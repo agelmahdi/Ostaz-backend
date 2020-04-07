@@ -1,0 +1,20 @@
+<?php
+return [
+'adminlocalization' => 'ادارة اللغة للادمن',
+'category' => 'مجموعة اساسية',
+'dashboard' => 'الصفحة الرئيسية',
+'datamanagement' => 'ادارة البيانات',
+'homepage' => 'الرئيسية',
+'localization' => 'ادارة اللغة للموقع',
+'logout' => 'الخروج',
+'option' => 'اعدادات متغيرة',
+'permission' => 'الاذونات',
+'permissioncategory' => 'مجموعة الاذونات',
+'PERSONAL' => 'اساسي',
+'role' => 'الوظيفة',
+'settings' => 'الاعدادات',
+'sitedata' => 'ادارة الموقع',
+'subcategory' => 'مجموعة فرعية',
+'user' => 'المستخدم',
+'usermanegment' => 'إدارة المستخدم',
+];

@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Admin as User;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -33,7 +33,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('id', 'DESC')->get();
-        return view('users.index', compact('data'))->with('i');;
+        return view('Admin.users.index', compact('data'))->with('i');;
     }
 
 
@@ -45,7 +45,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return view('users.create', compact('roles'));
+        return view('Admin.users.create', compact('roles'));
     }
 
 
@@ -73,7 +73,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
 
 
-        return redirect()->route('users.index')
+        return redirect()->route('Admin.users.index')
             ->with('success', 'User created successfully');
     }
 
@@ -87,7 +87,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users.show', compact('user'));
+        return view('Admin.users.show', compact('user'));
     }
 
 
@@ -104,7 +104,7 @@ class UserController extends Controller
         $userRole = $user->roles->pluck('name', 'name')->all();
 
 
-        return view('users.edit', compact('user', 'roles', 'userRole'));
+        return view('Admin.users.edit', compact('user', 'roles', 'userRole'));
     }
 
 
@@ -141,7 +141,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
 
 
-        return redirect()->route('users.index')
+        return redirect()->route('Admin.users.index')
             ->with('success', 'User updated successfully');
     }
 
@@ -155,7 +155,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')
+        return redirect()->route('Admin.users.index')
             ->with('success', 'User deleted successfully');
     }
 

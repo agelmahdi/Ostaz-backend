@@ -1,13 +1,19 @@
+
 <!DOCTYPE html>
-<html lang="en">
+@if(app()->getLocale()=="en")
+    <html lang="en">
+@else
+    <html lang="en" dir="rtl">
+@endif
+
 @include('layouts.BackEnd.head')
 @yield('css')
 
 
 <body class="fix-header fix-sidebar card-no-border">
-<!-- ============================================================== -->
-<!-- Preloader - style you can find in spinners.css -->
-<!-- ============================================================== -->
+{{--<!-- ============================================================== -->--}}
+{{--<!-- Preloader - style you can find in spinners.css -->--}}
+{{--<!-- ============================================================== -->--}}
 <div class="preloader">
     <div class="loader">
         <div class="loader__figure"></div>
@@ -35,9 +41,9 @@
 <!-- End Wrapper -->
 <!-- ============================================================== -->
 @include('layouts.BackEnd.foot')
-@yield('js')
 @yield('model')
 @yield('ajax')
+@yield('js')
 </body>
 
 </html>

@@ -63,7 +63,10 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
-        ];
+        'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'streamer' => \App\Http\Middleware\RedirectIfNotStreamer::class,
+        'follower' => \App\Http\Middleware\RedirectIfNotFollower::class,
+    ];
 
     /**
      * The priority-sorted list of middleware.

@@ -223,14 +223,6 @@ $(function () {
     // ============================================================== 
     // This is for the popup message while page load
     // ============================================================== 
-        $.toast({
-            heading: 'Welcome to Adminwrap',
-            text: 'Most powerfull and elegant design with tons of elements.',
-            position: 'top-right',
-            loaderBg: '#f33c49',
-            icon: 'info',
-            hideAfter: 6000,
-            stack: 6
-        })
+
     
 });

@@ -18,8 +18,9 @@ class CreateSubCategoriesTable extends Migration
             $table->BigInteger('category_id')->unsigned();
             $table->string('title_ar');
             $table->string('title_en');
-            $table->string('slug');
-            $table->string('image')->default('default.png');
+            $table->string('slug_ar');
+            $table->string('slug_en');
+            $table->string('image')->default('categories/default.png');
             $table->text('details_ar');
             $table->text('details_en');
             $table->foreign('category_id')

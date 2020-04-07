@@ -1,5 +1,10 @@
 <?php
 
+use App\Admin;
+use App\Follower;
+use App\Streamer;
+use App\User;
+
 return [
 
     /*
@@ -14,7 +19,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'admin',
         'passwords' => 'users',
     ],
 
@@ -38,9 +43,21 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'teachers',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
 
+        'follower' => [
+            'driver' => 'session',
+            'provider' => 'followers',
+        ],
+        'streamer' => [
+            'driver' => 'session',
+            'provider' => 'streamers',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -70,6 +87,19 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
+
+        'streamers' => [
+            'driver' => 'eloquent',
+            'model' => App\Streamer::class,
+        ],
+        'followers' => [
+            'driver' => 'eloquent',
+            'model' => App\Follower::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -98,6 +128,24 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+        'followers' => [
+            'provider' => 'followers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ]
+        ,'streamers' => [
+            'provider' => 'streamers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
+
     ],
 
 ];

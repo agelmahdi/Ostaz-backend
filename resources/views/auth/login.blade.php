@@ -133,7 +133,7 @@
                     {!! Html::image('BackEnd/assets/images/logo-text.png',"Home") !!}
                 </a>
 
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('admin.login.post')}}">
                     @csrf
                     <div class="form-group m-t-40">
                         <div class="col-xs-12">

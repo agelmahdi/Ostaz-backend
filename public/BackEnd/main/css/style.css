@@ -89,7 +89,7 @@ body {
     margin: 0;
     overflow-x: hidden;
     color: #67757c;
-    font-weight: 300;
+    font-weight: bold;
     font-size: 14px;
 }
 
@@ -764,7 +764,7 @@ Labels
     padding: 3px 10px;
     line-height: 13px;
     color: #ffffff;
-    font-weight: 400;
+    font-weight: bold;
     border-radius: 4px;
     font-size: 75%;
 }
@@ -1090,7 +1090,7 @@ sidebar navigation
     padding: 10px 35px 10px 15px;
     display: block;
     font-size: 15px;
-    font-weight: 400;
+    font-weight: bold;
 }
 
 .sidebar-nav ul li a.active,
@@ -1104,7 +1104,7 @@ sidebar navigation
 }
 
 .sidebar-nav ul li a.active {
-    font-weight: 500;
+    font-weight: bold;
     color: #263238;
 }
 
@@ -1124,7 +1124,7 @@ sidebar navigation
     font-size: 12px;
     margin-bottom: 0px;
     padding: 30px 14px 14px 0px;
-    color: #bcc3d3;
+    color: #000000;
     font-weight: 500;
 }
 
@@ -1145,6 +1145,7 @@ sidebar navigation
     display: inline-block;
     vertical-align: middle;
     color: #787f91;
+    font-weight: bold;
 }
 
 .sidebar-nav>ul>li>a .label {
