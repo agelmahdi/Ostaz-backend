@@ -26,10 +26,20 @@ $factory->define(Admin::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
-$factory->define(Customer::class, function (Faker $faker) {
+$factory->define(\App\Follower::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'email' => 'user@user.com',
+        'email' => 'follower@follower.com',
+        'email_verified_at' => now(),
+        'password' => '$2y$10$LEQ4VQSvI8ZLN1pVn99p3ucpSye0fRmPo3vMe4g6MO10iIVeGLcZS', // password
+        'remember_token' => Str::random(10),
+    ];
+});
+$factory->define(\App\Streamer::class, function (Faker $faker) {
+    return [
+        'name_ar' => $faker->name,
+        'name_en' => $faker->name,
+        'email' => 'streamer@streamer.com',
         'email_verified_at' => now(),
         'password' => '$2y$10$LEQ4VQSvI8ZLN1pVn99p3ucpSye0fRmPo3vMe4g6MO10iIVeGLcZS', // password
         'remember_token' => Str::random(10),

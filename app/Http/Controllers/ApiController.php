@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  *     ),
  *    @OA\Server(
  *         description=APP_SWAGGER_Title,
- *         url=L5_SWAGGER_CONST_HOST
+ *         url="http://127.0.0.1:8000"
  *     )
  * ),
  ** @OA\SecurityScheme(
@@ -28,12 +28,6 @@ use Illuminate\Http\Request;
  **/
 
 
-/**
- * @OA\Get(
- *     path="/api/resource.json",
- *     @OA\Response(response="200", description="An example resource")
- * )
- */
 class ApiController extends Controller
 {
 

@@ -19,9 +19,10 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'admin',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -59,9 +60,8 @@ return [
             'provider' => 'streamers',
         ],
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 

@@ -15,12 +15,16 @@ class CreateStreamersTable extends Migration
     {
         Schema::create('streamers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name_ar')->nullable();
+            $table->string('name_en')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->longText('details')->nullable();
+            $table->string('address_ar')->nullable();
+            $table->string('address_en')->nullable();
+            $table->longText('details_ar')->nullable();
+            $table->longText('details_en')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('image')->default('/streamer/default.jpg');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

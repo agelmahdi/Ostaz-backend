@@ -17,10 +17,12 @@ class CreateFollowersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('phone')->nullable();
+            $table->tinyInteger('gender')->nullable();
+            $table->string('birthday')->nullable();
             $table->string('address')->nullable();
-            $table->longText('details')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('image')->default('/follower/default.jpg');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

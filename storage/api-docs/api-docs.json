@@ -12,13 +12,970 @@
         }
     ],
     "paths": {
-        "/api/resource.json": {
-            "get": {
+        "/api/follower/login": {
+            "post": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Login",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::authenticate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "required|string|email|max:255",
+                                        "type": "string",
+                                        "example": "follower@follower.com"
+                                    },
+                                    "password": {
+                                        "description": "required|string|min:6",
+                                        "type": "string",
+                                        "example": "123123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "An example resource"
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token:": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid_credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Validator",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Validator.": {
+                                            "description": "Validator",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        },
+        "/api/follower/register": {
+            "post": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Registration",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "description": "['required', 'unique:followers']",
+                                        "type": "integer",
+                                        "example": "1234567"
+                                    },
+                                    "address": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "gender": {
+                                        "description": "0= Male ,1=Female",
+                                        "type": "string",
+                                        "example": "0"
+                                    },
+                                    "birthday": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "15/1/1994"
+                                    },
+                                    "image": {
+                                        "description": "image|mimes:jpeg,png,jpg,gif,svg|max:1024",
+                                        "type": "file",
+                                        "example": "File Image"
+                                    },
+                                    "email": {
+                                        "description": "required|string|email|max:255|unique:users",
+                                        "type": "string",
+                                        "example": "user@user.com"
+                                    },
+                                    "password": {
+                                        "description": "required|string|min:6|confirmed",
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Same As Password",
+                                        "type": "string",
+                                        "example": "123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{name,email,updated_at,created_at,id},token}": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/follower/update-profile-password": {
+            "put": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Update Profile Password",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfilePassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_password",
+                                    "new_password",
+                                    "new_password_confirmation"
+                                ],
+                                "properties": {
+                                    "current_password": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "new_password": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "12341234"
+                                    },
+                                    "new_password_confirmation": {
+                                        "description": "Same As Password",
+                                        "type": "string",
+                                        "example": "12341234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/follower/update-profile": {
+            "put": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Update Profile Data",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "description": "['required','regex:/^(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']",
+                                        "type": "integer",
+                                        "example": "1234567"
+                                    },
+                                    "address": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "gender": {
+                                        "description": "string|max:20",
+                                        "type": "string",
+                                        "example": "Male"
+                                    },
+                                    "birthday": {
+                                        "description": "string|max:20",
+                                        "type": "string",
+                                        "example": "15/2/1994"
+                                    },
+                                    "email": {
+                                        "description": "required|string|email|max:255|unique:users",
+                                        "type": "string",
+                                        "example": "user@user.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/follower/update-profile-image": {
+            "post": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Update Profile Image",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfileImage",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "Image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "required|image|mimes:jpeg,png,jpg,gif,svg|max:1024",
+                                        "type": "file",
+                                        "example": "File Image"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/follower/me": {
+            "get": {
+                "tags": [
+                    "Follower Authorization"
+                ],
+                "summary": "User Data",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::getAuthenticatedUser",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{name,email,updated_at,created_at,id},token}": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/login": {
+            "post": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Login",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::authenticate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "required|string|email|max:255",
+                                        "type": "string",
+                                        "example": "streamer@streamer.com"
+                                    },
+                                    "password": {
+                                        "description": "required|string|min:6",
+                                        "type": "string",
+                                        "example": "123123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token:": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid_credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Validator",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Validator.": {
+                                            "description": "Validator",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/streamer/register": {
+            "post": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Registration",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "description": "['required', 'unique:followers']",
+                                        "type": "integer",
+                                        "example": "1234567"
+                                    },
+                                    "address": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "gender": {
+                                        "description": "0= Male ,1=Female",
+                                        "type": "string",
+                                        "example": "0"
+                                    },
+                                    "birthday": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "15/1/1994"
+                                    },
+                                    "image": {
+                                        "description": "image|mimes:jpeg,png,jpg,gif,svg|max:1024",
+                                        "type": "file",
+                                        "example": "File Image"
+                                    },
+                                    "email": {
+                                        "description": "required|string|email|max:255|unique:users",
+                                        "type": "string",
+                                        "example": "user@user.com"
+                                    },
+                                    "password": {
+                                        "description": "required|string|min:6|confirmed",
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Same As Password",
+                                        "type": "string",
+                                        "example": "123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{name,email,updated_at,created_at,id},token}": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/streamer/update-profile-password": {
+            "put": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Update Profile Password",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfilePassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_password",
+                                    "new_password",
+                                    "new_password_confirmation"
+                                ],
+                                "properties": {
+                                    "current_password": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "new_password": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "12341234"
+                                    },
+                                    "new_password_confirmation": {
+                                        "description": "Same As Password",
+                                        "type": "string",
+                                        "example": "12341234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/update-profile": {
+            "put": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Update Profile Data",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "description": "['required','regex:/^(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']",
+                                        "type": "integer",
+                                        "example": "1234567"
+                                    },
+                                    "address": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "gender": {
+                                        "description": "string|max:20",
+                                        "type": "string",
+                                        "example": "Male"
+                                    },
+                                    "birthday": {
+                                        "description": "string|max:20",
+                                        "type": "string",
+                                        "example": "15/2/1994"
+                                    },
+                                    "email": {
+                                        "description": "required|string|email|max:255|unique:users",
+                                        "type": "string",
+                                        "example": "user@user.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/update-profile-image": {
+            "post": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Update Profile Image",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfileImage",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "Image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "required|image|mimes:jpeg,png,jpg,gif,svg|max:1024",
+                                        "type": "file",
+                                        "example": "File Image"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/me": {
+            "get": {
+                "tags": [
+                    "Streamer Authorization"
+                ],
+                "summary": "User Data",
+                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::getAuthenticatedUser",
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{name,email,updated_at,created_at,id},token}": {
+                                            "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

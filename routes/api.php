@@ -16,11 +16,37 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
-Route::get('open', 'DataController@open');
 
-Route::group(['middleware' => ['jwt.verify']], function() {
-    Route::get('user', 'UserController@getAuthenticatedUser');
-    Route::get('closed', 'DataController@closed');
-});
+Route::group( [
+    'prefix' => 'streamer',
+], function () {
+    Route::post( 'login', 'Auth\ApiAuthStreamerController@authenticate' );
+} );
+Route::group( [
+    'prefix' => 'follower',
+], function () {
+    Route::post( 'login', 'Auth\ApiAuthFollowerController@authenticate' );
+    Route::post( 'register', 'Auth\ApiAuthFollowerController@register' );
+
+    Route::group(['middleware' => ['jwt.verify']], function() {
+        Route::post( 'update-profile-image', 'Auth\ApiAuthFollowerController@updateProfileImage' );
+        Route::put( 'update-profile', 'Auth\ApiAuthFollowerController@updateProfileImage' );
+        Route::put( 'update-profile-password', 'Auth\ApiAuthFollowerController@updateProfilePassword' );
+        Route::get( 'me', 'Auth\ApiAuthFollowerController@getAuthenticatedUser' );
+    });
+
+} );
+Route::group( [
+    'prefix' => 'streamer',
+], function () {
+    Route::post( 'login', 'Auth\ApiAuthStreamerController@authenticate' );
+    Route::post( 'register', 'Auth\ApiAuthStreamerController@register' );
+
+    Route::group(['middleware' => ['jwt.verify']], function() {
+        Route::post( 'update-profile-image', 'Auth\ApiAuthStreamerController@updateProfileImage' );
+        Route::put( 'update-profile', 'Auth\ApiAuthStreamerController@updateProfileImage' );
+        Route::put( 'update-profile-password', 'Auth\ApiAuthStreamerController@updateProfilePassword' );
+        Route::get( 'me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser' );
+    });
+
+} );

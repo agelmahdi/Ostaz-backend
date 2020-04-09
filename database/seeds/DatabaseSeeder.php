@@ -105,28 +105,11 @@ class DatabaseSeeder extends Seeder
             $rolesArray = explode(',', $roles);
 
             // add roles
-            foreach ($rolesArray as $role) {
-                $role = Role::firstOrCreate(['name' => trim($role)]);
 
-                if ($role->name == 'Admin') {
-                    // assign all permissions to admin role
-                    $role->permissions()->sync(Permission::all());
-                    $this->command->info('Admin will have full rights');
-                } else {
-                    // for others, give access to view only
-                    $role->permissions()->sync(Permission::where('name', 'LIKE', 'view_%')->get());
-                }
+                $role = Role::firstOrCreate(['name' => 'Admin','guard_name'=>'admin']);
 
-                // create one user for each role
                 $this->createUser($role);
             }
-
-            $this->command->info('Roles ' . $roles . ' added successfully');
-
-        } else {
-            Role::firstOrCreate(['name' => 'User']);
-            $this->command->info('By default, User role added.');
-        }
 
 
     }
@@ -139,7 +122,8 @@ class DatabaseSeeder extends Seeder
     private function createUser($role)
     {
         $user = factory(Admin::class)->create();
-        factory(Customer::class)->create();
+        factory(\App\Streamer::class)->create();
+        factory(\App\Follower::class)->create();
         $user->assignRole($role->name);
 
         if ($role->name == 'Admin') {
