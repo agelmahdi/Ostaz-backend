@@ -17,6 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
+Route::group( ['middleware' => ['cors']], function () {
+    Route::get( '/', function () {
+          return ['data'=>'Yes'];
+        });
+});
 Route::group( [
     'prefix' => 'follower','middleware' => ['cors']
 ], function () {
