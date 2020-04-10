@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  *     ),
  *    @OA\Server(
  *         description=APP_SWAGGER_Title,
- *         url="L5_SWAGGER_CONST_HOST"
+ *         url=L5_SWAGGER_CONST_HOST
  *     )
  * ),
  ** @OA\SecurityScheme(
