@@ -11,16 +11,20 @@ use JWTAuth;
 use Config;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
+
 class ApiAuthStreamerController extends Controller
 {
     function __construct()
     {
+        // We set the guard api as default driver
+        auth()->setDefaultDriver('api');
         Config::set('jwt.user', Streamer::class);
         Config::set('auth.providers', ['users' => [
             'driver' => 'eloquent',
             'model' => Streamer::class,
         ]]);
     }
+
     /**
      * @OA\Post(
      *   path="/api/streamer/login",
@@ -105,6 +109,7 @@ class ApiAuthStreamerController extends Controller
 
         return response()->json(compact('token'));
     }
+
     /**
      * @OA\Post(
      *   path="/api/streamer/register",
@@ -116,19 +121,43 @@ class ApiAuthStreamerController extends Controller
      *       type="object",
      *       required={"name","phone","email", "password","password_confirmation"},
      *     @OA\Property(
-     *         property="name",
+     *         property="name_ar",
      *         type="string",
-     *         example="user",
+     *         example="أحمد توفيق",
+     *         description="required|string|max:255"
+     *       ),
+     *     @OA\Property(
+     *         property="name_en",
+     *         type="string",
+     *         example="Ahmed Tawfek",
+     *         description="required|string|max:255"
+     *       ),
+     *     @OA\Property(
+     *         property="slug_ar",
+     *         type="string",
+     *         example="أحمد_توفيق",
+     *         description="required|string|max:255"
+     *       ),
+     *     @OA\Property(
+     *         property="slug_en",
+     *         type="string",
+     *         example="ahmed_tawfek",
      *         description="required|string|max:255"
      *       ),
      *      @OA\Property(
      *         property="phone",
      *         type="integer",
      *         example="1234567",
-     *         description="['required', 'unique:followers']"
+     *         description="['required', 'unique:streamers']"
      *       ),
      *       @OA\Property(
-     *         property="address",
+     *         property="address_ar",
+     *         type="string",
+     *         example="Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt.",
+     *         description="string|max:255"
+     *       ),
+     *       @OA\Property(
+     *         property="address_en",
      *         type="string",
      *         example="Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt.",
      *         description="string|max:255"
@@ -140,12 +169,6 @@ class ApiAuthStreamerController extends Controller
      *         description="0= Male ,1=Female"
      *       ),
      *     @OA\Property(
-     *         property="birthday",
-     *         type="string",
-     *         example="15/1/1994",
-     *         description="string|max:255"
-     *       ),
-     *     @OA\Property(
      *         property="image",
      *         type="file",
      *         example="File Image",
@@ -154,8 +177,8 @@ class ApiAuthStreamerController extends Controller
      *       @OA\Property(
      *         property="email",
      *         type="string",
-     *         example="user@user.com",
-     *         description="required|string|email|max:255|unique:users"
+     *         example="streamer@streamer.com",
+     *         description="required|string|email|max:255|unique:streamers"
      *       ),
      *       @OA\Property(
      *         property="password",
@@ -202,13 +225,16 @@ class ApiAuthStreamerController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'phone' => ['required', 'unique:followers'],
-            'address' => 'string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'slug_ar' => 'required|string|max:255',
+            'slug_en' => 'required|string|max:255',
+            'phone' => ['required', 'unique:streamers'],
+            'address_ar' => 'string|max:255',
+            'address_en' => 'string|max:255',
             'gender' => 'string|max:20',
-            'birthday' => 'string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:streamers',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -217,20 +243,23 @@ class ApiAuthStreamerController extends Controller
         }
         $filename = time() . ".jpg";
         $date = date('FY');
-        if ($request->file('avatar')) {
-            $path = $request->file('avatar')->move(storage_path('app/public/users/' . $date), $filename);
-            $photoUrl = '/follower/' . $date . '/' . $filename;
+        if ($request->file('image')) {
+            $path = $request->file('avatar')->move(storage_path('app/public/streamer/' . $date), $filename);
+            $photoUrl = '/streamer/' . $date . '/' . $filename;
 
         } else {
-            $photoUrl = "/follower/default.jpg";
+            $photoUrl = "/streamer/default.jpg";
         }
 
-        $user = Follower::create([
-            'name' => $request->get('name'),
+        $user = Streamer::create([
+            'name_ar' => $request->get('name_ar'),
+            'name_en' => $request->get('name_en'),
+            'slug_ar' => $request->get('slug_ar'),
+            'slug_en' => $request->get('slug_en'),
             'phone' => $request->get('phone'),
-            'address' => $request->get('address'),
+            'address_ar' => $request->get('address_ar'),
+            'address_en' => $request->get('address_en'),
             'gender' => $request->get('gender'),
-            'birthday' => $request->get('gender'),
             'image' => $photoUrl,
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
@@ -239,6 +268,7 @@ class ApiAuthStreamerController extends Controller
 
         return response()->json(compact('user', 'token'), 201);
     }
+
     /**
      * @OA\Put(
      *   path="/api/streamer/update-profile-password",
@@ -581,6 +611,7 @@ class ApiAuthStreamerController extends Controller
         ];
         return response()->json(compact('user'), 201);
     }
+
     /**
      * @OA\Get(
      *   path="/api/streamer/me",
@@ -637,14 +668,16 @@ class ApiAuthStreamerController extends Controller
         }
 
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
+            'name_ar' => $user->name_ar,
+            'name_en' => $user->name_en,
+            'slug_ar' => $user->slug_ar,
+            'slug_en' => $user->slug_en,
             'phone' => $user->phone,
             'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
+            'address_ar' => $user->address_ar,
+            'address_en' => $user->address_en,
             'email' => $user->email,
-            'avatar' => env('APP_URL') . $user->avatar,
+            'image' => env('APP_URL') . $user->image,
         ];
         return response()->json(compact('user'));
     }

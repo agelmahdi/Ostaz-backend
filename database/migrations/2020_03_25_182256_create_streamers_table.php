@@ -17,7 +17,10 @@ class CreateStreamersTable extends Migration
             $table->increments('id');
             $table->string('name_ar')->nullable();
             $table->string('name_en')->nullable();
+            $table->string('slug_ar')->nullable();
+            $table->string('slug_en')->nullable();
             $table->string('phone')->nullable();
+            $table->tinyInteger('gender')->nullable();
             $table->string('address_ar')->nullable();
             $table->string('address_en')->nullable();
             $table->longText('details_ar')->nullable();

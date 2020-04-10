@@ -210,7 +210,7 @@ class ApiAuthFollowerController extends Controller
             'gender' => 'string|max:20',
             'birthday' => 'string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:followers',
             'password' => 'required|string|min:6|confirmed',
         ]);
 

@@ -139,7 +139,6 @@ class DatabaseSeeder extends Seeder
     private function createUser($role)
     {
         $user = factory(Admin::class)->create();
-        factory(Customer::class)->create();
         $user->assignRole($role->name);
 
         if ($role->name == 'Admin') {
