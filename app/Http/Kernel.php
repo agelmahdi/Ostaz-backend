@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'streamer' => \App\Http\Middleware\RedirectIfNotStreamer::class,
         'follower' => \App\Http\Middleware\RedirectIfNotFollower::class,
         'assign.guard' => \App\Http\Middleware\AssignGuard::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**

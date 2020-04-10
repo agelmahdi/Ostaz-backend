@@ -18,12 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });*/
 
 Route::group( [
-    'prefix' => 'streamer',
-], function () {
-    Route::post( 'login', 'Auth\ApiAuthStreamerController@authenticate' );
-} );
-Route::group( [
-    'prefix' => 'follower',
+    'prefix' => 'follower','middleware' => ['cors']
 ], function () {
     Route::post( 'login', 'Auth\ApiAuthFollowerController@authenticate' );
     Route::post( 'register', 'Auth\ApiAuthFollowerController@register' );
@@ -37,7 +32,7 @@ Route::group( [
 
 } );
 Route::group( [
-    'prefix' => 'streamer',
+    'prefix' => 'streamer','middleware' => ['cors']
 ], function () {
     Route::post( 'login', 'Auth\ApiAuthStreamerController@authenticate' );
     Route::post( 'register', 'Auth\ApiAuthStreamerController@register' );

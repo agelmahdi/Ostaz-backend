@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
     {
         // Ask for confirmation to refresh migration
         if ($this->command->confirm('Do you wish to refresh migration before seeding, Make sure it will clear all old data ?', true)) {
+            $this->command->call('key:generate');
+            $this->command->call('jwt:secret');
             $this->command->call('migrate:refresh');
             $this->command->warn("Data deleted, starting from fresh database.");
         }
