@@ -18,8 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });*/
 
 Route::group( ['middleware' => ['cors']], function () {
-    Route::post( '/', function () {
-          return ['data'=>'Yes'];
+    Route::post( '/', function (Request $request) {
+          return $request->get('name');
         });
 });
 Route::group( [
