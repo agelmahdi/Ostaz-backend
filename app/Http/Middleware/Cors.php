@@ -19,6 +19,7 @@ class Cors
             ->header('Sec-Fetch-Dest', 'empty')
             ->header('Sec-Fetch-Mode', 'cors')
             ->header('Sec-Fetch-Sit', 'cross-site')
+            ->header('Accept-Encoding', 'gzip, deflate, br')
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
