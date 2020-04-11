@@ -119,15 +119,15 @@
 
     <script type="text/javascript">
 
-     @for($i=0;$i<=100;$i++)
-            var x{{$i}} = 0;
-            $("#add_answer{{$i}}").click(function () {
-                ++x{{$i}};
-                $("#dynamicTableAnswer{{$i}}").append('<tr><td><input type="text" name="addmore[{{$i}}][' + x{{$i}} + '][answer{{$i}}]" placeholder="Enter your Answer" class="form-control" /></td><td><button type="button" class="btn btn-danger answer-remove-tr{{$i}}">Remove</button></td></tr>');
-            });
-            $(document).on('click', '.answer-remove-tr{{$i}}', function () {
-                $(this).parent().remove();
-            });
+            @for($i=0;$i<=100;$i++)
+        var x{{$i}} = 0;
+        $("#add_answer{{$i}}").click(function () {
+            ++x{{$i}};
+            $("#dynamicTableAnswer{{$i}}").append('<tr><td><input type="text" name="addmore[{{$i}}][' + x{{$i}} + '][answer{{$i}}]" placeholder="Enter your Answer" class="form-control" /></td><td><button type="button" class="btn btn-danger answer-remove-tr{{$i}}">Remove</button></td></tr>');
+        });
+        $(document).on('click', '.answer-remove-tr{{$i}}', function () {
+            $(this).parents('tr').remove();
+        });
             @endfor
 
 

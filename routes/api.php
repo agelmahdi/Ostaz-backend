@@ -17,12 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
-//Route::group(['middleware' => ['cors']], function () {
+Route::group(['middleware' => ['cors']], function () {
     Route::post('/', function (Request $request) {
         return $request->get('name');
     });
-//});
-//Route::group(['middleware' => ['cors']], function () {
+});
+Route::group(['middleware' => ['cors']], function () {
     Route::group(['prefix' => 'follower'], function () {
         Route::post('login', 'Auth\ApiAuthFollowerController@authenticate');
         Route::post('register', 'Auth\ApiAuthFollowerController@register');
@@ -45,4 +45,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
             Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
         });
     });
-//});
+});
