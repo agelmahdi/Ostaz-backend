@@ -14,11 +14,10 @@ class Streamer extends Authenticatable implements JWTSubject
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name_ar','name_en','slug_ar','slug_en','address_ar','address_en','details_ar','details_en','phone','email','gender','image', 'password',
     ];
 
     /**
@@ -42,9 +41,12 @@ class Streamer extends Authenticatable implements JWTSubject
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
-     *
      * @return mixed
      */
+    public function quizes()
+    {
+        return $this->hasMany('App\Quiz');
+    }
     public function getJWTIdentifier()
     {
         // TODO: Implement getJWTIdentifier() method.

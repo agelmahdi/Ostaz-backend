@@ -66,6 +66,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'user', 'value_en' => 'User', 'value_ar' => 'المستخدم',],
             ['key' => 'datamanagement', 'value_en' => 'Data Management', 'value_ar' => 'ادارة البيانات',],
             ['key' => 'category', 'value_en' => 'Category', 'value_ar' => 'مجموعة اساسية',],
+            ['key' => 'quiz', 'value_en' => 'Quiz', 'value_ar' => 'الاختبار',],
             ['key' => 'subcategory', 'value_en' => 'Sub Category', 'value_ar' => 'مجموعة فرعية',],
             ['key' => 'sitedata', 'value_en' => 'Site Data', 'value_ar' => 'ادارة الموقع',],
             ['key' => 'settings', 'value_en' => 'Settings', 'value_ar' => 'الاعدادات',],
@@ -153,12 +154,26 @@ class DatabaseSeeder extends Seeder
 
     private function defaultPermissions()
     {
-        return ['role-list', 'role-create', 'role-edit', 'role-delete', 'permission-list', 'permission-create', 'permission-edit', 'permission-delete', 'main-userManagement', 'main-dataManagement', 'permissioncategory-list', 'permissioncategory-create', 'permissioncategory-edit', 'permissioncategory-delete', 'product-list', 'product-create', 'product-update', 'product-delete', 'category-list', 'category-create', 'category-edit', 'category-delete', 'category-showdetails', 'subcategory-list', 'subcategory-create', 'subcategory-edit', 'subcategory-delete', 'subcategory-showdetails', 'user-list', 'user-create', 'user-edit', 'user-delete', 'main-site', 'option-list', 'option-create', 'option-edit', 'option-delete', 'localization-list', 'localization-create', 'localization-edit', 'localization-delete', 'adminlocalization-list', 'adminlocalization-create', 'adminlocalization-edit', 'adminlocalization-delete'];
+        return ['role-list', 'role-create', 'role-edit', 'role-delete',
+            'permission-list', 'permission-create', 'permission-edit', 'permission-delete',
+            'main-userManagement', 'main-dataManagement','main-site',
+            'permissioncategory-list', 'permissioncategory-create', 'permissioncategory-edit', 'permissioncategory-delete',
+            'product-list', 'product-create', 'product-update', 'product-delete',
+            'category-list', 'category-create', 'category-edit', 'category-delete',
+            'category-showdetails', 'subcategory-list', 'subcategory-create', 'subcategory-edit', 'subcategory-delete',
+            'subcategory-showdetails', 'user-list', 'user-create', 'user-edit', 'user-delete',
+            'option-list', 'option-create', 'option-edit', 'option-delete',
+            'localization-list', 'localization-create', 'localization-edit', 'localization-delete',
+            'adminlocalization-list', 'adminlocalization-create', 'adminlocalization-edit', 'adminlocalization-delete',
+            'quiz-showdetails','quiz-list','quiz-create','quiz-edit','quiz-delete',
+            'questions-list','questions-create','questions-edit','questions-delete',
+            'answer-list','answer-create','answer-edit','answer-delete',
+            'result-list','result-create','result-edit','result-delete'];
     }
 
     private function defaultPermissioncategory()
     {
-        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization'];
+        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization','quiz','questions','answer','result'];
     }
 
 

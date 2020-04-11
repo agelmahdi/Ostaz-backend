@@ -3,9 +3,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Permissioncategory;
 use App\Permission;
+use App\Quiz;
+use App\Streamer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 
 class QuizController extends Controller
@@ -30,8 +36,8 @@ class QuizController extends Controller
      */
     public function index(Request $request)
     {
-        $permissions = Permission::orderBy('id', 'DESC')->get();
-        return view('Admin.permissions.index', compact('permissions'))->with('i');;
+        $quizzes =Quiz::orderBy('id', 'DESC')->get();
+        return view('Admin.quizzes.index', compact('quizzes'))->with('i');
     }
 
 
@@ -42,7 +48,8 @@ class QuizController extends Controller
      */
     public function create()
     {
-        return view('Admin.quiz.create');
+        $streamers=Streamer::get();
+        return view('Admin.quizzes.create',compact('streamers'));
     }
 
 
@@ -54,42 +61,23 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-//        request()->validate([
-//            'name' => 'required',
-//        ]);
-//
-//        $category_name = mb_split("-", $request->name);
-//        $permissionCategory = new PermissionCategory();
-//        $permissionCategory->name = $category_name[0];
-//        $categories_count = PermissionCategory::where('name', '=', $category_name[0])->count();
-//        if ($categories_count == 0) {
-//
-//            $permissionCategory->save();
-//        }
-//        Permission::create($request->all());
-//        $request->guard_name = 'web';
-//        return redirect()->route('Admin.permissions.index')
-//            ->with('success', 'Permission created successfully.');
-        $request->validate([
-            'addmore.*.name' => 'required',
-
+        $this->validate($request,[
+            'title' => 'required',
+            'time' => 'required|integer',
+            'lang' => 'required|string',
+            'questions_number' => 'required|integer',
+            'streamer_id' => 'required|integer',
         ]);
-
-        foreach ($request->addmore as $key => $value) {
-
-            Permission::create($value);
-            $category_name = mb_split("-", $value['name']);
-            $permissionCategory = new PermissionCategory();
-            $permissionCategory->name = $category_name[0];
-            $categories_count = PermissionCategory::where('name', '=', $category_name[0])->count();
-            if ($categories_count == 0) {
-
-                $permissionCategory->save();
-            }
-        }
-
-        return redirect()->route('Admin.permissions.index')
-            ->with('success', 'Permission created successfully.');
+       $slug=md5(now());
+        $quiz = new Quiz();
+        $quiz->title = $request->title;
+        $quiz->slug = $slug;
+        $quiz->time = $request->time;
+        $quiz->lang = $request->lang;
+        $quiz->questions_number = $request->questions_number;
+        $quiz->streamer_id = $request->streamer_id;
+        $quiz->save();
+        return redirect()->route('Admin.quiz.index')->with('success', 'Quiz created successfully.');
     }
 
 
@@ -99,9 +87,9 @@ class QuizController extends Controller
      * @param \App\Permission $permission
      * @return \Illuminate\Http\Response
      */
-    public function show(Permission $permission)
+    public function show(Quiz $quiz)
     {
-        return view('Admin.permissions.show', compact('permission'));
+        return view('Admin.quiz.show', compact('quiz'));
     }
 
 
@@ -152,12 +140,10 @@ class QuizController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Permission $permission)
+    public function destroy(Request $request)
     {
-        $permission->delete();
-
-
-        return redirect()->route('Admin.permissions.index')
-            ->with('success', 'Permission deleted successfully');
+        $quiz = Quiz::findOrFail($request->quiz_id);
+        $quiz->delete();
+        return redirect()->back()->with('success', 'Quiz Deleted successfully.');
     }
 }

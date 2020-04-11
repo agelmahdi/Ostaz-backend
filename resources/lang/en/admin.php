@@ -11,6 +11,7 @@ return [
 'permission' => 'Permission',
 'permissioncategory' => 'Permission Category',
 'PERSONAL' => 'Primary',
+'quiz' => 'Quiz',
 'role' => 'Role',
 'settings' => 'Settings',
 'sitedata' => 'Site Data',

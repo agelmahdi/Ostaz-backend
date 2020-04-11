@@ -11,6 +11,7 @@ return [
 'permission' => 'الاذونات',
 'permissioncategory' => 'مجموعة الاذونات',
 'PERSONAL' => 'اساسي',
+'quiz' => 'الاختبارات',
 'role' => 'الوظيفة',
 'settings' => 'الاعدادات',
 'sitedata' => 'ادارة الموقع',

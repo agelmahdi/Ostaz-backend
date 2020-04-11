@@ -91,6 +91,18 @@
                             </ul>
                         </li>
                     @endcan
+                    @can('quiz-list')
+                        <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                                    class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.quiz') }}</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                @can('quiz-create')
+
+                                    <li>{!! Html::linkRoute('Admin.quiz.create','Add Quiz') !!}</li>
+                                @endcan
+                                <li>{!! Html::linkRoute('Admin.quiz.index','Quiz') !!}</li>
+                            </ul>
+                        </li>
+                    @endcan
                 @endcan
                 @can('main-site')
                     <li class="nav-small-cap">---{{ trans('admin.sitedata')}}</li>

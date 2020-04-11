@@ -18,7 +18,7 @@ class Follower extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','phone','gender','birthday','address','image', 'email', 'password',
     ];
 
     /**

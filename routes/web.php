@@ -60,26 +60,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 
 /**
- * customer login route
- */
-Route::get('/customer/login', 'Auth\CustomerLoginController@showLoginForm')->name('customer.login');
-Route::post('/customer/login', 'Auth\CustomerLoginController@login')->name('customer.login.post');
-Route::post('/customer/logout', 'Auth\CustomerLoginController@logout')->name('customer.logout');
-
-
-/**
- * route only for customer profile
- */
-Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-    Route::group(['middleware' => 'customer'], function () {
-
-        Route::get('/customer/home', 'Customer\HomeController@index');
-
-    });
-});
-
-
-/**
  * follower login route
  */
 Route::get('/follower/login', 'Auth\FollowerLoginController@showLoginForm')->name('follower.login');

@@ -14,7 +14,7 @@ class CreateStreamersTable extends Migration
     public function up()
     {
         Schema::create('streamers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name_ar')->nullable();
             $table->string('name_en')->nullable();
             $table->string('slug_ar')->nullable();
