@@ -89,7 +89,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        return view('Admin.quiz.show', compact('quiz'));
+        return view('Admin.quizzes.show', compact('quiz'));
     }
 
 
@@ -99,37 +99,35 @@ class QuizController extends Controller
      * @param \App\Permission $permission
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit(Quiz $quiz)
     {
-        return view('Admin.permissions.edit', compact('permission'));
+        $streamers=Streamer::get();
+        return view('Admin.quizzes.edit', compact(['quiz','streamers']));
     }
 
 
     /**
      * Update the specified resource in storage.
-     *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Permission $permission
+     * @param \App\Quiz $quiz
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, Quiz $quiz)
     {
-        request()->validate([
-            'name' => 'required',
+        $this->validate($request,[
+            'title' => 'required',
+            'time' => 'required|integer',
+            'lang' => 'required|string',
+            'questions_number' => 'required|integer',
+            'streamer_id' => 'required|integer',
         ]);
-
-        $category_name = mb_split("-", $request->name);
-        $permissionCategory = new PermissionCategory();
-        $permissionCategory->name = $category_name[0];
-        $categories_count = PermissionCategory::where('name', '=', $category_name[0])->count();
-        if ($categories_count == 0) {
-
-            $permissionCategory->save();
-        }
-        $permission->update($request->all());
-        $request->guard_name = 'web';
-        return redirect()->route('Admin.permissions.index')
-            ->with('success', 'Permission updated successfully');
+        $quiz->title = $request->title;
+        $quiz->time = $request->time;
+        $quiz->lang = $request->lang;
+        $quiz->questions_number = $request->questions_number;
+        $quiz->streamer_id = $request->streamer_id;
+        $quiz->save();
+        return redirect()->route('Admin.quiz.index')->with('success', 'Quiz created successfully.');
     }
 
 

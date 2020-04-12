@@ -16,7 +16,7 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-themecolor">quiz</h3>
+                    <h3 class="text-themecolor">question</h3>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('Admin.home') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('Admin.quiz.index') }}">Management
@@ -26,9 +26,9 @@
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-left">
-                            @can('quiz-create')
-                                <a class="btn btn-info" href="{{ route('Admin.quiz.create') }}"> Create New
-                                    Quiz</a>
+                            @can('questions-create')
+                                <a class="btn btn-info" href="{{ route('Admin.question.create',$quiz->id) }}"> Create New
+                                    question</a>
                             @endcan
                         </div>
                     </div>
@@ -55,8 +55,8 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Title</th>
-                                        <th>streamer</th>
-                                        <th>Questions Count</th>
+                                        <th>Quiz</th>
+                                        <th>Answers Count</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -65,42 +65,30 @@
 
                                     <tbody>
 
-                                    @foreach($quizzes as $quiz)
+                                    @foreach($questions as $question)
                                         <tr>
                                             <td>{{$loop->index + 1}}</td>
-                                            <td>{{$quiz->title}}</td>
-                                            <td>{{$quiz->streamer->name_en}}</td>
-                                            <td>{{$quiz->questions->count()}}</td>
-                                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $quiz->created_at)->diffForHumans() }}</td>
+                                            <td>{{$question->title}}</td>
+                                            <td>{{$question->quiz->title}}</td>
+                                            <td>{{$question->answers->count()}}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $question->created_at)->diffForHumans() }}</td>
                                             <td>
-                                                @can('questions-list')
-                                                    <a href="{{ route('Admin.question.index',$quiz->id)}}"
-                                                       class="btn btn-info waves-effect">
-                                                        <i class="fa fa-question"></i>
-                                                    </a>
-                                                @endcan
-                                                @can('quiz-showdetails')
-                                                    <button class="btn btn-success waves-effect"
-                                                            data-mytitle="{{$quiz->title}}"
-                                                            data-myslug="{{$quiz->slug}}"
-                                                            data-mytime="{{$quiz->time}}"
-                                                            data-mylang="{{$quiz->lang}}"
-                                                            data-myquestionsnumber="{{$quiz->questions_number}}"
-                                                            data-mystreamer="{{$quiz->streamer->name_en}}"
-                                                            data-myquestions="{{$quiz->questions->count()}}"
-                                                            data-myid={{$quiz->id}} data-toggle="modal"
-                                                            data-target="#show"><i class="fa fa-eye"></i></button>
-                                                @endcan
-                                                @can('quiz-edit')
-                                                    <a href="{{ route('Admin.quiz.edit',$quiz->id) }}"
+                                                @can('answers-list')
+                                                    <a href="{{ route('Admin.answer.index').'/'.$question->id}}"
                                                        class="btn btn-info waves-effect">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                 @endcan
-                                                @can('quiz-delete')
+                                                @can('questions-edit')
+{{--                                                    <a href="{{ route('Admin.questions.edit',$question->id) }}"--}}
+{{--                                                       class="btn btn-info waves-effect">--}}
+{{--                                                        <i class="fa fa-edit"></i>--}}
+{{--                                                    </a>--}}
+                                                @endcan
+                                                @can('questions-delete')
 
                                                     <button class="btn btn-danger"
-                                                            data-myid={{$quiz->id}} data-toggle="modal"
+                                                            data-myid={{$question->id}} data-toggle="modal"
                                                             data-target="#delete"><i class="fa fa-trash"></i></button>
                                                 @endcan
 
@@ -114,8 +102,8 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Title</th>
-                                        <th>streamer</th>
-                                        <th>Questions Count</th>
+                                        <th>Quiz</th>
+                                        <th>Answers Count</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
