@@ -232,7 +232,7 @@ return [
     |--------------------------------------------------------------------------
      */
     'constants' => [
-        'L5_SWAGGER_CONST_HOST' => env('APP_SWAGGER', 'http://127.0.0.1:8000'),
+        'L5_SWAGGER_CONST_HOST' => env('APP_SWAGGER_URL', 'http://127.0.0.1:8000'),
         'APP_SWAGGER_Title' => env('APP_SWAGGER_Title', 'Admin Backend'),
         'APP_SWAGGER_Description' => env('APP_SWAGGER_Description', 'Admin Backend Description')
     ],

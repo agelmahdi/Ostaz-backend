@@ -54,23 +54,27 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::resource('category', 'CategoryController');
         Route::resource('subcategory', 'SubCategoryController');
         Route::resource('quiz', 'QuizController');
-//        _____________________________Question_____________________________________________________
+        //     _____________________________Question_____________________________________________________
         Route::get('question/{quiz}', 'QuestionController@index')->name('question.index');
         Route::get('question/{quiz}/create', 'QuestionController@create')->name('question.create');
         Route::post('question/{quiz}/store', 'QuestionController@store')->name('question.store');
         Route::get('question/{question}/edit', 'QuestionController@edit')->name('question.edit');
         Route::put('question/{question}', 'QuestionController@update')->name('question.update');
         Route::delete('question/{question}', 'QuestionController@destroy')->name('question.destroy');
-        //        ___________________________End__Question_____________________________________________________
-        Route::get('answer/{question}', 'QuestionController@index')->name('answer.index');
-        Route::get('answer/{question}/create', 'QuestionController@create')->name('answer.create');
-        Route::post('answer/{question}/store', 'QuestionController@store')->name('answer.store');
+        //        ___________________________End__Question_______________________________________________
+        //     _____________________________Answer_____________________________________________________
+        Route::get('answer/{question}', 'AnswerController@index')->name('answer.index');
+//        Route::get('answer/show', 'AnswerController@show')->name('answer.show');
+        Route::get('answer/{question}/create', 'AnswerController@create')->name('answer.create');
+        Route::post('answer/{question}/store', 'AnswerController@store')->name('answer.store');
+        Route::get('answer/{answer}/edit', 'AnswerController@edit')->name('answer.edit');
+        Route::put('answer/{answer}', 'AnswerController@update')->name('answer.update');
+        Route::delete('answer/{answer}', 'AnswerController@destroy')->name('answer.destroy');
 
-
+        //        ___________________________End__Answer________________________________________________
     });
 });
-
-
+        Route::get('answer/changeStatus', 'Admin\AnswerController@ChangeStatus');
 /**
  * follower login route
  */
