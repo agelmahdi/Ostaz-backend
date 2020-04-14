@@ -82,7 +82,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('Admin.questions.edit', compact(['question']));
     }
 
     /**
@@ -94,7 +94,12 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required',
+        ]);
+        $question->title = $request->title;
+        $question->save();
+        return redirect()->route('Admin.question.index',$question->quiz_id)->with('success', 'Question created successfully.');
     }
 
     /**
@@ -103,8 +108,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Request $request)
     {
-        //
+        dd($request->question_id);
+        $question = Question::findOrFail($request->question_id);
+        $question->delete();
+        return redirect()->back()->with('success', 'Question Deleted successfully.');
     }
 }

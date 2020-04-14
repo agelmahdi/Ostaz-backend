@@ -73,17 +73,17 @@
                                             <td>{{$question->answers->count()}}</td>
                                             <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $question->created_at)->diffForHumans() }}</td>
                                             <td>
-                                                @can('answers-list')
-                                                    <a href="{{ route('Admin.answer.index').'/'.$question->id}}"
+                                                @can('answer-list')
+                                                    <a href="{{ route('Admin.answer.index',$question->id)}}"
                                                        class="btn btn-info waves-effect">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                 @endcan
                                                 @can('questions-edit')
-{{--                                                    <a href="{{ route('Admin.questions.edit',$question->id) }}"--}}
-{{--                                                       class="btn btn-info waves-effect">--}}
-{{--                                                        <i class="fa fa-edit"></i>--}}
-{{--                                                    </a>--}}
+                                                    <a href="{{ route('Admin.question.edit',$question->id) }}"
+                                                       class="btn btn-info waves-effect">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
                                                 @endcan
                                                 @can('questions-delete')
 
@@ -124,92 +124,19 @@
                             </button>
                             <h4 class="modal-title text-center" id="myModalLabel">Delete Confirmation</h4>
                         </div>
-                        <form action="{{route('Admin.quiz.destroy','test')}}" method="post">
+                        <form action="{{route('Admin.question.destroy','test')}}" method="post">
                             {{method_field('delete')}}
                             {{csrf_field()}}
                             <div class="modal-body">
                                 <p class="text-center">
                                     Are you sure you want to delete this?
                                 </p>
-                                <input type="hidden" name="quiz_id" id="quiz_id" value="">
+                                <input type="hidden" name="question_id" id="question_id" value="">
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
                                 <button type="submit" class="btn btn-warning">Yes, Delete</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">show Quiz</h4>
-                        </div>
-                        <form action="{{route('Admin.quiz.show','test')}}" method="post" enctype="multipart/form-data">
-                            {{method_field('patch')}}
-                            {{csrf_field()}}
-                            <div class="modal-body">
-                                <input type="hidden" name="quiz_id" id="id" value="">
-                            {{--------------------The ShowForm -----------------------------}}
-                            <!-- row -->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="tab-content tabcontent-border">
-                                                    <div class="tab-pane active" role="tabpanel">
-                                                        <div class="p-20">
-                                                            <label for="title">Title</label>
-                                                            <input type="text" class="form-control" name="title"
-                                                                   id="title" disabled>
-                                                            </br>
-                                                            <label for="streamer">streamer</label>
-                                                            <input type="text" class="form-control" name="streamer"
-                                                                   id="streamer" disabled>
-                                                            </br>
-                                                            <label for="slug">Slug</label>
-                                                            <input type="text" class="form-control" name="slug"
-                                                                   id="slug" disabled>
-                                                            </br>
-                                                            <label for="questions">Question Number</label>
-                                                            <input type="text" class="form-control" name="questions"
-                                                                   id="questions" disabled>
-                                                            </br>
-                                                            <label for="questions_number">Questions Limiter</label>
-                                                            <input type="text" class="form-control"
-                                                                   name="questions_number" id="questions_number"
-                                                                   disabled>
-                                                            </br>
-                                                            <label for="time">time</label>
-                                                            <input type="text" class="form-control" name="time"
-                                                                   id="time" disabled>
-                                                            </br>
-                                                            <label for="lang">lang</label>
-                                                            <input type="text" class="form-control" name="lang"
-                                                                   id="lang" disabled>
-                                                            </br>
-
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{--------------------End ShowForm -----------------------------}}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -274,7 +201,7 @@
                             var button = $(event.relatedTarget);
                             var id = button.data('myid');
                             var modal = $(this);
-                            modal.find('.modal-body #quiz_id').val(id);
+                            modal.find('.modal-body #question_id').val(id);
                         });
 
 
