@@ -21,9 +21,7 @@ class CreateFollowersTable extends Migration
             $table->string('birthday')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('image')->default('/follower/default.jpg');
-            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });

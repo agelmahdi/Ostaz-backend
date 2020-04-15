@@ -26,9 +26,7 @@ class CreateStreamersTable extends Migration
             $table->longText('details_ar')->nullable();
             $table->longText('details_en')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('image')->default('/streamer/default.jpg');
-            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });

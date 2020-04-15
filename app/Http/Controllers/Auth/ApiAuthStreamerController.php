@@ -18,10 +18,10 @@ class ApiAuthStreamerController extends Controller
     {
         // We set the guard api as default driver
         auth()->setDefaultDriver('api');
-        Config::set('jwt.user', Streamer::class);
+        Config::set('jwt.user', User::class);
         Config::set('auth.providers', ['users' => [
             'driver' => 'eloquent',
-            'model' => Streamer::class,
+            'model' => User::class,
         ]]);
     }
 
@@ -106,7 +106,10 @@ class ApiAuthStreamerController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
+        $user=User::where('email',$request->get('email'))->first();
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
         return response()->json(compact('token'));
     }
 
@@ -234,24 +237,25 @@ class ApiAuthStreamerController extends Controller
             'address_en' => 'string|max:255',
             'gender' => 'string|max:20',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'email' => 'required|string|email|max:255|unique:streamers',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
         $filename = time() . ".jpg";
         $date = date('FY');
         if ($request->file('image')) {
-            $path = $request->file('avatar')->move(storage_path('app/public/streamer/' . $date), $filename);
+            $path = $request->file('image')->move(storage_path('app/public/streamer/' . $date), $filename);
             $photoUrl = '/streamer/' . $date . '/' . $filename;
 
         } else {
             $photoUrl = "/streamer/default.jpg";
         }
 
-        $user = Streamer::create([
+        $streamer = Streamer::create([
             'name_ar' => $request->get('name_ar'),
             'name_en' => $request->get('name_en'),
             'slug_ar' => $request->get('slug_ar'),
@@ -261,12 +265,17 @@ class ApiAuthStreamerController extends Controller
             'address_en' => $request->get('address_en'),
             'gender' => $request->get('gender'),
             'image' => $photoUrl,
+            'email' => $request->get('email')
+        ]);
+        $user = User::create([
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'role'=>1,
+            'role_id'=>$streamer->id,
         ]);
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('streamer', 'token'), 201);
     }
 
     /**
@@ -357,6 +366,9 @@ class ApiAuthStreamerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
         if (!(Hash::check($request->get('current_password'), $user->password))) {
             return response()->json(['error' => 'password not Valid'], 400);
         }
@@ -364,16 +376,18 @@ class ApiAuthStreamerController extends Controller
             'password' => bcrypt($request->get('new_password')),
         ]);
         $user->save();
+        $streamer=Streamer::where('email',$user->email)->first();
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'address' => $user->address,
-            'gender' => $user->gender,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'image' => env('APP_URL') . '/' . $user->avatar,
-
+            'name_ar' => $streamer->name_ar,
+            'name_en' => $streamer->name_en,
+            'slug_ar' => $streamer->slug_ar,
+            'slug_en' => $streamer->slug_en,
+            'phone' => $streamer->phone,
+            'gender' => $streamer->gender,
+            'address_ar' => $streamer->address_ar,
+            'address_en' => $streamer->address_en,
+            'email' => $streamer->email,
+            'image' => env('APP_URL') . $streamer->image,
         ];
         return response()->json(compact('user'), 201);
     }
@@ -475,37 +489,53 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'phone' => ['required', 'unique:users,phone,' . $user->id],
-            'address' => 'string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'slug_ar' => 'required|string|max:255',
+            'slug_en' => 'required|string|max:255',
+            'phone' => ['required', 'unique:streamers,phone,' . $user->role_id],
+            'address_ar' => 'string|max:255',
+            'address_en' => 'string|max:255',
             'gender' => 'string|max:20',
             'birthday' => 'string|max:20',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
-        $user->update([
-            'name' => $request->get('name'),
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
+        $streamer=Streamer::where('email',$user->email)->first();
+        $streamer->update([
+            'name_ar' => $request->get('name_ar'),
+            'name_en' => $request->get('name_en'),
+            'slug_ar' => $request->get('slug_ar'),
+            'slug_en' => $request->get('slug_en'),
             'phone' => $request->get('phone'),
-            'address' => $request->get('address'),
+            'address_ar' => $request->get('address_ar'),
+            'address_en' => $request->get('address_en'),
             'gender' => $request->get('gender'),
             'birthday' => $request->get('birthday'),
             'email' => $request->get('email')
         ]);
-        $user->save();
+        $streamer->save();
+        $user->update([
+            'email' => $request->get('email')
+        ]);
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'avatar' => env('APP_URL') . '/storage/' . $user->avatar,
+            'name_ar' => $streamer->name_ar,
+            'name_en' => $streamer->name_en,
+            'slug_ar' => $streamer->slug_ar,
+            'slug_en' => $streamer->slug_en,
+            'phone' => $streamer->phone,
+            'gender' => $streamer->gender,
+            'address_ar' => $streamer->address_ar,
+            'address_en' => $streamer->address_en,
+            'email' => $streamer->email,
+            'image' => env('APP_URL') . $streamer->image,
         ];
         return response()->json(compact('user'), 201);
     }
@@ -577,7 +607,9 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
@@ -587,27 +619,29 @@ class ApiAuthStreamerController extends Controller
 
         $filename = time() . ".jpg";
         $date = date('FY');
-        if ($request->file('avatar')) {
-            $path = $request->file('avatar')->move(storage_path('follower/' . $date), $filename);
-            $photoUrl = '/follower/' . $date . '/' . $filename;
+        if ($request->file('image')) {
+            $path = $request->file('image')->move(storage_path('streamer/' . $date), $filename);
+            $photoUrl = '/streamer/' . $date . '/' . $filename;
 
         } else {
-            $photoUrl = "/follower/default.jpg";
+            $photoUrl = "/streamer/default.jpg";
         }
-
-        $user->update([
+        $streamer=Streamer::where('email',$user->email)->first();
+        $streamer->update([
             'image' => $photoUrl,
         ]);
-        $user->save();
+        $streamer->save();
         $user = [
-            'id' => $user->id,
-            'first_name' => $user->name,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'image' => env('APP_URL') . '/follower/' . $user->avatar,
+            'name_ar' => $streamer->name_ar,
+            'name_en' => $streamer->name_en,
+            'slug_ar' => $streamer->slug_ar,
+            'slug_en' => $streamer->slug_en,
+            'phone' => $streamer->phone,
+            'gender' => $streamer->gender,
+            'address_ar' => $streamer->address_ar,
+            'address_en' => $streamer->address_en,
+            'email' => $streamer->email,
+            'image' => env('APP_URL') . $streamer->image,
         ];
         return response()->json(compact('user'), 201);
     }
@@ -666,18 +700,21 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
+        $streamer=Streamer::where('email',$user->email)->first();
         $user = [
-            'name_ar' => $user->name_ar,
-            'name_en' => $user->name_en,
-            'slug_ar' => $user->slug_ar,
-            'slug_en' => $user->slug_en,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address_ar' => $user->address_ar,
-            'address_en' => $user->address_en,
-            'email' => $user->email,
-            'image' => env('APP_URL') . $user->image,
+            'name_ar' => $streamer->name_ar,
+            'name_en' => $streamer->name_en,
+            'slug_ar' => $streamer->slug_ar,
+            'slug_en' => $streamer->slug_en,
+            'phone' => $streamer->phone,
+            'gender' => $streamer->gender,
+            'address_ar' => $streamer->address_ar,
+            'address_en' => $streamer->address_en,
+            'email' => $streamer->email,
+            'image' => env('APP_URL') . $streamer->image,
         ];
         return response()->json(compact('user'));
     }

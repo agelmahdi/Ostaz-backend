@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors']], function () {
 
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthFollowerController@updateProfileImage');
-            Route::put('update-profile', 'Auth\ApiAuthFollowerController@updateProfileImage');
+            Route::put('update-profile', 'Auth\ApiAuthFollowerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthFollowerController@updateProfilePassword');
             Route::get('me', 'Auth\ApiAuthFollowerController@getAuthenticatedUser');
         });
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['cors']], function () {
 
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthStreamerController@updateProfileImage');
-            Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfileImage');
+            Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthStreamerController@updateProfilePassword');
             Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
         });

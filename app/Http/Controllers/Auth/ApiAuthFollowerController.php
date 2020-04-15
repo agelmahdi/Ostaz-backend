@@ -17,10 +17,10 @@ class ApiAuthFollowerController extends Controller
     {
         // We set the guard api as default driver
         auth()->setDefaultDriver('api');
-        Config::set('jwt.user', Follower::class);
+        Config::set('jwt.user', User::class);
         Config::set('auth.providers', ['users' => [
             'driver' => 'eloquent',
-            'model' => Follower::class,
+            'model' => User::class,
         ]]);
     }
     /**
@@ -156,19 +156,19 @@ class ApiAuthFollowerController extends Controller
      *       @OA\Property(
      *         property="email",
      *         type="string",
-     *         example="user@user.com",
+     *         example="follower@follower.com",
      *         description="required|string|email|max:255|unique:users"
      *       ),
      *       @OA\Property(
      *         property="password",
      *         type="string",
-     *         example="123123",
+     *         example="123123123",
      *         description="required|string|min:6|confirmed"
      *       ),
      *     @OA\Property(
      *         property="password_confirmation",
      *         type="string",
-     *         example="123123",
+     *         example="123123123",
      *         description="Same As Password"
      *       )
      *     )
@@ -210,7 +210,7 @@ class ApiAuthFollowerController extends Controller
             'gender' => 'string|max:20',
             'birthday' => 'string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'email' => 'required|string|email|max:255|unique:followers',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -219,15 +219,15 @@ class ApiAuthFollowerController extends Controller
         }
         $filename = time() . ".jpg";
         $date = date('FY');
-        if ($request->file('avatar')) {
-            $path = $request->file('avatar')->move(storage_path('app/public/users/' . $date), $filename);
+        if ($request->file('image')) {
+            $path = $request->file('image')->move(storage_path('app/public/users/' . $date), $filename);
             $photoUrl = '/follower/' . $date . '/' . $filename;
 
         } else {
             $photoUrl = "/follower/default.jpg";
         }
 
-        $user = Follower::create([
+        $follower = Follower::create([
             'name' => $request->get('name'),
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
@@ -235,11 +235,16 @@ class ApiAuthFollowerController extends Controller
             'birthday' => $request->get('gender'),
             'image' => $photoUrl,
             'email' => $request->get('email'),
+        ]);
+        $user = User::create([
+            'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'role'=>2,
+            'role_id'=>$follower->id,
         ]);
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('follower', 'token'), 201);
     }
     /**
      * @OA\Put(
@@ -329,6 +334,9 @@ class ApiAuthFollowerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        if($user->role!=2){
+            return response()->json('sorry this user role is not As Follower',402);
+        }
         if (!(Hash::check($request->get('current_password'), $user->password))) {
             return response()->json(['error' => 'password not Valid'], 400);
         }
@@ -336,15 +344,16 @@ class ApiAuthFollowerController extends Controller
             'password' => bcrypt($request->get('new_password')),
         ]);
         $user->save();
+        $follower=Follower::where('email',$user->email)->first();
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'address' => $user->address,
-            'gender' => $user->gender,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'image' => env('APP_URL') . '/' . $user->avatar,
+            'id' => $follower->id,
+            'name' => $follower->name,
+            'phone' => $follower->phone,
+            'address' => $follower->address,
+            'gender' => $follower->gender,
+            'birthday' => $follower->birthday,
+            'email' => $follower->email,
+            'image' => env('APP_URL') . '/' . $follower->image,
 
         ];
         return response()->json(compact('user'), 201);
@@ -382,7 +391,7 @@ class ApiAuthFollowerController extends Controller
      *     @OA\Property(
      *         property="gender",
      *         type="string",
-     *         example="Male",
+     *         example=0,
      *         description="string|max:20"
      *       ),
      *     @OA\Property(
@@ -450,17 +459,21 @@ class ApiAuthFollowerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'phone' => ['required', 'unique:users,phone,' . $user->id],
+            'phone' => ['required', 'unique:followers,phone,' . $user->role_id],
             'address' => 'string|max:255',
             'gender' => 'string|max:20',
             'birthday' => 'string|max:20',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
         ]);
+        if($user->role!=2){
+            return response()->json('sorry this user role is not As Follower',402);
+        }
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $user->update([
+        $follower=Follower::where('email',$user->email)->first();
+        $follower->update([
             'name' => $request->get('name'),
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
@@ -468,16 +481,19 @@ class ApiAuthFollowerController extends Controller
             'birthday' => $request->get('birthday'),
             'email' => $request->get('email')
         ]);
-        $user->save();
+        $follower->save();
+        $user->update([
+            'email' => $request->get('email')
+        ]);
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'avatar' => env('APP_URL') . '/storage/' . $user->avatar,
+            'id' => $follower->id,
+            'name' => $follower->name,
+            'phone' => $follower->phone,
+            'gender' => $follower->gender,
+            'address' => $follower->address,
+            'birthday' => $follower->birthday,
+            'email' => $follower->email,
+            'image' => env('APP_URL') . '/storage/' . $follower->image,
         ];
         return response()->json(compact('user'), 201);
     }
@@ -549,7 +565,9 @@ class ApiAuthFollowerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
+        if($user->role!=2){
+            return response()->json('sorry this user role is not As Follower',402);
+        }
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
@@ -559,27 +577,26 @@ class ApiAuthFollowerController extends Controller
 
         $filename = time() . ".jpg";
         $date = date('FY');
-        if ($request->file('avatar')) {
-            $path = $request->file('avatar')->move(storage_path('follower/' . $date), $filename);
+        if ($request->file('image')) {
+            $path = $request->file('image')->move(storage_path('follower/' . $date), $filename);
             $photoUrl = '/follower/' . $date . '/' . $filename;
 
         } else {
             $photoUrl = "/follower/default.jpg";
         }
-
-        $user->update([
+        $follower=Follower::where('email',$user->email)->first();
+        $follower->update([
             'image' => $photoUrl,
         ]);
-        $user->save();
+        $follower->save();
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'image' => env('APP_URL') . '/follower/' . $user->avatar,
+            'name' => $follower->name,
+            'phone' => $follower->phone,
+            'gender' => $follower->gender,
+            'address' => $follower->address,
+            'birthday' => $follower->birthday,
+            'email' => $follower->email,
+            'image' => env('APP_URL') . '/follower/' . $follower->image,
         ];
         return response()->json(compact('user'), 201);
     }
@@ -637,16 +654,18 @@ class ApiAuthFollowerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-
+        if($user->role!=2){
+            return response()->json('sorry this user role is not As Follower',402);
+        }
+        $follower=Follower::where('email',$user->email)->first();
         $user = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'gender' => $user->gender,
-            'address' => $user->address,
-            'birthday' => $user->birthday,
-            'email' => $user->email,
-            'avatar' => env('APP_URL') . $user->avatar,
+            'name' => $follower->name,
+            'phone' => $follower->phone,
+            'gender' => $follower->gender,
+            'address' => $follower->address,
+            'birthday' => $follower->birthday,
+            'email' => $follower->email,
+            'avatar' => env('APP_URL') . $follower->image,
         ];
         return response()->json(compact('user'));
     }

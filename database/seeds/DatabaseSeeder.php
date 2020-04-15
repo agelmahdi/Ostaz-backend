@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Ask for confirmation to refresh migration
-        if ($this->command->confirm('Do you wish to refresh migration before seeding, Make sure it will clear all old data ?', true)) {
             $this->command->call('key:generate');
             $this->command->call('jwt:secret');
             $this->command->call('migrate:refresh');
+            $this->command->call('config:clear');
+            $this->command->call('cache:clear');
+            $this->command->call('view:clear');
+            $this->command->call('route:clear');
             $this->command->warn("Data deleted, starting from fresh database.");
-        }
-
-
         // Seed the default localization
         $options = [
             ['key' => 'website_name_ar', 'value' => 'تجريبي'],
@@ -99,10 +99,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Default Permissions added.');
 
         // Ask to confirm to assign admin or user role
-        if ($this->command->confirm('Create Roles for user, default is admin and user? [y|N]', true)) {
+
 
             // Ask for roles from input
-            $roles = $this->command->ask('Enter roles in comma separate format.', 'Admin');
+            $roles = 'Admin';
 
             // Explode roles
             $rolesArray = explode(',', $roles);
@@ -126,10 +126,7 @@ class DatabaseSeeder extends Seeder
 
             $this->command->info('Roles ' . $roles . ' added successfully');
 
-        } else {
-            Role::firstOrCreate(['name' => 'User']);
-            $this->command->info('By default, User role added.');
-        }
+
 
 
     }
@@ -156,7 +153,7 @@ class DatabaseSeeder extends Seeder
     {
         return ['role-list', 'role-create', 'role-edit', 'role-delete',
             'permission-list', 'permission-create', 'permission-edit', 'permission-delete',
-            'main-userManagement', 'main-dataManagement','main-site',
+            'main-userManagement', 'main-dataManagement', 'main-site',
             'permissioncategory-list', 'permissioncategory-create', 'permissioncategory-edit', 'permissioncategory-delete',
             'product-list', 'product-create', 'product-update', 'product-delete',
             'category-list', 'category-create', 'category-edit', 'category-delete',
@@ -165,15 +162,15 @@ class DatabaseSeeder extends Seeder
             'option-list', 'option-create', 'option-edit', 'option-delete',
             'localization-list', 'localization-create', 'localization-edit', 'localization-delete',
             'adminlocalization-list', 'adminlocalization-create', 'adminlocalization-edit', 'adminlocalization-delete',
-            'quiz-showdetails','quiz-list','quiz-create','quiz-edit','quiz-delete',
-            'questions-list','questions-create','questions-edit','questions-delete',
-            'answer-list','answer-create','answer-edit','answer-delete',
-            'result-list','result-create','result-edit','result-delete'];
+            'quiz-showdetails', 'quiz-list', 'quiz-create', 'quiz-edit', 'quiz-delete',
+            'questions-list', 'questions-create', 'questions-edit', 'questions-delete',
+            'answer-list', 'answer-create', 'answer-edit', 'answer-delete',
+            'result-list', 'result-create', 'result-edit', 'result-delete'];
     }
 
     private function defaultPermissioncategory()
     {
-        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization','quiz','questions','answer','result'];
+        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result'];
     }
 
 
