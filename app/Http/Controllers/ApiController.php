@@ -899,6 +899,79 @@ use Illuminate\Http\Request;
      *      description="For Home Data as ['quizes']")
      * )
      */
+/**
+ * @OA\Put(
+ *   path="/api/streamer/quiz/{slug}",
+ *   summary="Update Quiz",
+ *   tags={"quiz Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="slug",
+ *      description="Quiz Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"name","phone","email"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="New Exam",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="time",
+ *         type="string",
+ *         example=10,
+ *         description="required|integer"
+ *       ),
+ *     @OA\Property(
+ *         property="lang",
+ *         type="string",
+ *         example="ar",
+ *         description="required|string|max:255(ar-en)"
+ *       ),
+ *     @OA\Property(
+ *         property="questions_number",
+ *         type="string",
+ *         example=10,
+ *         description="required|integer"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
 //===========================End=Quiz=============================================
 //===========================Start=Question=============================================
         /**

@@ -46,6 +46,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('quiz', 'api\QuizController@quizes');
             Route::post('create_quiz', 'api\QuizController@createQuiz');
             Route::get('quiz/{slug}', 'api\QuizController@Detail_quiz');
+            Route::put('quiz/{slug}', 'api\QuizController@Update_quiz');
             //===========================End=Quiz=============================================
             //===========================Start=Question=============================================
             Route::get('{quiz}/question', 'api\QuestionController@question');
