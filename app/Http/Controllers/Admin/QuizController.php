@@ -68,7 +68,7 @@ class QuizController extends Controller
             'questions_number' => 'required|integer',
             'streamer_id' => 'required|integer',
         ]);
-       $slug=md5(now());
+       $slug=$this->generateRandomString(10);
         $quiz = new Quiz();
         $quiz->title = $request->title;
         $quiz->slug = $slug;
@@ -79,7 +79,16 @@ class QuizController extends Controller
         $quiz->save();
         return redirect()->route('Admin.quiz.index')->with('success', 'Quiz created successfully.');
     }
-
+    function generateRandomString($length = 5)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 
     /**
      * Display the specified resource.

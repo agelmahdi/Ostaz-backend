@@ -4,10 +4,24 @@ namespace App\Http\Controllers\api;
 
 use App\Quiz;
 
+use App\User;
+use App\Http\Resources\Streamer\QuizResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use JWTAuth;
+use Config;
 class QuizController extends Controller
 {
+    function __construct()
+    {
+        // We set the guard api as default driver
+        auth()->setDefaultDriver('api');
+        Config::set('jwt.user', User::class);
+        Config::set('auth.providers', ['users' => [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ]]);
+    }
     /**
      * @OA\Get(
      *     operationId="Quiz",
@@ -15,20 +29,19 @@ class QuizController extends Controller
      *     tags={"quiz Pages"},
      *     security={{"bearerAuth":{}}},
      * @OA\Parameter(
-     *         name="lang",
-     *         in="query",
-     *         required=true,
-     *         description="Lang",
-     *         @OA\Schema(
-     *              type="string",
-     *              example="ar",
-     *         )
-     *      ),
-     * @OA\Parameter(
-     *      name="query_search",
-     *      description="search in the clinics",
+     *      name="P",
+     *      description="Paginate by Number of items every page",
      *      required=false,
-     *      in="query",
+     *      in="path",
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     *   ),
+     *     @OA\Parameter(
+     *      name="page",
+     *      description="page Number",
+     *      required=false,
+     *      in="path",
      *      @OA\Schema(
      *          type="integer"
      *      )
@@ -59,7 +72,16 @@ class QuizController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
+        if($user->role!=1){
+            return response()->json('sorry this user role is not As Streamer',402);
+        }
+        $paginate=$request->input('P');
+         if($paginate==null){
+             $paginate=10;
+         };
+//        dd($user->id);
+       $quiz=Quiz::where('streamer_id',$user->role_id)->paginate($paginate);
+       return QuizResource::collection($quiz);
     }
-
 
 }
