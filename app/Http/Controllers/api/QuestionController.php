@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Resources\Streamer\QuestionResource;
 use App\Quiz;
-
+use App\Question;
 use App\User;
 use App\Http\Resources\Streamer\QuizResource;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use JWTAuth;
 use Config;
 use Illuminate\Support\Facades\Validator;
 
-class QuizController extends Controller
+class QuestionController extends Controller
 {
     function __construct()
     {
@@ -25,7 +26,7 @@ class QuizController extends Controller
         ]]);
     }
 
-    function quizes(Request $request)
+    function question($quiz,Request $request)
     {
         try {
 
@@ -53,10 +54,14 @@ class QuizController extends Controller
         if ($paginate == null) {
             $paginate = 10;
         };
-        $quiz = Quiz::where('streamer_id', $user->role_id)->paginate($paginate);
-        return QuizResource::collection($quiz);
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('slug', $quiz)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
+        $qusestion = Question::where('quiz_id', $quiz->id)->paginate($paginate);
+        return QuestionResource::collection($qusestion);
     }
-    function createQuiz(Request $request)
+    function createQuestion($quiz,Request $request)
     {
 
         try {
@@ -83,21 +88,19 @@ class QuizController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'time' => 'required|integer',
-            'lang' => 'required|string|max:255',
-            'questions_number' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('slug', $quiz)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
         $slug = $this->generateRandomString(10);
-        Quiz::create([
+        Question::create([
             'title' => $request->get('title'),
             'slug' => $slug,
-            'time' => $request->get('time'),
-            'lang' => $request->get('lang'),
-            'questions_number' => $request->get('questions_number'),
-            'streamer_id' => $user->role_id,
+            'quiz_id' =>$quiz->id,
         ]);
         return response()->json(['success'], 200);
     }
@@ -110,42 +113,5 @@ class QuizController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
-    function Detail_quiz($quiz)
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-        if ($user->role != 1) {
-            return response()->json('sorry this user role is not As Streamer', 402);
-        }
-        $quiz = Quiz::where('streamer_id', $user->role_id)->where('slug', $quiz)->first();
-        if ($quiz == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
-        }
-        $quiz = [
-            "title" => $quiz->title,
-            "time" => $quiz->time,
-            "lang" => $quiz->lang,
-            "questions_limit" => $quiz->questions_number,
-            "question_number" => $quiz->questions()->count(),
-        ];
-
-        return response()->json(compact('quiz'), 200);
     }
 }

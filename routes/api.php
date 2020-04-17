@@ -42,9 +42,16 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthStreamerController@updateProfilePassword');
             Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
+            //===========================Start=Quiz=============================================
             Route::get('quiz', 'api\QuizController@quizes');
             Route::post('create_quiz', 'api\QuizController@createQuiz');
             Route::get('quiz/{slug}', 'api\QuizController@Detail_quiz');
+            //===========================End=Quiz=============================================
+            //===========================Start=Question=============================================
+            Route::get('{quiz}/question', 'api\QuestionController@question');
+            Route::post('{quiz}/create_question', 'api\QuestionController@createQuestion');
+            Route::get('{quiz}/question/{slug}', 'api\QuestionController@Detail_question');
+            //===========================End=Question=============================================
         });
     });
 });

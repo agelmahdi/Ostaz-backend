@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2cf26921-9344-4deb-be80-28f512b1e5bb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/api/QuestionController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/Streamer/QuestionResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/l5-swagger.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/l5-swagger.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_25_182256_create_streamers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_25_182256_create_streamers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_25_182317_create_followers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_25_182317_create_followers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Question.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/api-docs/api-docs.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/api-docs/api-docs.json" afterDir="false" />
     </list>
@@ -32,20 +30,78 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+            <state relative-caret-position="740">
+              <caret line="103" selection-start-line="103" selection-end-line="112" selection-end-column="5" />
               <folding>
                 <element signature="e#44#57#0#PHP" expanded="true" />
+                <element signature="e#4098#4475#0#PHP" />
+                <element signature="e#6616#7646#0#PHP" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/api/QuestionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+              <folding>
+                <element signature="e#44#93#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/User.php">
+        <entry file="file://$PROJECT_DIR$/app/Http/Resources/Streamer/QuestionResource.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="20" column="64" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
+            <state relative-caret-position="456">
+              <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
+              <folding>
+                <element signature="e#2429#3215#0#PHP" />
+                <element signature="e#6208#7927#0#PHP" />
+                <element signature="e#9695#11595#0#PHP" />
+                <element signature="e#13950#16217#0#PHP" />
+                <element signature="e#17537#19509#0#PHP" />
+                <element signature="e#20452#21693#0#PHP" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Resources/Streamer/QuizResource.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="552">
+              <caret line="23" column="46" selection-start-line="17" selection-start-column="11" selection-end-line="23" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Quiz.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Question.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="14" column="27" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -53,56 +109,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2376">
-              <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="393" column="24" selection-start-line="393" selection-start-column="24" selection-end-line="393" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/api.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="40" column="68" lean-forward="true" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+            <state relative-caret-position="345">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
-                <element signature="e#7#38#0#PHP" expanded="true" />
+                <element signature="e#45#62#0#PHP" expanded="true" />
+                <element signature="e#2431#3406#0#PHP" />
+                <element signature="e#7076#9133#0#PHP" />
+                <element signature="e#10902#12911#0#PHP" />
+                <element signature="e#15271#18069#0#PHP" />
+                <element signature="e#19389#21497#0#PHP" />
+                <element signature="e#22441#23832#0#PHP" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.env">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/l5-swagger.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="234" column="30" selection-start-line="234" selection-start-column="9" selection-end-line="234" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -110,17 +127,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+            <state relative-caret-position="452">
+              <caret line="945" column="47" selection-start-line="945" selection-start-column="47" selection-end-line="945" selection-end-column="47" />
+              <folding>
+                <element signature="e#542#2306#0#PHP" />
+                <element signature="e#2315#5298#0#PHP" />
+                <element signature="e#5307#7064#0#PHP" />
+                <element signature="e#7069#9413#0#PHP" />
+                <element signature="e#9422#10731#0#PHP" />
+                <element signature="e#10740#11673#0#PHP" />
+                <element signature="e#11682#13446#0#PHP" />
+                <element signature="e#13452#16907#0#PHP" />
+                <element signature="e#16916#18673#0#PHP" />
+                <element signature="e#18678#21027#0#PHP" />
+                <element signature="e#21036#22345#0#PHP" />
+                <element signature="e#22354#23287#0#PHP" />
+                <element signature="e#23912#24750#0#PHP" />
+                <element signature="e#24143#26011#0#PHP" />
+                <element signature="e#26020#26527#0#PHP" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
+        <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="668">
+              <caret line="51" column="47" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -207,18 +241,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/auth/admin-login.blade.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2017_03_03_100000_create_options_table.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_08_02_212325_create_localizations_table.php" />
-        <option value="$PROJECT_DIR$/app/Localization.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/OptionController.php" />
-        <option value="$PROJECT_DIR$/resources/views/Admin/localizations/create.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Admin/localizations/edit.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Admin/localizations/index.blade.php" />
-        <option value="$PROJECT_DIR$/config/laravellocalization.php" />
-        <option value="$PROJECT_DIR$/resources/lang/ar/main.php" />
-        <option value="$PROJECT_DIR$/resources/lang/en/main.php" />
-        <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/BackEnd/foot.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/BackEnd/master.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/Admin/permissioncategories/create.blade.php" />
@@ -240,24 +262,36 @@
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/AdminLoginController.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_03_25_182256_create_streamers_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2020_03_25_182317_create_followers_table.php" />
         <option value="$PROJECT_DIR$/config/l5-swagger.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
         <option value="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/resources/views/vendor/l5-swagger/index.blade.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/Cors.php" />
+        <option value="$PROJECT_DIR$/app/Http/Resources/quiz.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2020_04_11_181149_create_questions_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2020_04_11_181209_create_answers_table.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2020_04_11_182004_create_results_table.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/QuizController.php" />
+        <option value="$PROJECT_DIR$/app/Quiz.php" />
+        <option value="$PROJECT_DIR$/app/Http/Resources/Streamer/QuizResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php" />
+        <option value="$PROJECT_DIR$/app/Question.php" />
+        <option value="$PROJECT_DIR$/app/Http/Resources/Streamer/QuestionResource.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/api/QuestionController.php" />
       </list>
     </option>
   </component>
@@ -365,10 +399,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1358" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="x" value="2062" />
+    <option name="y" value="-13" />
+    <option name="width" value="1036" />
+    <option name="height" value="743" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -411,6 +445,21 @@
             <path>
               <item name="Stream" type="b2602c69:ProjectViewProjectNode" />
               <item name="Stream" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stream" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Stream" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Streamer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stream" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Stream" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -421,12 +470,8 @@
             <path>
               <item name="Stream" type="b2602c69:ProjectViewProjectNode" />
               <item name="Stream" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Stream" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Stream" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -440,19 +485,20 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Resources/Streamer" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Projects(31-5-2019)\blogsystem\app\Http\Controllers\Admin" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PrivateData\Stream\app\Http\Resources\Streamer" />
+      <recent name="D:\PrivateData\Stream\app\Http\Controllers\api" />
       <recent name="D:\PrivateData\online_appointment\app\Http\Controllers" />
       <recent name="E:\Projects(31-5-2019)\BlogSystemWLocalization\resources\views\Admin" />
       <recent name="E:\Projects(31-5-2019)\BlogSystemWLocalization\app\Http\Controllers\Admin" />
-      <recent name="E:\Projects(31-5-2019)\BlogSystemWLocalization\app" />
-      <recent name="E:\Projects(31-5-2019)\BlogSystemWLocalization\database\migrations" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PrivateData\Stream\app\Http\Resources\Streamer" />
+      <recent name="E:\Projects(31-5-2019)\blogsystem\app\Http\Controllers\Admin" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -531,6 +577,8 @@
       <workItem from="1571044836226" duration="25160000" />
       <workItem from="1586245212548" duration="1160000" />
       <workItem from="1586253059728" duration="1494000" />
+      <workItem from="1587026149942" duration="1923000" />
+      <workItem from="1587121997054" duration="17524000" />
     </task>
     <task id="LOCAL-00001" summary="database update">
       <created>1559991387164</created>
@@ -574,11 +622,53 @@
       <option name="project" value="LOCAL" />
       <updated>1571071466429</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[bug]fix swagger issue&#10;[bug]fix security issue to sign with streamer and follower data&#10;[feature]add quiz data">
+      <created>1586987475034</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586987475034</updated>
+    </task>
+    <task id="LOCAL-00008" summary="[bug]fix swagger docs link and be dynamic">
+      <created>1587129109823</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587129109823</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[bug]have Quizs by streamer token">
+      <created>1587132425297</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587132425297</updated>
+    </task>
+    <task id="LOCAL-00010" summary="[bug]fx swagger">
+      <created>1587133545483</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587133545483</updated>
+    </task>
+    <task id="LOCAL-00011" summary="[bug]add slugs to quize and create new">
+      <created>1587138702951</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587138702951</updated>
+    </task>
+    <task id="LOCAL-00012" summary="[bug]Creation Quies and show details">
+      <created>1587140611877</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587140611877</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217652000" />
+    <option name="totallyTimeSpent" value="237378000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -593,7 +683,7 @@
     <frame x="1358" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49268293" visible="true" weight="0.18976545" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49268293" visible="true" weight="0.19402985" />
       <window_info id="Structure" order="1" sideWeight="0.50731707" side_tool="true" weight="0.295764" />
       <window_info id="Favorites" order="2" sideWeight="0.50731707" side_tool="true" weight="0.295764" />
       <window_info id="npm" order="3" side_tool="true" />
@@ -607,8 +697,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" visible="true" weight="0.38544738" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50159913" side_tool="true" visible="true" weight="0.38544738" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49733475" weight="0.24680433" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5026652" side_tool="true" weight="0.24680433" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49946696" weight="0.3284169" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -616,13 +706,13 @@
       <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49268293" weight="0.2217484" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49268293" weight="0.19402985" />
       <window_info id="Structure" order="1" sideWeight="0.50731707" side_tool="true" weight="0.295764" />
       <window_info id="Favorites" order="2" sideWeight="0.50731707" side_tool="true" weight="0.295764" />
       <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.049099836" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49621785" weight="0.46705997" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49621785" visible="true" weight="0.049099836" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -630,9 +720,9 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.029498525" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50378215" side_tool="true" weight="0.17021276" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.3289689" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49733475" visible="true" weight="0.24680433" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5026652" side_tool="true" visible="true" weight="0.24680433" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49946696" weight="0.3284169" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -691,7 +781,13 @@
     <MESSAGE value="finish all localization on admin panel" />
     <MESSAGE value="add it to sidebar" />
     <MESSAGE value="project initiate" />
-    <option name="LAST_COMMIT_MESSAGE" value="project initiate" />
+    <MESSAGE value="[bug]fix swagger issue&#10;[bug]fix security issue to sign with streamer and follower data&#10;[feature]add quiz data" />
+    <MESSAGE value="[bug]fix swagger docs link and be dynamic" />
+    <MESSAGE value="[bug]have Quizs by streamer token" />
+    <MESSAGE value="[bug]fx swagger" />
+    <MESSAGE value="[bug]add slugs to quize and create new" />
+    <MESSAGE value="[bug]Creation Quies and show details" />
+    <option name="LAST_COMMIT_MESSAGE" value="[bug]Creation Quies and show details" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -705,75 +801,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/BackEnd/header.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_02_312325_create_adminlocalizations_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Admin/adminlocalizations/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/adminLocalization.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Localization.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/lang/ar/admin.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/AdminLocalizationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="100" column="62" lean-forward="true" selection-start-line="100" selection-start-column="62" selection-end-line="100" selection-end-column="62" />
-          <folding>
-            <element signature="e#46#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Admin/adminlocalizations/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Admin/adminlocalizations/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="48" column="75" selection-start-line="48" selection-start-column="58" selection-end-line="48" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Admin/adminlocalizations/edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="64" column="103" selection-start-line="64" selection-start-column="103" selection-end-line="64" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/lang/en/admin.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -960,13 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/quiz.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2020_03_25_182256_create_streamers_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -981,41 +1001,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
+    <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        <state relative-caret-position="720">
+          <caret line="95" column="55" lean-forward="true" selection-start-line="95" selection-start-column="55" selection-end-line="95" selection-end-column="55" />
+          <folding>
+            <element signature="e#7#38#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/l5-swagger.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
+        <state relative-caret-position="801">
           <caret line="234" column="30" selection-start-line="234" selection-start-column="9" selection-end-line="234" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/vendor/l5-swagger/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
-          <folding>
-            <element signature="e#7#38#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="264">
+          <caret line="77" column="31" selection-start-line="77" selection-start-column="31" selection-end-line="77" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1026,34 +1039,160 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+        <state relative-caret-position="96">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/QuizController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="90" column="5" selection-start-line="81" selection-start-column="4" selection-end-line="90" selection-end-column="5" />
           <folding>
-            <element signature="e#44#57#0#PHP" expanded="true" />
+            <element signature="e#47#64#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_11_182004_create_results_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_11_181209_create_answers_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Cors.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2020_04_11_181149_create_questions_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Resources/Streamer/QuizResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="23" column="46" selection-start-line="17" selection-start-column="11" selection-end-line="23" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthStreamerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2376">
-          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="40" column="68" lean-forward="true" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
+        <state relative-caret-position="345">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#45#62#0#PHP" expanded="true" />
+            <element signature="e#2431#3406#0#PHP" />
+            <element signature="e#7076#9133#0#PHP" />
+            <element signature="e#10902#12911#0#PHP" />
+            <element signature="e#15271#18069#0#PHP" />
+            <element signature="e#19389#21497#0#PHP" />
+            <element signature="e#22441#23832#0#PHP" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ApiAuthFollowerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="393" column="24" selection-start-line="393" selection-start-column="24" selection-end-line="393" selection-end-column="24" />
+        <state relative-caret-position="432">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#2429#3215#0#PHP" />
+            <element signature="e#6208#7927#0#PHP" />
+            <element signature="e#9695#11595#0#PHP" />
+            <element signature="e#13950#16217#0#PHP" />
+            <element signature="e#17537#19509#0#PHP" />
+            <element signature="e#20452#21693#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Quiz.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Question.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Resources/Streamer/QuestionResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/api/QuizController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="740">
+          <caret line="103" selection-start-line="103" selection-end-line="112" selection-end-column="5" />
+          <folding>
+            <element signature="e#44#57#0#PHP" expanded="true" />
+            <element signature="e#4098#4475#0#PHP" />
+            <element signature="e#6616#7646#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="668">
+          <caret line="51" column="47" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="945" column="47" selection-start-line="945" selection-start-column="47" selection-end-line="945" selection-end-column="47" />
+          <folding>
+            <element signature="e#542#2306#0#PHP" />
+            <element signature="e#2315#5298#0#PHP" />
+            <element signature="e#5307#7064#0#PHP" />
+            <element signature="e#7069#9413#0#PHP" />
+            <element signature="e#9422#10731#0#PHP" />
+            <element signature="e#10740#11673#0#PHP" />
+            <element signature="e#11682#13446#0#PHP" />
+            <element signature="e#13452#16907#0#PHP" />
+            <element signature="e#16916#18673#0#PHP" />
+            <element signature="e#18678#21027#0#PHP" />
+            <element signature="e#21036#22345#0#PHP" />
+            <element signature="e#22354#23287#0#PHP" />
+            <element signature="e#23912#24750#0#PHP" />
+            <element signature="e#24143#26011#0#PHP" />
+            <element signature="e#26020#26527#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/api/QuestionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+          <folding>
+            <element signature="e#44#93#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

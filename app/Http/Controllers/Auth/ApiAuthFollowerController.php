@@ -11,6 +11,7 @@ use JWTAuth;
 use Config;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
+
 class ApiAuthFollowerController extends Controller
 {
     function __construct()
@@ -23,69 +24,7 @@ class ApiAuthFollowerController extends Controller
             'model' => User::class,
         ]]);
     }
-    /**
-     * @OA\Post(
-     *   path="/api/follower/login",
-     *   summary="User Login",
-     *   tags={"Follower Authorization"},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"email", "password"},
-     *       @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         example="follower@follower.com",
-     *         description="required|string|email|max:255"
-     *       ),
-     *       @OA\Property(
-     *         property="password",
-     *         type="string",
-     *         example="123123123",
-     *         description="required|string|min:6"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=200,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="token:",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="invalid_credentials",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    ),
-     *   @OA\Response(
-     *     response=401,
-     *     description="Validator",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="Validator.",
-     *         type="string",
-     *         description="Validator"
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -107,99 +46,7 @@ class ApiAuthFollowerController extends Controller
 
         return response()->json(compact('token'));
     }
-    /**
-     * @OA\Post(
-     *   path="/api/follower/register",
-     *   summary="User Registration",
-     *   tags={"Follower Authorization"},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"name","phone","email", "password","password_confirmation"},
-     *     @OA\Property(
-     *         property="name",
-     *         type="string",
-     *         example="user",
-     *         description="required|string|max:255"
-     *       ),
-     *      @OA\Property(
-     *         property="phone",
-     *         type="integer",
-     *         example="1234567",
-     *         description="['required', 'unique:followers']"
-     *       ),
-     *       @OA\Property(
-     *         property="address",
-     *         type="string",
-     *         example="Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt.",
-     *         description="string|max:255"
-     *       ),
-     *     @OA\Property(
-     *         property="gender",
-     *         type="string",
-     *         example="0",
-     *         description="0= Male ,1=Female"
-     *       ),
-     *     @OA\Property(
-     *         property="birthday",
-     *         type="string",
-     *         example="15/1/1994",
-     *         description="string|max:255"
-     *       ),
-     *     @OA\Property(
-     *         property="image",
-     *         type="file",
-     *         example="File Image",
-     *         description="image|mimes:jpeg,png,jpg,gif,svg|max:1024"
-     *       ),
-     *       @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         example="follower@follower.com",
-     *         description="required|string|email|max:255|unique:users"
-     *       ),
-     *       @OA\Property(
-     *         property="password",
-     *         type="string",
-     *         example="123123123",
-     *         description="required|string|min:6|confirmed"
-     *       ),
-     *     @OA\Property(
-     *         property="password_confirmation",
-     *         type="string",
-     *         example="123123123",
-     *         description="Same As Password"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{name,email,updated_at,created_at,id},token}",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
+
     public function register(Request $request)
     {
 
@@ -239,71 +86,13 @@ class ApiAuthFollowerController extends Controller
         $user = User::create([
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'role'=>2,
-            'role_id'=>$follower->id,
+            'role' => 2,
+            'role_id' => $follower->id,
         ]);
         $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('follower', 'token'), 201);
     }
-    /**
-     * @OA\Put(
-     *   path="/api/follower/update-profile-password",
-     *   summary="User Update Profile Password",
-     *   tags={"Follower Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"current_password","new_password","new_password_confirmation"},
-     *     @OA\Property(
-     *         property="current_password",
-     *         type="string",
-     *         example="123123",
-     *         description="required|string|max:255"
-     *       ),
-     *        @OA\Property(
-     *         property="new_password",
-     *         type="string",
-     *         example="12341234",
-     *         description="required|string|max:255"
-     *       ),
-     *     @OA\Property(
-     *         property="new_password_confirmation",
-     *         type="string",
-     *         example="12341234",
-     *         description="Same As Password"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{data}",
-     *         type="string",
-     *         description="User"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
 
     public function updateProfilePassword(Request $request)
     {
@@ -334,8 +123,8 @@ class ApiAuthFollowerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        if($user->role!=2){
-            return response()->json('sorry this user role is not As Follower',402);
+        if ($user->role != 2) {
+            return response()->json('sorry this user role is not As Follower', 402);
         }
         if (!(Hash::check($request->get('current_password'), $user->password))) {
             return response()->json(['error' => 'password not Valid'], 400);
@@ -344,7 +133,7 @@ class ApiAuthFollowerController extends Controller
             'password' => bcrypt($request->get('new_password')),
         ]);
         $user->save();
-        $follower=Follower::where('email',$user->email)->first();
+        $follower = Follower::where('email', $user->email)->first();
         $user = [
             'id' => $follower->id,
             'name' => $follower->name,
@@ -359,82 +148,6 @@ class ApiAuthFollowerController extends Controller
         return response()->json(compact('user'), 201);
     }
 
-    /**
-     * @OA\Put(
-     *   path="/api/follower/update-profile",
-     *   summary="User Update Profile Data",
-     *   tags={"Follower Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"name","phone","email"},
-     *     @OA\Property(
-     *         property="name",
-     *         type="string",
-     *         example="user",
-     *         description="required|string|max:255"
-     *       ),
-     *      @OA\Property(
-     *         property="phone",
-     *         type="integer",
-     *         example="1234567",
-     *         description="['required','regex:/^(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']"
-     *       ),
-     *       @OA\Property(
-     *         property="address",
-     *         type="string",
-     *         example="Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt.",
-     *         description="string|max:255"
-     *       ),
-     *     @OA\Property(
-     *         property="gender",
-     *         type="string",
-     *         example=0,
-     *         description="string|max:20"
-     *       ),
-     *     @OA\Property(
-     *         property="birthday",
-     *         type="string",
-     *         example="15/2/1994",
-     *         description="string|max:20"
-     *       ),
-     *       @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         example="user@user.com",
-     *         description="required|string|email|max:255|unique:users"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{data}",
-     *         type="string",
-     *         description="User"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
     public function updateProfile(Request $request)
     {
         try {
@@ -465,14 +178,14 @@ class ApiAuthFollowerController extends Controller
             'birthday' => 'string|max:20',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
         ]);
-        if($user->role!=2){
-            return response()->json('sorry this user role is not As Follower',402);
+        if ($user->role != 2) {
+            return response()->json('sorry this user role is not As Follower', 402);
         }
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $follower=Follower::where('email',$user->email)->first();
+        $follower = Follower::where('email', $user->email)->first();
         $follower->update([
             'name' => $request->get('name'),
             'phone' => $request->get('phone'),
@@ -498,52 +211,6 @@ class ApiAuthFollowerController extends Controller
         return response()->json(compact('user'), 201);
     }
 
-    /**
-     * @OA\Post(
-     *   path="/api/follower/update-profile-image",
-     *   summary="User Update Profile Image",
-     *   tags={"Follower Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"Image"},
-     *     @OA\Property(
-     *         property="image",
-     *         type="file",
-     *         example="File Image",
-     *         description="required|image|mimes:jpeg,png,jpg,gif,svg|max:1024"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{data}",
-     *         type="string",
-     *         description="User"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
     public function updateProfileImage(Request $request)
     {
         try {
@@ -565,8 +232,8 @@ class ApiAuthFollowerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-        if($user->role!=2){
-            return response()->json('sorry this user role is not As Follower',402);
+        if ($user->role != 2) {
+            return response()->json('sorry this user role is not As Follower', 402);
         }
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
@@ -584,7 +251,7 @@ class ApiAuthFollowerController extends Controller
         } else {
             $photoUrl = "/follower/default.jpg";
         }
-        $follower=Follower::where('email',$user->email)->first();
+        $follower = Follower::where('email', $user->email)->first();
         $follower->update([
             'image' => $photoUrl,
         ]);
@@ -600,39 +267,7 @@ class ApiAuthFollowerController extends Controller
         ];
         return response()->json(compact('user'), 201);
     }
-    /**
-     * @OA\Get(
-     *   path="/api/follower/me",
-     *   summary="User Data",
-     *   tags={"Follower Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{name,email,updated_at,created_at,id},token}",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
+
     public function getAuthenticatedUser()
     {
         try {
@@ -654,10 +289,10 @@ class ApiAuthFollowerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-        if($user->role!=2){
-            return response()->json('sorry this user role is not As Follower',402);
+        if ($user->role != 2) {
+            return response()->json('sorry this user role is not As Follower', 402);
         }
-        $follower=Follower::where('email',$user->email)->first();
+        $follower = Follower::where('email', $user->email)->first();
         $user = [
             'name' => $follower->name,
             'phone' => $follower->phone,
