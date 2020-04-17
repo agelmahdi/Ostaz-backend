@@ -25,27 +25,29 @@ class QuizController extends Controller
     /**
      * @OA\Get(
      *     operationId="Quiz",
-     *     path="/api/quiz",
+     *     path="/api/streamer/quiz",
      *     tags={"quiz Pages"},
      *     security={{"bearerAuth":{}}},
      * @OA\Parameter(
-     *      name="P",
-     *      description="Paginate by Number of items every page",
-     *      required=false,
-     *      in="path",
-     *      @OA\Schema(
-     *          type="integer"
-     *      )
-     *   ),
+     *         name="P",
+     *         in="query",
+     *         required=true,
+     *         description="Paginate",
+     *         @OA\Schema(
+     *              type="integer",
+     *              example="10",
+     *         )
+     *      ),
      *     @OA\Parameter(
-     *      name="page",
-     *      description="page Number",
-     *      required=false,
-     *      in="path",
-     *      @OA\Schema(
-     *          type="integer"
-     *      )
-     *   ),
+     *         name="page",
+     *         in="query",
+     *         required=true,
+     *         description="Page Number",
+     *         @OA\Schema(
+     *              type="integer",
+     *              example="1",
+     *         )
+     *      ),
      *     @OA\Response(
      *     response="200",
      *      description="For Home Data as ['quizes']")
