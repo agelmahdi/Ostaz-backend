@@ -171,12 +171,6 @@ class ApiAuthStreamerController extends Controller
      *         example="0",
      *         description="0= Male ,1=Female"
      *       ),
-     *     @OA\Property(
-     *         property="image",
-     *         type="file",
-     *         example="File Image",
-     *         description="image|mimes:jpeg,png,jpg,gif,svg|max:1024"
-     *       ),
      *       @OA\Property(
      *         property="email",
      *         type="string",
@@ -186,13 +180,13 @@ class ApiAuthStreamerController extends Controller
      *       @OA\Property(
      *         property="password",
      *         type="string",
-     *         example="123123",
+     *         example="123123123",
      *         description="required|string|min:6|confirmed"
      *       ),
      *     @OA\Property(
      *         property="password_confirmation",
      *         type="string",
-     *         example="123123",
+     *         example="123123123",
      *         description="Same As Password"
      *       )
      *     )

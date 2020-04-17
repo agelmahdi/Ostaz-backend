@@ -19,7 +19,8 @@ class QuizResource extends JsonResource
             "slug" => $this->slug,
             "time" => $this->time,
             "lang" => $this->lang,
-            "questions_number" => $this->questions_number,
+            "questions_limit" => $this->questions_number,
+            "question_number"=>$this->questions()->count(),
             "created_at" => $this->created_at,
         ];
     }

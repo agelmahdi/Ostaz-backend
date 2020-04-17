@@ -16,6 +16,7 @@ class CreateResultsTable extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('result');
+            $table->string('slug');
             $table->BigInteger('follower_id')->unsigned();
             $table->foreign('follower_id')
                 ->references('id')->on('followers')

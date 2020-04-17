@@ -79,7 +79,7 @@ class QuizController extends Controller
         $quiz->save();
         return redirect()->route('Admin.quiz.index')->with('success', 'Quiz created successfully.');
     }
-    function generateRandomString($length = 5)
+    function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
