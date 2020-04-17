@@ -3,9 +3,8 @@
 namespace App\Http\Resources\Streamer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\Resource;
 
-class QuestionResource extends JsonResource
+class AnswerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +14,15 @@ class QuestionResource extends JsonResource
      */
     public function toArray($request)
     {
+        if($this->right==1){
+            $type="True";
+        }else{
+            $type="False";
+        }
+
         return [
             "title" => $this->title,
-            "slug" => $this->slug,
-            "Answer_number"=>$this->answers()->count(),
-            "created_at" => $this->created_at,
-            "answers"=>AnswerResource::collection($this->answers)
+            "type"=>$type
         ];
     }
 }

@@ -59,7 +59,8 @@ class QuestionController extends Controller
         if ($quiz == null) {
             return response()->json(['sorry your data not equal our system'], 400);
         }
-        $qusestion = Question::where('quiz_id', $quiz->id)->paginate($paginate);
+        $qusestion = Question::where('quiz_id', $quiz->id)->with('answers')->paginate($paginate);
+
         return QuestionResource::collection($qusestion);
     }
 
