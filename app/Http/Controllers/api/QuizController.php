@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use JWTAuth;
 use Config;
 use Illuminate\Support\Facades\Validator;
+
 class QuizController extends Controller
 {
     function __construct()
@@ -86,6 +87,7 @@ class QuizController extends Controller
         $quiz = Quiz::where('streamer_id', $user->role_id)->paginate($paginate);
         return QuizResource::collection($quiz);
     }
+
     /**
      * @OA\Post(
      *   path="/api/streamer/create_quiz",
@@ -205,5 +207,64 @@ class QuizController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    /**
+     * @OA\Get(
+     *     operationId="Quiz",
+     *     path="/api/streamer/quiz/{slug}",
+     *     tags={"quiz Pages"},
+     *     security={{"bearerAuth":{}}},
+     *  @OA\Parameter(
+     *      name="slug",
+     *      description="Quiz Slug",
+     *      required=true,
+     *      in="path",
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *   ),
+     *     @OA\Response(
+     *     response="200",
+     *      description="For Home Data as ['quizes']")
+     * )
+     */
+    function Detail_quiz($quiz)
+    {
+        try {
+
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
+        }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('slug', $quiz)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
+        $quiz = [
+            "title" => $quiz->title,
+            "time" => $quiz->time,
+            "lang" => $quiz->lang,
+            "questions_limit" => $quiz->questions_number,
+            "question_number" => $quiz->questions()->count(),
+        ];
+
+        return response()->json(compact('quiz'), 200);
     }
 }

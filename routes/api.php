@@ -37,7 +37,6 @@ Route::group(['middleware' => ['cors']], function () {
     Route::group(['prefix' => 'streamer'], function () {
         Route::post('login', 'Auth\ApiAuthStreamerController@authenticate');
         Route::post('register', 'Auth\ApiAuthStreamerController@register');
-
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthStreamerController@updateProfileImage');
             Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfile');
@@ -45,6 +44,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
             Route::get('quiz', 'api\QuizController@quizes');
             Route::post('create_quiz', 'api\QuizController@createQuiz');
+            Route::get('quiz/{slug}', 'api\QuizController@Detail_quiz');
         });
     });
 });
