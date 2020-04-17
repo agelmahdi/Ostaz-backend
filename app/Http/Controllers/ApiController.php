@@ -881,7 +881,7 @@ use Illuminate\Http\Request;
      */
         /**
      * @OA\Get(
-     *     operationId="Quiz",
+     *     operationId="Quiz Get Data Details",
      *     path="/api/streamer/quiz/{slug}",
      *     tags={"quiz Pages"},
      *     security={{"bearerAuth":{}}},
