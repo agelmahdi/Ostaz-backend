@@ -196,4 +196,35 @@ class QuizController extends Controller
         return response()->json(['success'], 200);
 
     }
+    function Delete_quiz($quiz)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
+        }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->with('questions')->where('slug', $quiz)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
+        $quiz->delete();
+        return response()->json(['success'], 200);
+
+    }
 }

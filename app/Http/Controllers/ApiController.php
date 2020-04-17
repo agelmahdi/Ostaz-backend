@@ -972,6 +972,48 @@ use Illuminate\Http\Request;
  *   )
  * )
  */
+/**
+ * @OA\Delete(
+ *   path="/api/streamer/quiz/{slug}",
+ *   summary="Delete Quiz",
+ *   tags={"quiz Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="slug",
+ *      description="Quiz Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
 //===========================End=Quiz=============================================
 //===========================Start=Question=============================================
         /**
