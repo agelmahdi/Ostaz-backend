@@ -17,7 +17,7 @@ class QuestionResource extends JsonResource
         return [
             "title" => $this->title,
             "slug" => $this->slug,
-            "question_number"=>$this->answers()->count(),
+            "Answer_number"=>$this->answers()->count(),
             "created_at" => $this->created_at,
         ];
     }

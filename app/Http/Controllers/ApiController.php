@@ -966,6 +966,12 @@ use Illuminate\Http\Request;
  *         type="string",
  *         example="First Question",
  *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="answers",
+ *         type="string",
+ *         example="[{'title':'First Answer','type':0},{'title':'Second Answer','type':1},{'title':'Third Answer','type':0}]",
+ *         description="required|string|max:255"
  *       )
  *     )
  *   ),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Answer;
 use App\Http\Resources\Streamer\QuestionResource;
 use App\Quiz;
 use App\Question;
@@ -26,7 +27,7 @@ class QuestionController extends Controller
         ]]);
     }
 
-    function question($quiz,Request $request)
+    function question($quiz, Request $request)
     {
         try {
 
@@ -61,7 +62,8 @@ class QuestionController extends Controller
         $qusestion = Question::where('quiz_id', $quiz->id)->paginate($paginate);
         return QuestionResource::collection($qusestion);
     }
-    function createQuestion($quiz,Request $request)
+
+    function createQuestion($quiz, Request $request)
     {
 
         try {
@@ -88,6 +90,7 @@ class QuestionController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
+            'answers' => 'required|max:500',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -96,14 +99,25 @@ class QuestionController extends Controller
         if ($quiz == null) {
             return response()->json(['sorry your data not equal our system'], 400);
         }
+        $answers=json_decode(str_replace("'",'"',$request->get('answers')), true);
         $slug = $this->generateRandomString(10);
-        Question::create([
+        $question = Question::create([
             'title' => $request->get('title'),
             'slug' => $slug,
-            'quiz_id' =>$quiz->id,
+            'quiz_id' => $quiz->id,
         ]);
+        foreach ($answers as $answer){
+                Answer::create([
+                    'title' => $answer['title'],
+                    'slug' => $this->generateRandomString(10),
+                    'right' => $answer['type'],
+                    'question_id' => $question->id,
+                ]);
+            }
+
         return response()->json(['success'], 200);
     }
+
     function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
