@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Resources\Streamer\QuestionResource;
 use App\Quiz;
 
 use App\User;
@@ -134,7 +135,7 @@ class QuizController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $quiz = Quiz::where('streamer_id', $user->role_id)->where('slug', $quiz)->first();
+        $quiz = Quiz::where('streamer_id', $user->role_id)->with('questions')->where('slug', $quiz)->first();
         if ($quiz == null) {
             return response()->json(['sorry your data not equal our system'], 400);
         }
@@ -144,6 +145,7 @@ class QuizController extends Controller
             "lang" => $quiz->lang,
             "questions_limit" => $quiz->questions_number,
             "question_number" => $quiz->questions()->count(),
+            "questions" =>QuestionResource::collection($quiz->questions),
         ];
 
         return response()->json(compact('quiz'), 200);

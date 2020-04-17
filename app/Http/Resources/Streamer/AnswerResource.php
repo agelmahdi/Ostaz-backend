@@ -22,6 +22,7 @@ class AnswerResource extends JsonResource
 
         return [
             "title" => $this->title,
+            "slug" => $this->slug,
             "type"=>$type
         ];
     }
