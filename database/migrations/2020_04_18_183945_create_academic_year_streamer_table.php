@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSoftDeletesToQuizzesTable extends Migration
+class CreateAcademicYearsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddSoftDeletesToQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('academic_years', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title_ar');
+            $table->string('title_en');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddSoftDeletesToQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        Schema::dropIfExists('academic_years');
     }
 }

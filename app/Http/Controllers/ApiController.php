@@ -899,7 +899,7 @@ use Illuminate\Http\Request;
      *      description="For Home Data as ['quizes']")
      * )
      */
-/**
+        /**
  * @OA\Put(
  *   path="/api/streamer/quiz/{slug}",
  *   summary="Update Quiz",
@@ -972,7 +972,7 @@ use Illuminate\Http\Request;
  *   )
  * )
  */
-/**
+        /**
  * @OA\Delete(
  *   path="/api/streamer/quiz/{slug}",
  *   summary="Delete Quiz",
@@ -1198,7 +1198,7 @@ use Illuminate\Http\Request;
  *   )
  * )
  */
-/**
+        /**
  * @OA\Delete(
  *   path="/api/streamer/question/{question}",
  *   summary="Delete Question",

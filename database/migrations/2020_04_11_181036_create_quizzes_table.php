@@ -24,7 +24,7 @@ class CreateQuizzesTable extends Migration
             $table->foreign('streamer_id')
                 ->references('id')->on('streamers')
                 ->onDelete('cascade');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

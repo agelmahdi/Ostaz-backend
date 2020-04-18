@@ -1,14 +1,14 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Admin Backend",
-        "description": "Admin Backend Description",
+        "title": "VSEL",
+        "description": "The main Api for all Streaming websites that we have ",
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://127.0.0.1:8000",
-            "description": "Admin Backend"
+            "description": "VSEL"
         }
     ],
     "paths": {
@@ -18,7 +18,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Login",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::authenticate",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -103,7 +102,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Registration",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::register",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -150,17 +148,17 @@
                                     "email": {
                                         "description": "required|string|email|max:255|unique:users",
                                         "type": "string",
-                                        "example": "user@user.com"
+                                        "example": "follower@follower.com"
                                     },
                                     "password": {
                                         "description": "required|string|min:6|confirmed",
                                         "type": "string",
-                                        "example": "123123"
+                                        "example": "123123123"
                                     },
                                     "password_confirmation": {
                                         "description": "Same As Password",
                                         "type": "string",
-                                        "example": "123123"
+                                        "example": "123123123"
                                     }
                                 },
                                 "type": "object"
@@ -210,7 +208,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Update Profile Password",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfilePassword",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -290,7 +287,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Update Profile Data",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfile",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -320,7 +316,7 @@
                                     "gender": {
                                         "description": "string|max:20",
                                         "type": "string",
-                                        "example": "Male"
+                                        "example": 0
                                     },
                                     "birthday": {
                                         "description": "string|max:20",
@@ -385,7 +381,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Update Profile Image",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::updateProfileImage",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -453,7 +448,6 @@
                     "Follower Authorization"
                 ],
                 "summary": "User Data",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthFollowerController::getAuthenticatedUser",
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -501,7 +495,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Login",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::authenticate",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -586,7 +579,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Registration",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::register",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -600,17 +592,37 @@
                                     "password_confirmation"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "name_ar": {
                                         "description": "required|string|max:255",
                                         "type": "string",
-                                        "example": "user"
+                                        "example": "أحمد توفيق"
+                                    },
+                                    "name_en": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "Ahmed Tawfek"
+                                    },
+                                    "slug_ar": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "أحمد_توفيق"
+                                    },
+                                    "slug_en": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "ahmed_tawfek"
                                     },
                                     "phone": {
-                                        "description": "['required', 'unique:followers']",
+                                        "description": "['required', 'unique:streamers']",
                                         "type": "integer",
                                         "example": "1234567"
                                     },
-                                    "address": {
+                                    "address_ar": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "address_en": {
                                         "description": "string|max:255",
                                         "type": "string",
                                         "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
@@ -620,30 +632,20 @@
                                         "type": "string",
                                         "example": "0"
                                     },
-                                    "birthday": {
-                                        "description": "string|max:255",
-                                        "type": "string",
-                                        "example": "15/1/1994"
-                                    },
-                                    "image": {
-                                        "description": "image|mimes:jpeg,png,jpg,gif,svg|max:1024",
-                                        "type": "file",
-                                        "example": "File Image"
-                                    },
                                     "email": {
-                                        "description": "required|string|email|max:255|unique:users",
+                                        "description": "required|string|email|max:255|unique:streamers",
                                         "type": "string",
-                                        "example": "user@user.com"
+                                        "example": "streamer@streamer.com"
                                     },
                                     "password": {
                                         "description": "required|string|min:6|confirmed",
                                         "type": "string",
-                                        "example": "123123"
+                                        "example": "123123123"
                                     },
                                     "password_confirmation": {
                                         "description": "Same As Password",
                                         "type": "string",
-                                        "example": "123123"
+                                        "example": "123123123"
                                     }
                                 },
                                 "type": "object"
@@ -693,7 +695,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Update Profile Password",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfilePassword",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -773,7 +774,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Update Profile Data",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfile",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -868,7 +868,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Update Profile Image",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::updateProfileImage",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -936,7 +935,6 @@
                     "Streamer Authorization"
                 ],
                 "summary": "User Data",
-                "operationId": "App\\Http\\Controllers\\Auth\\ApiAuthStreamerController::getAuthenticatedUser",
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -946,6 +944,609 @@
                                     "properties": {
                                         "{user{name,email,updated_at,created_at,id},token}": {
                                             "description": "The Token",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/quiz": {
+            "get": {
+                "tags": [
+                    "quiz Pages"
+                ],
+                "operationId": "Quiz",
+                "parameters": [
+                    {
+                        "name": "P",
+                        "in": "query",
+                        "description": "Paginate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "10"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['quizes']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/create_quiz": {
+            "post": {
+                "tags": [
+                    "quiz Pages"
+                ],
+                "summary": "Add New Quiz",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "time",
+                                    "email",
+                                    "lang",
+                                    "questions_number"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "First Exam"
+                                    },
+                                    "time": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": 10
+                                    },
+                                    "lang": {
+                                        "description": "required|string|max:255(ar-en)",
+                                        "type": "string",
+                                        "example": "ar"
+                                    },
+                                    "questions_number": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{Success}": {
+                                            "description": "Data Created SuccessFully ",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/quiz/{slug}": {
+            "get": {
+                "tags": [
+                    "quiz Pages"
+                ],
+                "operationId": "Quiz Get Data Details",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Quiz Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['quizes']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "quiz Pages"
+                ],
+                "summary": "Update Quiz",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Quiz Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "New Exam"
+                                    },
+                                    "time": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": 10
+                                    },
+                                    "lang": {
+                                        "description": "required|string|max:255(ar-en)",
+                                        "type": "string",
+                                        "example": "ar"
+                                    },
+                                    "questions_number": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "quiz Pages"
+                ],
+                "summary": "Delete Quiz",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Quiz Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/{quiz}/question": {
+            "get": {
+                "tags": [
+                    "question Pages"
+                ],
+                "operationId": "Question",
+                "parameters": [
+                    {
+                        "name": "quiz",
+                        "in": "path",
+                        "description": "Quiz Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "P",
+                        "in": "query",
+                        "description": "Paginate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "10"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['question']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/{quiz}/create_question": {
+            "post": {
+                "tags": [
+                    "question Pages"
+                ],
+                "summary": "Add New Question",
+                "parameters": [
+                    {
+                        "name": "quiz",
+                        "in": "path",
+                        "description": "Quiz Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "First Question"
+                                    },
+                                    "answers": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "[{'title':'First Answer','type':0},{'title':'Second Answer','type':1},{'title':'Third Answer','type':0}]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{Success}": {
+                                            "description": "Data Created SuccessFully ",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/question/{question}": {
+            "get": {
+                "tags": [
+                    "question Pages"
+                ],
+                "operationId": "Question Get Data Details",
+                "parameters": [
+                    {
+                        "name": "question",
+                        "in": "path",
+                        "description": "question Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['quizes']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "question Pages"
+                ],
+                "summary": "Update Question",
+                "parameters": [
+                    {
+                        "name": "question",
+                        "in": "path",
+                        "description": "Question Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "answers"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "updated Question"
+                                    },
+                                    "answers": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "[{'title':'First Answer Updated','type':0},{'title':'Second Answer Updated','type':1},{'title':'Third Answer Updated','type':0}]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "question Pages"
+                ],
+                "summary": "Delete Question",
+                "parameters": [
+                    {
+                        "name": "question",
+                        "in": "path",
+                        "description": "Question Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
                                             "type": "string"
                                         }
                                     },
