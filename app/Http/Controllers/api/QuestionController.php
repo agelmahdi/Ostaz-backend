@@ -237,5 +237,39 @@ class QuestionController extends Controller
         return response()->json(['success'], 200);
 
     }
+    function Delete_question($question)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
 
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
+        }
+        $question = Question::where('slug', $question)->with('quiz')->with('answers')->first();
+        if ($question == null) {
+            return response()->json(['sorry your question slug not equal our system'], 400);
+        }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('id', $question->quiz->id)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your Quiz not equal our system'], 400);
+        }
+        $question->delete();
+        return response()->json(['success'], 200);
+
+    }
 }

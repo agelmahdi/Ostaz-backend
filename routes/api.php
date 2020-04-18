@@ -42,19 +42,20 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthStreamerController@updateProfilePassword');
             Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
-            //===========================Start=Quiz=============================================
+            //===========================Start=Quiz==========================================
             Route::get('quiz', 'api\QuizController@quizes');
             Route::post('create_quiz', 'api\QuizController@createQuiz');
             Route::get('quiz/{slug}', 'api\QuizController@Detail_quiz');
             Route::put('quiz/{slug}', 'api\QuizController@Update_quiz');
             Route::delete('quiz/{slug}', 'api\QuizController@Delete_quiz');
             //===========================End=Quiz=============================================
-            //===========================Start=Question=============================================
+            //===========================Start=Question=======================================
             Route::get('{quiz}/question', 'api\QuestionController@question');
             Route::post('{quiz}/create_question', 'api\QuestionController@createQuestion');
             Route::get('question/{question}', 'api\QuestionController@Detail_question');
             Route::put('question/{question}', 'api\QuestionController@Update_question');
-            //===========================End=Question=============================================
+            Route::delete('question/{question}', 'api\QuestionController@Delete_question');
+            //===========================End=Question==========================================
         });
     });
 });
