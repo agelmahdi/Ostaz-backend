@@ -1117,21 +1117,12 @@ use Illuminate\Http\Request;
  *   )
  * )
  */
-/**
+        /**
  * @OA\Get(
  *     operationId="Question Get Data Details",
- *     path="/api/streamer/{quiz}/question/{question}",
+ *     path="/api/streamer/question/{question}",
  *     tags={"question Pages"},
  *     security={{"bearerAuth":{}}},
- *  @OA\Parameter(
- *      name="quiz",
- *      description="Quiz Slug",
- *      required=true,
- *      in="path",
- *      @OA\Schema(
- *          type="string"
- *      )
- *   ),
  *  @OA\Parameter(
  *      name="question",
  *      description="question Slug",
@@ -1144,6 +1135,67 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *     response="200",
  *      description="For Home Data as ['quizes']")
+ * )
+ */
+        /**
+ * @OA\Put(
+ *   path="/api/streamer/question/{question}",
+ *   summary="Update Question",
+ *   tags={"question Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="question",
+ *      description="Question Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"title","answers"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="updated Question",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="answers",
+ *         type="string",
+ *         example="[{'title':'First Answer Updated','type':0},{'title':'Second Answer Updated','type':1},{'title':'Third Answer Updated','type':0}]",
+ *         description="required|string"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
  * )
  */
 ////===========================End=Question=============================================

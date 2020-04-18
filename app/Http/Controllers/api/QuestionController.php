@@ -104,10 +104,9 @@ class QuestionController extends Controller
         if($answers == null){
             return response()->json(['sorry your Answers not write Correctly'], 400);
         }
-        $slug = $this->generateRandomString(10);
         $question = Question::create([
             'title' => $request->get('title'),
-            'slug' => $slug,
+            'slug' => $this->generateRandomString(10),
             'quiz_id' => $quiz->id,
         ]);
         foreach ($answers as $answer){
@@ -131,7 +130,7 @@ class QuestionController extends Controller
         }
         return $randomString;
     }
-    function Detail_question($quiz,$question)
+    function Detail_question($question)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -154,13 +153,14 @@ class QuestionController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $quiz = Quiz::where('streamer_id', $user->role_id)->with('questions')->where('slug', $quiz)->first();
-        if ($quiz == null) {
-            return response()->json(['sorry your Quiz slug not equal our system'], 400);
-        }
-        $question = Question::where('quiz_id', $quiz->id)->where('slug', $question)->with('quiz')->with('answers')->first();
+
+        $question = Question::where('slug', $question)->with('quiz')->with('answers')->first();
         if ($question == null) {
             return response()->json(['sorry your question slug not equal our system'], 400);
+        }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('id', $question->quiz->id)->first();
+        if ($quiz == null) {
+            return response()->json(['sorry your Quiz not equal our system'], 400);
         }
         $question = [
             "title" => $question->title,
@@ -178,7 +178,7 @@ class QuestionController extends Controller
 
         return response()->json(compact('question'), 200);
     }
-    function Update_question($quiz,Request $request)
+    function Update_question($question,Request $request)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -201,58 +201,41 @@ class QuestionController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $quiz = Quiz::where('streamer_id', $user->role_id)->with('questions')->where('slug', $quiz)->first();
+
+        $question = Question::where('slug', $question)->with('quiz')->with('answers')->first();
+        if ($question == null) {
+            return response()->json(['sorry your question slug not equal our system'], 400);
+        }
+        $quiz = Quiz::where('streamer_id', $user->role_id)->where('id', $question->quiz->id)->first();
         if ($quiz == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
+            return response()->json(['sorry your Quiz not equal our system'], 400);
         }
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'time' => 'required|integer',
-            'lang' => 'required|string|max:255',
-            'questions_number' => 'required|integer',
+            'answers' => 'required|max:500',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $quiz->update([
+        $delete_answers= Answer::where('question_id', $question->id)->delete();
+        $question->update([
             'title' => $request->get('title'),
-            'time' => $request->get('time'),
-            'lang' => $request->get('lang'),
-            'questions_number' => $request->get('questions_number')
         ]);
-        $quiz->save();
+        $question->save();
+        $answers=json_decode(str_replace("'",'"',$request->get('answers')), true);
+        if($answers == null){
+            return response()->json(['sorry your Answers not write Correctly'], 400);
+        }
+        foreach ($answers as $answer){
+            Answer::create([
+                'title' => $answer['title'],
+                'slug' => $this->generateRandomString(10),
+                'right' => $answer['type'],
+                'question_id' => $question->id,
+            ]);
+        }
         return response()->json(['success'], 200);
 
     }
-    function Delete_question($quiz)
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
 
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-        if ($user->role != 1) {
-            return response()->json('sorry this user role is not As Streamer', 402);
-        }
-        $quiz = Quiz::where('streamer_id', $user->role_id)->with('questions')->where('slug', $quiz)->first();
-        if ($quiz == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
-        }
-        $quiz->delete();
-        return response()->json(['success'], 200);
-
-    }
 }
