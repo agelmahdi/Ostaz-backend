@@ -14,16 +14,10 @@ class AnswerResource extends JsonResource
      */
     public function toArray($request)
     {
-        if($this->right==1){
-            $type="True";
-        }else{
-            $type="False";
-        }
-
         return [
             "title" => $this->title,
             "slug" => $this->slug,
-            "type"=>$type
+            "type"=>$this->right
         ];
     }
 }

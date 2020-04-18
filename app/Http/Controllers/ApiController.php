@@ -1056,7 +1056,7 @@ use Illuminate\Http\Request;
      *      description="For Home Data as ['question']")
      * )
      */
-/**
+        /**
  * @OA\Post(
  *   path="/api/streamer/{quiz}/create_question",
  *   summary="Add New Question",
@@ -1115,6 +1115,35 @@ use Illuminate\Http\Request;
  *     )
  *    )
  *   )
+ * )
+ */
+/**
+ * @OA\Get(
+ *     operationId="Question Get Data Details",
+ *     path="/api/streamer/{quiz}/question/{question}",
+ *     tags={"question Pages"},
+ *     security={{"bearerAuth":{}}},
+ *  @OA\Parameter(
+ *      name="quiz",
+ *      description="Quiz Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *  @OA\Parameter(
+ *      name="question",
+ *      description="question Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['quizes']")
  * )
  */
 ////===========================End=Question=============================================

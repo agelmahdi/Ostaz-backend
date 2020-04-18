@@ -52,7 +52,7 @@ Route::group(['middleware' => ['cors']], function () {
             //===========================Start=Question=============================================
             Route::get('{quiz}/question', 'api\QuestionController@question');
             Route::post('{quiz}/create_question', 'api\QuestionController@createQuestion');
-            Route::get('{quiz}/question/{slug}', 'api\QuestionController@Detail_question');
+            Route::get('{quiz}/question/{question}', 'api\QuestionController@Detail_question');
             //===========================End=Question=============================================
         });
     });
