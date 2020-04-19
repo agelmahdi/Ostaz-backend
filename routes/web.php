@@ -54,6 +54,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::resource('category', 'CategoryController');
         Route::resource('subcategory', 'SubCategoryController');
         Route::resource('quiz', 'QuizController');
+        Route::resource('academicyears', 'AcademicController');
         //     _____________________________Question_____________________________________________________
         Route::get('question/{quiz}', 'QuestionController@index')->name('question.index');
         Route::get('question/{quiz}/create', 'QuestionController@create')->name('question.create');

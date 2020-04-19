@@ -67,6 +67,17 @@
                 @endcan
                 @can('main-dataManagement')
                     <li class="nav-small-cap">--- {{ trans('admin.datamanagement') }}</li>
+                    @can('academic_year-list')
+                        <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                                    class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.academicyears') }}</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                @can('academic_year-create')
+                                    <li>{!! Html::linkRoute('Admin.academicyears.create','Add Year') !!}</li>
+                                @endcan
+                                <li>{!! Html::linkRoute('Admin.academicyears.index','Academic Year') !!}</li>
+                            </ul>
+                        </li>
+                    @endcan
                     @can('category-list')
                         <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                     class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.category') }}</span></a>

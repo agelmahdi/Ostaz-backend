@@ -36,10 +36,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'facebook',],
             ['key' => 'twitter'],
             ['key' => 'google'],
-
-
         ];
-
         foreach ($options as $option) {
             Option::create($option);
         }
@@ -67,6 +64,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'datamanagement', 'value_en' => 'Data Management', 'value_ar' => 'ادارة البيانات',],
             ['key' => 'category', 'value_en' => 'Category', 'value_ar' => 'مجموعة اساسية',],
             ['key' => 'quiz', 'value_en' => 'Quiz', 'value_ar' => 'الاختبار',],
+            ['key' => 'academicyears', 'value_en' => 'Academic Year', 'value_ar' => 'السنة الدراسية',],
             ['key' => 'subcategory', 'value_en' => 'Sub Category', 'value_ar' => 'مجموعة فرعية',],
             ['key' => 'sitedata', 'value_en' => 'Site Data', 'value_ar' => 'ادارة الموقع',],
             ['key' => 'settings', 'value_en' => 'Settings', 'value_ar' => 'الاعدادات',],
@@ -97,20 +95,14 @@ class DatabaseSeeder extends Seeder
             Permissioncategory::firstOrCreate(['name' => $cat_permission]);
         }
         $this->command->info('Default Permissions added.');
-
-        // Ask to confirm to assign admin or user role
-
-
+            // Ask to confirm to assign admin or user role
             // Ask for roles from input
             $roles = 'Admin';
-
             // Explode roles
             $rolesArray = explode(',', $roles);
-
             // add roles
             foreach ($rolesArray as $role) {
                 $role = Role::firstOrCreate(['name' => trim($role)]);
-
                 if ($role->name == 'Admin') {
                     // assign all permissions to admin role
                     $role->permissions()->sync(Permission::all());
@@ -119,18 +111,11 @@ class DatabaseSeeder extends Seeder
                     // for others, give access to view only
                     $role->permissions()->sync(Permission::where('name', 'LIKE', 'view_%')->get());
                 }
-
-                // create one user for each role
+                    // create one user for each role
                 $this->createUser($role);
             }
-
             $this->command->info('Roles ' . $roles . ' added successfully');
-
-
-
-
     }
-
     /**
      * Create a user with given role
      *
@@ -140,15 +125,12 @@ class DatabaseSeeder extends Seeder
     {
         $user = factory(Admin::class)->create();
         $user->assignRole($role->name);
-
         if ($role->name == 'Admin') {
             $this->command->info('Admin login details:');
             $this->command->warn('Username : ' . $user->email);
             $this->command->warn('Password : "123123123"');
         }
-
     }
-
     private function defaultPermissions()
     {
         return ['role-list', 'role-create', 'role-edit', 'role-delete',
@@ -165,13 +147,11 @@ class DatabaseSeeder extends Seeder
             'quiz-showdetails', 'quiz-list', 'quiz-create', 'quiz-edit', 'quiz-delete',
             'questions-list', 'questions-create', 'questions-edit', 'questions-delete',
             'answer-list', 'answer-create', 'answer-edit', 'answer-delete',
-            'result-list', 'result-create', 'result-edit', 'result-delete'];
+            'result-list', 'result-create', 'result-edit', 'result-delete',
+            'academic_year-list', 'academic_year-create', 'academic_year-edit', 'academic_year-delete'];
     }
-
     private function defaultPermissioncategory()
     {
-        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result'];
+        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result','academic_year'];
     }
-
-
 }

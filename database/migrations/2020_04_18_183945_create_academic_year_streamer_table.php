@@ -17,7 +17,8 @@ class CreateAcademicYearsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title_ar');
             $table->string('title_en');
-            $table->string('slug');
+            $table->string('slug_ar');
+            $table->string('slug_en');
             $table->timestamps();
         });
     }
