@@ -1,5 +1,6 @@
 <?php
 return [
+'academicyears' => 'السنة الدراسية',
 'adminlocalization' => 'ادارة اللغة للادمن',
 'category' => 'مجموعة اساسية',
 'dashboard' => 'الصفحة الرئيسية',
@@ -11,11 +12,12 @@ return [
 'permission' => 'الاذونات',
 'permissioncategory' => 'مجموعة الاذونات',
 'PERSONAL' => 'اساسي',
-'quiz' => 'الاختبارات',
+'quiz' => 'الاختبار',
 'role' => 'الوظيفة',
 'settings' => 'الاعدادات',
 'sitedata' => 'ادارة الموقع',
 'subcategory' => 'مجموعة فرعية',
+'subject' => 'المواد الدراسية',
 'user' => 'المستخدم',
 'usermanegment' => 'إدارة المستخدم',
 ];

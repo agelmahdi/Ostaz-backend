@@ -783,6 +783,50 @@ use Illuminate\Http\Request;
      * )
      */
 //===========================End=Auth=============================================
+//===========================Start=Academic Years===========================================
+/**
+ * @OA\Get(
+ *     operationId=" All Academic Years",
+ *     path="/api/academicYears",
+ *     tags={"Academic Years"},
+ *     @OA\Parameter(
+ *         name="lang",
+ *         in="query",
+ *         required=true,
+ *         description="Lang",
+ *         @OA\Schema(
+ *              type="string",
+ *              example="ar",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['posts']")
+ * )
+ */
+//===========================End=Academic Years=============================================
+//===========================Start=Subjects===========================================
+/**
+ * @OA\Get(
+ *     operationId=" All Subjects",
+ *     path="/api/subjects",
+ *     tags={"Subjects"},
+ *     @OA\Parameter(
+ *         name="lang",
+ *         in="query",
+ *         required=true,
+ *         description="Lang",
+ *         @OA\Schema(
+ *              type="string",
+ *              example="ar",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['posts']")
+ * )
+ */
+//===========================End=Subjects=============================================
 //===========================Start=Quiz=============================================
         /**
      * @OA\Get(

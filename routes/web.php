@@ -55,6 +55,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::resource('subcategory', 'SubCategoryController');
         Route::resource('quiz', 'QuizController');
         Route::resource('academicyears', 'AcademicController');
+        Route::resource('subject', 'SubjectController');
         //     _____________________________Question_____________________________________________________
         Route::get('question/{quiz}', 'QuestionController@index')->name('question.index');
         Route::get('question/{quiz}/create', 'QuestionController@create')->name('question.create');
@@ -65,7 +66,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         //        ___________________________End__Question_______________________________________________
         //     _____________________________Answer_____________________________________________________
         Route::get('answer/{question}', 'AnswerController@index')->name('answer.index');
-//        Route::get('answer/show', 'AnswerController@show')->name('answer.show');
         Route::get('answer/{question}/create', 'AnswerController@create')->name('answer.create');
         Route::post('answer/{question}/store', 'AnswerController@store')->name('answer.store');
         Route::get('answer/{answer}/edit', 'AnswerController@edit')->name('answer.edit');

@@ -13,7 +13,6 @@
                             class="icon-Car-Wheel">
                         </i><span class="hide-menu">
                                     {{ trans('admin.dashboard') }}
-
                         </span></a>
                 </li>
                 @can('main-userManagement')
@@ -75,6 +74,17 @@
                                     <li>{!! Html::linkRoute('Admin.academicyears.create','Add Year') !!}</li>
                                 @endcan
                                 <li>{!! Html::linkRoute('Admin.academicyears.index','Academic Year') !!}</li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('subject-list')
+                        <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                                    class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.subject') }}</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                @can('subject-create')
+                                    <li>{!! Html::linkRoute('Admin.subject.create','Add subject') !!}</li>
+                                @endcan
+                                <li>{!! Html::linkRoute('Admin.subject.index','subject') !!}</li>
                             </ul>
                         </li>
                     @endcan

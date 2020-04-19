@@ -1,5 +1,6 @@
 <?php
 return [
+'academicyears' => 'Academic Year',
 'adminlocalization' => 'Admin loc',
 'category' => 'Category',
 'dashboard' => 'Dashboard',
@@ -16,6 +17,7 @@ return [
 'settings' => 'Settings',
 'sitedata' => 'Site Data',
 'subcategory' => 'Sub Category',
+'subject' => 'Subject',
 'user' => 'User',
 'usermanegment' => 'User Manegment',
 ];

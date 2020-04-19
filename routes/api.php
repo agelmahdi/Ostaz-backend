@@ -58,4 +58,11 @@ Route::group(['middleware' => ['cors']], function () {
             //===========================End=Question==========================================
         });
     });
+
+    //===========================Start=AcademicYears=======================================
+    Route::get('academicYears', 'api\AcademicYearController@index');
+    //===========================End=AcademicYears==========================================
+    //===========================Start=AcademicYears=======================================
+    Route::get('subjects', 'api\SubjectController@index');
+    //===========================End=AcademicYears==========================================
 });

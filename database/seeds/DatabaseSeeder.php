@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'category', 'value_en' => 'Category', 'value_ar' => 'مجموعة اساسية',],
             ['key' => 'quiz', 'value_en' => 'Quiz', 'value_ar' => 'الاختبار',],
             ['key' => 'academicyears', 'value_en' => 'Academic Year', 'value_ar' => 'السنة الدراسية',],
+            ['key' => 'subject', 'value_en' => 'Subject', 'value_ar' => 'المواد الدراسية',],
             ['key' => 'subcategory', 'value_en' => 'Sub Category', 'value_ar' => 'مجموعة فرعية',],
             ['key' => 'sitedata', 'value_en' => 'Site Data', 'value_ar' => 'ادارة الموقع',],
             ['key' => 'settings', 'value_en' => 'Settings', 'value_ar' => 'الاعدادات',],
@@ -148,7 +149,8 @@ class DatabaseSeeder extends Seeder
             'questions-list', 'questions-create', 'questions-edit', 'questions-delete',
             'answer-list', 'answer-create', 'answer-edit', 'answer-delete',
             'result-list', 'result-create', 'result-edit', 'result-delete',
-            'academic_year-list', 'academic_year-create', 'academic_year-edit', 'academic_year-delete'];
+            'academic_year-list', 'academic_year-create', 'academic_year-edit', 'academic_year-delete',
+            'subject-list', 'subject-create', 'subject-edit', 'subject-delete'];
     }
     private function defaultPermissioncategory()
     {
