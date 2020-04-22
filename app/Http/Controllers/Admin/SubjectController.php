@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Subject;
+use App\Streamer;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -38,7 +39,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('Admin.subjects.create');
+        $streamers=Streamer::get();
+        return view('Admin.subjects.create',compact('streamers'));
     }
     /**
      * Store a newly created resource in storage.
@@ -60,12 +62,13 @@ class SubjectController extends Controller
         $Subject->slug_ar = $request->slug_ar;
         $Subject->slug_en = $request->slug_en;
         $Subject->save();
-
+        $Subject->streamers()->attach($request->streamers);
         return redirect()->route('Admin.subject.index')->with('success', 'Subject created successfully.');
     }
     public function edit(Subject $subject)
     {
-        return view('Admin.subjects.edit',compact('subject'));
+        $streamers=Streamer::get();
+        return view('Admin.subjects.edit',compact('subject','streamers'));
     }
     public function update(Request $request, Subject $Subject)
     {
@@ -80,13 +83,14 @@ class SubjectController extends Controller
         $Subject->slug_ar = $request->slug_ar;
         $Subject->slug_en = $request->slug_en;
         $Subject->save();
-
+        $Subject->streamers()->sync($request->streamers);
         return redirect()->route('Admin.subject.index')->with('success', 'Subject Updated successfully.');
     }
     public function destroy(Request $request)
     {
         $Subject = Subject::findOrFail($request->subject_id);
         $Subject->delete();
+        $Subject->streamers()->detach();
         return redirect()->back()->with('success', 'Subject Deleted successfully.');
     }
 

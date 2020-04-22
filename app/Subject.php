@@ -10,6 +10,6 @@ class Subject extends Model
 
     public function streamers()
     {
-        return $this->belongsToMany('App\Streamer');
+        return $this->belongsToMany('App\Streamer','subject_streamer');
     }
 }
