@@ -804,6 +804,51 @@ use Illuminate\Http\Request;
  *      description="For Home Data as ['posts']")
  * )
  */
+/**
+ * @OA\Post(
+ *     operationId=" Create For Streamer Academic Years",
+ *     path="/api/streamer/create_academic",
+ *     tags={"Academic Years"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"academic_years"},
+ *     @OA\Property(
+ *         property="academic_years",
+ *         type="string",
+ *         example="['الصف-الاول-الابتدائي','الصف-الثانى-الابتدائي','الصف-الثالث-الاعدادي','first-grade-secondary']",
+ *         description="required|string|max:255"
+ *       )
+ *     )
+ *   ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['posts']")
+ * )
+ */
+/**
+ * @OA\Get(
+ *     operationId="Academic Years of streamer",
+ *     path="/api/streamer/academicYears",
+ *     tags={"Academic Years"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *         name="lang",
+ *         in="query",
+ *         required=true,
+ *         description="Lang",
+ *         @OA\Schema(
+ *              type="string",
+ *              example="ar",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['Academic Years']")
+ * )
+ */
 //===========================End=Academic Years=============================================
 //===========================Start=Subjects===========================================
 /**

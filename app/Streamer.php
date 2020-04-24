@@ -63,4 +63,8 @@ class Streamer extends Authenticatable implements JWTSubject
         // TODO: Implement getJWTCustomClaims() method.
         return [];
     }
+    public function AcademicYears()
+    {
+        return $this->belongsToMany('App\AcademicYear');
+    }
 }

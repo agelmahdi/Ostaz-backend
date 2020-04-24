@@ -48,19 +48,24 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('quiz/{slug}', 'api\QuizController@Detail_quiz');
             Route::put('quiz/{slug}', 'api\QuizController@Update_quiz');
             Route::delete('quiz/{slug}', 'api\QuizController@Delete_quiz');
-            //===========================End=Quiz=============================================
-            //===========================Start=Question=======================================
+            //===========================End=Quiz============================================
+            //===========================Start=Question======================================
             Route::get('{quiz}/question', 'api\QuestionController@question');
             Route::post('{quiz}/create_question', 'api\QuestionController@createQuestion');
             Route::get('question/{question}', 'api\QuestionController@Detail_question');
             Route::put('question/{question}', 'api\QuestionController@Update_question');
             Route::delete('question/{question}', 'api\QuestionController@Delete_question');
-            //===========================End=Question==========================================
+            //===========================End=Question========================================
+            //===========================Start=AcademicYears=======================================
+            Route::post('create_academic', 'api\AcademicYearController@store_academic_years_streamer');
+            Route::get('academicYears', 'api\AcademicYearController@get_academic_years_streamer');
+            //===========================End=AcademicYears==========================================
         });
     });
 
     //===========================Start=AcademicYears=======================================
     Route::get('academicYears', 'api\AcademicYearController@index');
+    Route::post('testarr', 'api\AcademicYearController@store_academic_years_streamer');
     //===========================End=AcademicYears==========================================
     //===========================Start=AcademicYears=======================================
     Route::get('subjects', 'api\SubjectController@index');
