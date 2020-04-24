@@ -28,6 +28,6 @@ class CreateSubjectsStreamersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subjects_streamers');
+        Schema::dropIfExists('subject_streamer');
     }
 }

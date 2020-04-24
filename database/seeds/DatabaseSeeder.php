@@ -115,7 +115,8 @@ class DatabaseSeeder extends Seeder
                     // create one user for each role
                 $this->createUser($role);
             }
-            $this->command->info('Roles ' . $roles . ' added successfully');
+        $this->call(AcademicyearSeed::class);
+        $this->command->info('Roles ' . $roles . ' added successfully');
     }
     /**
      * Create a user with given role
@@ -156,4 +157,5 @@ class DatabaseSeeder extends Seeder
     {
         return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result','academic_year'];
     }
+
 }
