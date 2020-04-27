@@ -56,18 +56,24 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('question/{question}', 'api\QuestionController@Update_question');
             Route::delete('question/{question}', 'api\QuestionController@Delete_question');
             //===========================End=Question========================================
-            //===========================Start=AcademicYears=======================================
+            //===========================Start=AcademicYears=================================
             Route::post('create_academic', 'api\AcademicYearController@store_academic_years_streamer');
             Route::get('academicYears', 'api\AcademicYearController@get_academic_years_streamer');
-            //===========================End=AcademicYears==========================================
+            //===========================End=AcademicYears====================================
+            //===========================Start=Subjects=======================================
+            Route::post('create_subjects', 'api\SubjectController@store_subjects_streamer');
+            Route::get('subjects', 'api\SubjectController@get_subjects_streamer');
+            //===========================End=Subjects==========================================
         });
     });
 
     //===========================Start=AcademicYears=======================================
     Route::get('academicYears', 'api\AcademicYearController@index');
-    Route::post('testarr', 'api\AcademicYearController@store_academic_years_streamer');
     //===========================End=AcademicYears==========================================
     //===========================Start=AcademicYears=======================================
     Route::get('subjects', 'api\SubjectController@index');
     //===========================End=AcademicYears==========================================
+    //===========================Start=Governorate=======================================
+    Route::get('governorate', 'api\GovernorateController@index');
+    //===========================End=Governorate==========================================
 });

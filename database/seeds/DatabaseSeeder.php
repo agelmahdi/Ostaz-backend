@@ -116,6 +116,8 @@ class DatabaseSeeder extends Seeder
                 $this->createUser($role);
             }
         $this->call(AcademicyearSeed::class);
+        $this->call(SubjectSeed::class);
+        $this->call(CitiesSeed::class);
         $this->command->info('Roles ' . $roles . ' added successfully');
     }
     /**

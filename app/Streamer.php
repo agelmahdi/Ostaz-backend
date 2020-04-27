@@ -67,4 +67,8 @@ class Streamer extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\AcademicYear');
     }
+    public function Subjects()
+    {
+        return $this->belongsToMany('App\Subject','subject_streamer');
+    }
 }

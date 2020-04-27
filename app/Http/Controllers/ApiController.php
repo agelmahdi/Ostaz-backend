@@ -871,7 +871,75 @@ use Illuminate\Http\Request;
  *      description="For Home Data as ['posts']")
  * )
  */
+/**
+ * @OA\Post(
+ *     operationId=" Create For Streamer Subjects",
+ *     path="/api/streamer/create_subjects",
+ *     tags={"Subjects"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"subjects"},
+ *     @OA\Property(
+ *         property="subjects",
+ *         type="string",
+ *         example="['كيمياء']",
+ *         description="required|string|max:255"
+ *       )
+ *     )
+ *   ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['subjects']")
+ * )
+ */
+/**
+ * @OA\Get(
+ *     operationId="Subjects of streamer",
+ *     path="/api/streamer/subjects",
+ *     tags={"Subjects"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *         name="lang",
+ *         in="query",
+ *         required=true,
+ *         description="Lang",
+ *         @OA\Schema(
+ *              type="string",
+ *              example="ar",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['subjects']")
+ * )
+ */
 //===========================End=Subjects=============================================
+
+//===========================Start=governorate==========================================
+/**
+ * @OA\Get(
+ *     operationId="All Governorates Of Egypt",
+ *     path="/api/governorate",
+ *     tags={"Governorates"},
+ *     @OA\Parameter(
+ *         name="lang",
+ *         in="query",
+ *         required=true,
+ *         description="Lang",
+ *         @OA\Schema(
+ *              type="string",
+ *              example="ar",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['governorates']")
+ * )
+ */
+//===========================End=governorate=============================================
 //===========================Start=Quiz=============================================
         /**
      * @OA\Get(
