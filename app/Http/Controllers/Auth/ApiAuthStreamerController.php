@@ -322,6 +322,7 @@ class ApiAuthStreamerController extends Controller
             'address_en' => $streamer->address_en,
             'email' => $streamer->email,
             'image' => env('APP_URL') . $streamer->image,
+            'is_streamer'=>true,
         ];
         return response()->json(compact('user'));
     }

@@ -301,6 +301,7 @@ class ApiAuthFollowerController extends Controller
             'birthday' => $follower->birthday,
             'email' => $follower->email,
             'avatar' => env('APP_URL') . $follower->image,
+            'is_streamer'=>false,
         ];
         return response()->json(compact('user'));
     }
