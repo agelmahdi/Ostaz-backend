@@ -47,7 +47,21 @@ class ApiAuthStreamerController extends Controller
         if($user->role!=1){
             return response()->json('sorry this user role is not As Streamer',402);
         }
-        return response()->json(compact('token'));
+        $streamer=Streamer::where('email',$user->email)->first();
+        $user = [
+            'name_ar' => $streamer->name_ar,
+            'name_en' => $streamer->name_en,
+            'slug_ar' => $streamer->slug_ar,
+            'slug_en' => $streamer->slug_en,
+            'phone' => $streamer->phone,
+            'gender' => $streamer->gender,
+            'address_ar' => $streamer->address_ar,
+            'address_en' => $streamer->address_en,
+            'email' => $streamer->email,
+            'image' => env('APP_URL') . $streamer->image,
+            'is_streamer'=>true,
+        ];
+        return response()->json(compact(['token','user']));
     }
     public function register(Request $request)
     {

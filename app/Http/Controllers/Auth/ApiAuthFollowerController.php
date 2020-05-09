@@ -43,8 +43,22 @@ class ApiAuthFollowerController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
-        return response()->json(compact('token'));
+        $user=User::where('email',$request->get('email'))->first();
+        if($user->role!=2){
+            return response()->json('sorry this user role is not As Follower',402);
+        }
+        $follower = Follower::where('email', $user->email)->first();
+        $user = [
+            'name' => $follower->name,
+            'phone' => $follower->phone,
+            'gender' => $follower->gender,
+            'address' => $follower->address,
+            'birthday' => $follower->birthday,
+            'email' => $follower->email,
+            'avatar' => env('APP_URL') . $follower->image,
+            'is_streamer'=>false,
+        ];
+        return response()->json(compact(['token','user']));
     }
 
     public function register(Request $request)
