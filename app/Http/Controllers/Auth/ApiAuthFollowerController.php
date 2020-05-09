@@ -16,7 +16,7 @@ class ApiAuthFollowerController extends Controller
 {
     function __construct()
     {
-        // We set the guard api as default driver
+
         auth()->setDefaultDriver('api');
         Config::set('jwt.user', User::class);
         Config::set('auth.providers', ['users' => [

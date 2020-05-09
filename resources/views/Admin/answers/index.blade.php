@@ -140,19 +140,17 @@
             </div>
         @endsection
         @section('ajax')
-{{--                <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">--}}
-{{--                <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>--}}
+
             {!! Html::script('BackEnd/assets/node_modules/d3/d3.min.js') !!}
             {!! Html::script('BackEnd/assets/node_modules/c3-master/c3.min.js') !!}
             <!-- Popup message jquery -->
             {!! Html::script('BackEnd/assets/node_modules/toast-master/js/jquery.toast.js') !!}
             <!-- Chart JS -->
-
                 <!-- ============================================================== -->
                 <!-- Style switcher -->
                 <!-- ============================================================== -->
             {!! Html::script('BackEnd/assets/node_modules/styleswitcher/jQuery.style.switcher.js') !!}
-            {{--                -------------------------------------------------------------------------------}}
+            {{---------------------------------------------------------------------------------}}
             <!--stickey kit -->
             {!! Html::script('BackEnd/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') !!}
             {!! Html::script('BackEnd/assets/node_modules/sparkline/jquery.sparkline.min.js') !!}
@@ -191,16 +189,12 @@
                             modal.find('.modal-body #questions').val(questions);
                             modal.find('.modal-body #id').val(id);
                         });
-
                         $('#delete').on('show.bs.modal', function (event) {
-
                             var button = $(event.relatedTarget);
                             var id = button.data('myid');
                             var modal = $(this);
                             modal.find('.modal-body #question_id').val(id);
                         });
-
-
                     });
                     $(function () {
                         $('#myTable').DataTable();

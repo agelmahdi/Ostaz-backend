@@ -57,7 +57,6 @@ class CategoryController extends Controller
         $slug = str_slug($request->title_en);
         if(isset($image))
         {
-//            make unipue name for image
             $currentDate = Carbon::now()->toDateString();
             $imageName  = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
@@ -65,10 +64,8 @@ class CategoryController extends Controller
             {
                 Storage::disk('public')->makeDirectory('category');
             }
-
             $categoryImage = Image::make($image)->resize(1600,1066)->save('test.jpg');
             Storage::disk('public')->put('category/'.$imageName,$categoryImage);
-
         } else {
             $imageName = "category/default.png";
         }
@@ -156,7 +153,6 @@ class CategoryController extends Controller
         $category->image = $imageName;
         $category->details_ar = $request->details_ar;
         $category->details_en = $request->details_en;
-
         $category->save();
 
         return redirect()->route('Admin.category.index')->with('success', 'Category Updated successfully.');
@@ -172,7 +168,6 @@ class CategoryController extends Controller
     public function destroy(Request $request)
     {
         $category = Category::findOrFail($request->category_id);
-
         if (Storage::disk('public')->exists('category/'.$category->image))
         {
             Storage::disk('public')->delete('category/'.$category->image);

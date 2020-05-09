@@ -153,11 +153,12 @@ class DatabaseSeeder extends Seeder
             'answer-list', 'answer-create', 'answer-edit', 'answer-delete',
             'result-list', 'result-create', 'result-edit', 'result-delete',
             'academic_year-list', 'academic_year-create', 'academic_year-edit', 'academic_year-delete',
-            'subject-list', 'subject-create', 'subject-edit', 'subject-delete'];
+            'subject-list', 'subject-create', 'subject-edit', 'subject-delete',
+            'group-list', 'group-create', 'group-edit', 'group-delete'];
     }
     private function defaultPermissioncategory()
     {
-        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result','academic_year'];
+        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result','academic_year','subject','group'];
     }
 
 }

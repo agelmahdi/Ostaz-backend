@@ -88,6 +88,17 @@
                             </ul>
                         </li>
                     @endcan
+                    @can('group-list')
+                        <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                                    class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.group') }}</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                @can('group-create')
+                                    <li>{!! Html::linkRoute('Admin.group.create','Add group') !!}</li>
+                                @endcan
+                                <li>{!! Html::linkRoute('Admin.group.index','group') !!}</li>
+                            </ul>
+                        </li>
+                    @endcan
                     @can('category-list')
                         <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                     class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.category') }}</span></a>
