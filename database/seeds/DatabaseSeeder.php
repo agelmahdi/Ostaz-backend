@@ -64,6 +64,8 @@ class DatabaseSeeder extends Seeder
             ['key' => 'datamanagement', 'value_en' => 'Data Management', 'value_ar' => 'ادارة البيانات',],
             ['key' => 'category', 'value_en' => 'Category', 'value_ar' => 'مجموعة اساسية',],
             ['key' => 'quiz', 'value_en' => 'Quiz', 'value_ar' => 'الاختبار',],
+            ['key' => 'group', 'value_en' => 'Group', 'value_ar' => 'المجموعة',],
+            ['key' => 'lesson', 'value_en' => 'Lesson', 'value_ar' => 'الدرس',],
             ['key' => 'academicyears', 'value_en' => 'Academic Year', 'value_ar' => 'السنة الدراسية',],
             ['key' => 'subject', 'value_en' => 'Subject', 'value_ar' => 'المواد الدراسية',],
             ['key' => 'subcategory', 'value_en' => 'Sub Category', 'value_ar' => 'مجموعة فرعية',],
@@ -154,11 +156,29 @@ class DatabaseSeeder extends Seeder
             'result-list', 'result-create', 'result-edit', 'result-delete',
             'academic_year-list', 'academic_year-create', 'academic_year-edit', 'academic_year-delete',
             'subject-list', 'subject-create', 'subject-edit', 'subject-delete',
-            'group-list', 'group-create', 'group-edit', 'group-delete'];
+            'group-list', 'group-create', 'group-edit', 'group-delete',
+            'lesson-list', 'lesson-create', 'lesson-edit', 'lesson-delete'];
     }
     private function defaultPermissioncategory()
     {
-        return ['main', 'permissioncategory', 'permission', 'role', 'user', 'category', 'subcategory', 'option', 'localization', 'adminlocalization', 'quiz', 'questions', 'answer', 'result','academic_year','subject','group'];
+        return ['main',
+            'permissioncategory',
+            'permission',
+            'role',
+            'user',
+            'category',
+            'subcategory',
+            'option',
+            'localization',
+            'adminlocalization',
+            'quiz',
+            'questions',
+            'answer',
+            'result',
+            'academic_year',
+            'subject',
+            'group',
+            'lesson'];
     }
 
 }

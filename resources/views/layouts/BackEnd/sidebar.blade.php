@@ -99,6 +99,17 @@
                             </ul>
                         </li>
                     @endcan
+                    @can('lesson-list')
+                        <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
+                                    class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.lesson') }}</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                @can('lesson-create')
+                                    <li>{!! Html::linkRoute('Admin.lesson.create','Add lesson') !!}</li>
+                                @endcan
+                                <li>{!! Html::linkRoute('Admin.lesson.index','lesson') !!}</li>
+                            </ul>
+                        </li>
+                    @endcan
                     @can('category-list')
                         <li><a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                                     class=" icon-Folder-Organizing"></i><span class="hide-menu">{{ trans('admin.category') }}</span></a>

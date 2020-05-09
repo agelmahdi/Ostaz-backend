@@ -68,7 +68,7 @@ class GroupController extends Controller
     {
         $this->validate($request,[
             'title' => 'required',
-            'slug' => 'required|unique:groups,slug',
+            'slug' => 'required|unique:groups,slug,NULL,id,streamer_id,'.$request->streamer_id,
             'description' => 'required', 
             'start' => 'required',
             'end' => 'required',
@@ -76,6 +76,7 @@ class GroupController extends Controller
             'academic_year_id' => 'required|integer',
             'subject_id' => 'required|integer',
         ]);
+//        $streamer=Streamer::findOrFail($request->streamer_id);
         $group = new Group();
         $group->title = $request->title;
         $group->slug = $request->slug;
@@ -128,10 +129,12 @@ class GroupController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'slug' => 'required|unique:groups,slug'.$group->id,
-            'time' => 'required|integer',
-            'lang' => 'required|string',
-            'questions_number' => 'required|integer',
+            'description' => 'required', 
+            'start' => 'required',
+            'end' => 'required',
             'streamer_id' => 'required|integer',
+            'academic_year_id' => 'required|integer',
+            'subject_id' => 'required|integer',
         ]);
         $group->title = $request->title;
         $group->slug = $request->slug;

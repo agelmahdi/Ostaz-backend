@@ -13,13 +13,17 @@ class CreateLessonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lessons', function (Blueprint $table) {
+       Schema::create('lessons', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->String('title');
+            $table->String('slug');
             $table->Text('description');
             $table->String('start');
             $table->String('end');
-            $table->Integer('stock');
+            $table->BigInteger('group_id')->unsigned();
+            $table->foreign('group_id')
+                ->references('id')->on('groups')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
