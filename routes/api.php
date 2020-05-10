@@ -23,25 +23,29 @@ Route::group(['middleware' => ['cors']], function () {
     });
 });
 Route::group(['middleware' => ['cors']], function () {
+    Route::post('login', 'Auth\ApiAuthStreamerController@authenticate');
+    Route::group(['middleware' => ['jwt.verify']], function () {
+        Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
+    });
     Route::group(['prefix' => 'follower'], function () {
-        Route::post('login', 'Auth\ApiAuthFollowerController@authenticate');
+//        Route::post('login', 'Auth\ApiAuthFollowerController@authenticate');
         Route::post('register', 'Auth\ApiAuthFollowerController@register');
 
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthFollowerController@updateProfileImage');
             Route::put('update-profile', 'Auth\ApiAuthFollowerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthFollowerController@updateProfilePassword');
-            Route::get('me', 'Auth\ApiAuthFollowerController@getAuthenticatedUser');
+//            Route::get('me', 'Auth\ApiAuthFollowerController@getAuthenticatedUser');
         });
     });
     Route::group(['prefix' => 'streamer'], function () {
-        Route::post('login', 'Auth\ApiAuthStreamerController@authenticate');
+//        Route::post('login', 'Auth\ApiAuthStreamerController@authenticate');
         Route::post('register', 'Auth\ApiAuthStreamerController@register');
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthStreamerController@updateProfileImage');
             Route::put('update-profile', 'Auth\ApiAuthStreamerController@updateProfile');
             Route::put('update-profile-password', 'Auth\ApiAuthStreamerController@updateProfilePassword');
-            Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
+//            Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
             //===========================Start=Quiz==========================================
             Route::get('quiz', 'api\QuizController@quizes');
             Route::post('create_quiz', 'api\QuizController@createQuiz');
@@ -64,6 +68,13 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('create_subjects', 'api\SubjectController@store_subjects_streamer');
             Route::get('subjects', 'api\SubjectController@get_subjects_streamer');
             //===========================End=Subjects==========================================
+            //===========================Start=Quiz==========================================
+            Route::get('group', 'api\GroupController@groups');
+            Route::post('create_group', 'api\GroupController@createGroup');
+            Route::get('group/{slug}', 'api\GroupController@Detail_group');
+            Route::put('group/{slug}', 'api\GroupController@Update_group');
+            Route::delete('group/{slug}', 'api\GroupController@Delete_group');
+            //===========================End=Quiz============================================
         });
     });
 

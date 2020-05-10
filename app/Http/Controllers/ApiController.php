@@ -26,71 +26,106 @@ use Illuminate\Http\Request;
  * ),
  *
  **/
+//===========================Start=Auth=============================================
+/**
+ * @OA\Post(
+ *   path="/api/login",
+ *   summary="User Login",
+ *   tags={"Authorization"},
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"email", "password"},
+ *       @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         example="streamer@streamer.com",
+ *         description="required|string|email|max:255"
+ *       ),
+ *       @OA\Property(
+ *         property="password",
+ *         type="string",
+ *         example="123123123",
+ *         description="required|string|min:6"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=200,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="token:",
+ *         type="string",
+ *         description="The Token"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="invalid_credentials",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    ),
+ *   @OA\Response(
+ *     response=401,
+ *     description="Validator",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="Validator.",
+ *         type="string",
+ *         description="Validator"
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+/**
+ * @OA\Get(
+ *   path="/api/me",
+ *   summary="User Data",
+ *   tags={"Authorization"},
+ *   security={{"bearerAuth":{}}},
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{name,email,updated_at,created_at,id},token}",
+ *         type="string",
+ *         description="The Token"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+//===========================End=Auth=============================================
 //============================Start==Follower=============================================
 //===========================Start=Auth=============================================
-        /**
-     * @OA\Post(
-     *   path="/api/follower/login",
-     *   summary="User Login",
-     *   tags={"Follower Authorization"},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"email", "password"},
-     *       @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         example="follower@follower.com",
-     *         description="required|string|email|max:255"
-     *       ),
-     *       @OA\Property(
-     *         property="password",
-     *         type="string",
-     *         example="123123123",
-     *         description="required|string|min:6"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=200,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="token:",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="invalid_credentials",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    ),
-     *   @OA\Response(
-     *     response=401,
-     *     description="Validator",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="Validator.",
-     *         type="string",
-     *         description="Validator"
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
         /**
      * @OA\Post(
      *   path="/api/follower/register",
@@ -364,106 +399,10 @@ use Illuminate\Http\Request;
      *   )
      * )
      */
-        /**
-     * @OA\Get(
-     *   path="/api/follower/me",
-     *   summary="User Data",
-     *   tags={"Follower Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{name,email,updated_at,created_at,id},token}",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
 //===========================End=Auth=============================================
 //============================End==Follower===============================================
 //============================Start==Streamer=============================================
 //===========================Start=Auth=============================================
-        /**
-     * @OA\Post(
-     *   path="/api/streamer/login",
-     *   summary="User Login",
-     *   tags={"Streamer Authorization"},
-     *   @OA\RequestBody(
-     *     required=true,
-     *     @OA\JsonContent(
-     *       type="object",
-     *       required={"email", "password"},
-     *       @OA\Property(
-     *         property="email",
-     *         type="string",
-     *         example="streamer@streamer.com",
-     *         description="required|string|email|max:255"
-     *       ),
-     *       @OA\Property(
-     *         property="password",
-     *         type="string",
-     *         example="123123123",
-     *         description="required|string|min:6"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=200,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="token:",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="invalid_credentials",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    ),
-     *   @OA\Response(
-     *     response=401,
-     *     description="Validator",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="Validator.",
-     *         type="string",
-     *         description="Validator"
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
         /**
      * @OA\Post(
      *   path="/api/streamer/register",
@@ -749,39 +688,6 @@ use Illuminate\Http\Request;
      *   )
      * )
      */
-        /**
-     * @OA\Get(
-     *   path="/api/streamer/me",
-     *   summary="User Data",
-     *   tags={"Streamer Authorization"},
-     *   security={{"bearerAuth":{}}},
-     *   @OA\Response(
-     *     response=201,
-     *     description="Success",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="{user{name,email,updated_at,created_at,id},token}",
-     *         type="string",
-     *         description="The Token"
-     *       )
-     *     )
-     *   ),
-     *   @OA\Response(
-     *     response=400,
-     *     description="Unauthorized",
-     *     @OA\JsonContent(
-     *       type="object",
-     *       @OA\Property(
-     *         property="error:These credentials do not match our records.",
-     *         type="string",
-     *         description="These credentials do not match our records."
-     *       )
-     *     )
-     *    )
-     *   )
-     * )
-     */
 //===========================End=Auth=============================================
 //===========================Start=Academic Years===========================================
 /**
@@ -917,7 +823,268 @@ use Illuminate\Http\Request;
  * )
  */
 //===========================End=Subjects=============================================
-
+//===========================Start=Group=============================================
+/**
+ * @OA\Get(
+ *     operationId="groups",
+ *     path="/api/streamer/group",
+ *     tags={"Group Pages"},
+ *     security={{"bearerAuth":{}}},
+ * @OA\Parameter(
+ *         name="P",
+ *         in="query",
+ *         required=true,
+ *         description="Paginate",
+ *         @OA\Schema(
+ *              type="integer",
+ *              example="10",
+ *         )
+ *      ),
+ *     @OA\Parameter(
+ *         name="page",
+ *         in="query",
+ *         required=true,
+ *         description="Page Number",
+ *         @OA\Schema(
+ *              type="integer",
+ *              example="1",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['group']")
+ * )
+ */
+/**
+ * @OA\Post(
+ *   path="/api/streamer/create_group",
+ *   summary="Add New Group",
+ *   tags={"Group Pages"},
+ *   security={{"bearerAuth":{}}},
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"title","slug","description", "academic_year","subject","start","end"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="First Exam",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         example="<h1>Description</h1>",
+ *         description="required|integer"
+ *       ),
+ *     @OA\Property(
+ *         property="start",
+ *         type="string",
+ *         example="2020-05-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="end",
+ *         type="string",
+ *         example="2020-08-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="academic_year",
+ *         type="string",
+ *         example="the-second-primary-grade",
+ *         description="required|integer"
+ *       ),
+ * 
+ *     @OA\Property(
+ *         property="subject",
+ *         type="string",
+ *         example="psychology",
+ *         description="required|integer"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{Success}",
+ *         type="string",
+ *         description="Data Created SuccessFully "
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+/**
+ * @OA\Get(
+ *     operationId="Group Get Data Details",
+ *     path="/api/streamer/group/{slug}",
+ *     tags={"Group Pages"},
+ *     security={{"bearerAuth":{}}},
+ *  @OA\Parameter(
+ *      name="slug",
+ *      description="Group Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['groups']")
+ * )
+ */
+/**
+ * @OA\Put(
+ *   path="/api/streamer/group/{slug}",
+ *   summary="Update Group",
+ *   tags={"Group Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="slug",
+ *      description="Group Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"name","phone","email"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="First Exam",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         example="<h1>Description</h1>",
+ *         description="required|integer"
+ *       ),
+ *     @OA\Property(
+ *         property="start",
+ *         type="string",
+ *         example="2020-05-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="end",
+ *         type="string",
+ *         example="2020-08-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="academic_year",
+ *         type="string",
+ *         example="the-second-primary-grade",
+ *         description="required"
+ *       ),
+ *
+ *     @OA\Property(
+ *         property="subject",
+ *         type="string",
+ *         example="psychology",
+ *         description="required"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+/**
+ * @OA\Delete(
+ *   path="/api/streamer/group/{slug}",
+ *   summary="Delete Group",
+ *   tags={"Group Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="slug",
+ *      description="Group Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+//===========================End=Group=============================================
 //===========================Start=governorate==========================================
 /**
  * @OA\Get(

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Follower;
 use App\Streamer;
 use App\User;
 use Illuminate\Http\Request;
@@ -44,23 +45,35 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
         $user=User::where('email',$request->get('email'))->first();
-        if($user->role!=1){
-            return response()->json('sorry this user role is not As Streamer',402);
+        if($user->role==1){
+            $streamer=Streamer::where('email',$user->email)->first();
+            $user = [
+                'name_ar' => $streamer->name_ar,
+                'name_en' => $streamer->name_en,
+                'slug_ar' => $streamer->slug_ar,
+                'slug_en' => $streamer->slug_en,
+                'phone' => $streamer->phone,
+                'gender' => $streamer->gender,
+                'address_ar' => $streamer->address_ar,
+                'address_en' => $streamer->address_en,
+                'email' => $streamer->email,
+                'image' => env('APP_URL') . $streamer->image,
+                'is_streamer'=>true,
+            ];
         }
-        $streamer=Streamer::where('email',$user->email)->first();
-        $user = [
-            'name_ar' => $streamer->name_ar,
-            'name_en' => $streamer->name_en,
-            'slug_ar' => $streamer->slug_ar,
-            'slug_en' => $streamer->slug_en,
-            'phone' => $streamer->phone,
-            'gender' => $streamer->gender,
-            'address_ar' => $streamer->address_ar,
-            'address_en' => $streamer->address_en,
-            'email' => $streamer->email,
-            'image' => env('APP_URL') . $streamer->image,
-            'is_streamer'=>true,
-        ];
+        elseif($user->role==2){
+            $follower = Follower::where('email', $user->email)->first();
+            $user = [
+                'name' => $follower->name,
+                'phone' => $follower->phone,
+                'gender' => $follower->gender,
+                'address' => $follower->address,
+                'birthday' => $follower->birthday,
+                'email' => $follower->email,
+                'avatar' => env('APP_URL') . $follower->image,
+                'is_streamer'=>false,
+            ];
+        }
         return response()->json(compact(['token','user']));
     }
     public function register(Request $request)
@@ -321,23 +334,35 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-        if($user->role!=1){
-            return response()->json('sorry this user role is not As Streamer',402);
+        if($user->role==1){
+            $streamer=Streamer::where('email',$user->email)->first();
+            $user = [
+                'name_ar' => $streamer->name_ar,
+                'name_en' => $streamer->name_en,
+                'slug_ar' => $streamer->slug_ar,
+                'slug_en' => $streamer->slug_en,
+                'phone' => $streamer->phone,
+                'gender' => $streamer->gender,
+                'address_ar' => $streamer->address_ar,
+                'address_en' => $streamer->address_en,
+                'email' => $streamer->email,
+                'image' => env('APP_URL') . $streamer->image,
+                'is_streamer'=>true,
+            ];
         }
-        $streamer=Streamer::where('email',$user->email)->first();
-        $user = [
-            'name_ar' => $streamer->name_ar,
-            'name_en' => $streamer->name_en,
-            'slug_ar' => $streamer->slug_ar,
-            'slug_en' => $streamer->slug_en,
-            'phone' => $streamer->phone,
-            'gender' => $streamer->gender,
-            'address_ar' => $streamer->address_ar,
-            'address_en' => $streamer->address_en,
-            'email' => $streamer->email,
-            'image' => env('APP_URL') . $streamer->image,
-            'is_streamer'=>true,
-        ];
+        elseif($user->role==2){
+            $follower = Follower::where('email', $user->email)->first();
+            $user = [
+                'name' => $follower->name,
+                'phone' => $follower->phone,
+                'gender' => $follower->gender,
+                'address' => $follower->address,
+                'birthday' => $follower->birthday,
+                'email' => $follower->email,
+                'avatar' => env('APP_URL') . $follower->image,
+                'is_streamer'=>false,
+            ];
+        }
         return response()->json(compact('user'));
     }
 
