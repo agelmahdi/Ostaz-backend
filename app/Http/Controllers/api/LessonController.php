@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\api;
 
-use App\AcademicYear;
+use App\Answer;
 use App\Group;
+use App\Http\Resources\Streamer\AnswerResource;
 use App\Http\Resources\Streamer\LessonResource;
 use App\Http\Resources\Streamer\QuestionResource;
+use App\Lesson;
 use App\Quiz;
-use App\Subject;
+use App\Question;
 use App\User;
-use App\Http\Resources\Streamer\GroupResource;
+use App\Http\Resources\Streamer\QuizResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use JWTAuth;
 use Config;
 use Illuminate\Support\Facades\Validator;
 
-class GroupController extends Controller
+class LessonController extends Controller
 {
     function __construct()
     {
@@ -29,7 +31,7 @@ class GroupController extends Controller
         ]]);
     }
 
-    function groups(Request $request)
+    function lesson($group, Request $request)
     {
         try {
 
@@ -57,10 +59,15 @@ class GroupController extends Controller
         if ($paginate == null) {
             $paginate = 10;
         };
-        $group = Group::where('streamer_id', $user->role_id)->paginate($paginate);
-        return GroupResource::collection($group);
+        $group = Group::where('streamer_id', $user->role_id)->where('slug', $group)->first();
+        if ($group == null) {
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
+        $lesson = Lesson::where('group_id', $group->id)->paginate($paginate);
+
+        return LessonResource::collection($lesson);
     }
-    function createGroup(Request $request)
+    function createLesson($group, Request $request)
     {
 
         try {
@@ -90,39 +97,25 @@ class GroupController extends Controller
             'description' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'academic_year' => 'required',
-            'subject' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $slug=$request->get('academic_year');
-        $academic_year = AcademicYear::where(function ($query) use ($slug) {
-            $query->where('slug_ar', $slug);
-            $query->orwhere('slug_en', $slug);
-        })->first();
-        if ($academic_year == null) {
-            return response()->json(['sorry your Academic Year data not equal our system'], 400);
+        $group = Group::where('streamer_id', $user->role_id)->where('slug', $group)->first();
+        if ($group == null) {
+            return response()->json(['sorry your Group data not equal our system'], 400);
         }
-        $slug=$request->get('subject');
-        $subject = Subject::where(function ($query) use ($slug) {
-            $query->where('slug_ar', $slug);
-            $query->orwhere('slug_en', $slug);
-        })->first();
-        if ($subject == null) {
-            return response()->json(['sorry your Subject data not equal our system'], 400);
-        }
+
         $slug = $this->generateRandomString(10);
-        Group::create([
+        $lesson = Lesson::create([
             'title' => $request->get('title'),
             'slug' => $slug,
             'description' => $request->get('description'),
             'start' => $request->get('start'),
             'end' => $request->get('end'),
-            'academic_year_id' => $academic_year->id,
-            'subject_id' => $subject->id,
-            'streamer_id' => $user->role_id,
+            'group_id' => $group->id,
         ]);
+
         return response()->json(['success'], 200);
     }
     function generateRandomString($length = 10)
@@ -135,7 +128,7 @@ class GroupController extends Controller
         }
         return $randomString;
     }
-    function Detail_group($group)
+    function Detail_lesson($lesson)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -158,26 +151,36 @@ class GroupController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $group = Group::where('streamer_id', $user->role_id)->where('slug', $group)->first();
-        if ($group == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
+        $lesson = Lesson::where('slug', $lesson)->with('group')->first();
+        if ($lesson == null) {
+            return response()->json(['sorry your lesson slug not equal our system'], 400);
         }
-        $group = [
-            "title" => $group->title,
-            "slug" => $group->slug,
-            "description" => $group->description,
-            "start" => $group->start,
-            "end" => $group->end,
-            "academic_year"=>$group->academic_year->title_en,
-            "subject"=>$group->subject->title_en,
-            "lesson"=>$group->lessons->count(),
-            "lesson"=>LessonResource::collection($group->lessons),
-            "created_at" => $group->created_at,
+        $group = Group::where('streamer_id', $user->role_id)->where('id', $lesson->group->id)->first();
+        if ($group == null) {
+            return response()->json(['sorry your Group not equal our system'], 400);
+        }
+        $lesson = [
+            "title" => $lesson->title,
+            "slug" => $lesson->slug,
+            "description" => $lesson->description,
+            "start" => $lesson->start,
+            "end" => $lesson->end,
+            "created_at" => $lesson->created_at,
+            "quiz"=>[
+                "title" => $lesson->group->title,
+                "slug" => $lesson->group->slug,
+                "description" => $lesson->group->description,
+                "start" => $lesson->group->start,
+                "end" => $lesson->group->end,
+                "academic_year"=>$lesson->group->academic_year->title_en,
+                "subject"=>$lesson->group->subject->title_en,
+                "lesson"=>$lesson->group->lessons()->count(),
+            ],
         ];
 
-        return response()->json(compact('group'), 200);
+        return response()->json(compact('lesson'), 200);
     }
-    function Update_group($group,Request $request)
+    function Update_lesson($lesson,Request $request)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -200,50 +203,37 @@ class GroupController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $group = Group::where('streamer_id', $user->role_id)->where('slug', $group)->first();
+
+        $lesson = Lesson::where('slug', $lesson)->with('group')->first();
+        if ($lesson == null) {
+            return response()->json(['sorry your Lesson slug not equal our system'], 400);
+        }
+        $group = Group::where('streamer_id', $user->role_id)->where('id', $lesson->group->id)->first();
         if ($group == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
+            return response()->json(['sorry your Group not equal our system'], 400);
         }
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'academic_year' => 'required',
-            'subject' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $slug=$request->get('academic_year');
-        $academic_year = AcademicYear::where(function ($query) use ($slug) {
-            $query->where('slug_ar', $slug);
-            $query->orwhere('slug_en', $slug);
-        })->first();
-        if ($academic_year == null) {
-            return response()->json(['sorry your Academic Year data not equal our system'], 400);
-        }
-        $slug=$request->get('subject');
-        $subject = Subject::where(function ($query) use ($slug) {
-            $query->where('slug_ar', $slug);
-            $query->orwhere('slug_en', $slug);
-        })->first();
-        if ($subject == null) {
-            return response()->json(['sorry your Subject data not equal our system'], 400);
-        }
-        $group->update([
+        $lesson->update([
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'start' => $request->get('start'),
             'end' => $request->get('end'),
-            'academic_year_id' => $academic_year->id,
-            'subject_id' => $subject->id,
+            'academic_year_id' => $group->id,
         ]);
-        $group->save();
+        $lesson->save();
+
         return response()->json(['success'], 200);
 
     }
-    function Delete_group($group)
+    function Delete_lesson($lesson)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -266,11 +256,15 @@ class GroupController extends Controller
         if ($user->role != 1) {
             return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $group = Group::where('streamer_id', $user->role_id)->where('slug', $group)->first();
-        if ($group == null) {
-            return response()->json(['sorry your data not equal our system'], 400);
+        $lesson = Lesson::where('slug', $lesson)->first();
+        if ($lesson == null) {
+            return response()->json(['sorry your Lesson slug not equal our system'], 400);
         }
-        $group->delete();
+        $group = Group::where('streamer_id', $user->role_id)->where('id', $lesson->group->id)->first();
+        if ($group == null) {
+            return response()->json(['sorry your Group not equal our system'], 400);
+        }
+        $lesson->delete();
         return response()->json(['success'], 200);
 
     }

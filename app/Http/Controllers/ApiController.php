@@ -1085,6 +1085,258 @@ use Illuminate\Http\Request;
  * )
  */
 //===========================End=Group=============================================
+//===========================Start=Lesson=============================================
+/**
+ * @OA\Get(
+ *     operationId="Lesson",
+ *     path="/api/streamer/{group}/lesson",
+ *     tags={"Lesson Pages"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="group",
+ *      description="Group Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *    @OA\Parameter(
+ *         name="P",
+ *         in="query",
+ *         required=true,
+ *         description="Paginate",
+ *         @OA\Schema(
+ *              type="integer",
+ *              example="10",
+ *         )
+ *      ),
+ *     @OA\Parameter(
+ *         name="page",
+ *         in="query",
+ *         required=true,
+ *         description="Page Number",
+ *         @OA\Schema(
+ *              type="integer",
+ *              example="1",
+ *         )
+ *      ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['Lesson']")
+ * )
+ */
+/**
+ * @OA\Post(
+ *   path="/api/streamer/{group}/create_lesson",
+ *   summary="Add New Lesson",
+ *   tags={"Lesson Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="group",
+ *      description="Group Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"title","slug","description","start","end"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="First Lesson",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         example="<h1>Description</h1>",
+ *         description="required|integer"
+ *       ),
+ *     @OA\Property(
+ *         property="start",
+ *         type="string",
+ *         example="2020-05-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="end",
+ *         type="string",
+ *         example="2020-08-04",
+ *         description="required|string"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{Success}",
+ *         type="string",
+ *         description="Data Created SuccessFully "
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+/**
+ * @OA\Get(
+ *     operationId="Lesson Get Data Details",
+ *     path="/api/streamer/lesson/{lesson}",
+ *     tags={"Lesson Pages"},
+ *     security={{"bearerAuth":{}}},
+ *  @OA\Parameter(
+ *      name="lesson",
+ *      description="lesson Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *     @OA\Response(
+ *     response="200",
+ *      description="For Home Data as ['quizes']")
+ * )
+ */
+/**
+ * @OA\Put(
+ *   path="/api/streamer/lesson/{lesson}",
+ *   summary="Update Lesson",
+ *   tags={"Lesson Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="lesson",
+ *      description="Lesson Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *      )
+ *   ),
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       type="object",
+ *       required={"title","slug","description","start","end"},
+ *     @OA\Property(
+ *         property="title",
+ *         type="string",
+ *         example="Second Lesson",
+ *         description="required|string|max:255"
+ *       ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         example="<h1>Description</h1>",
+ *         description="required|integer"
+ *       ),
+ *     @OA\Property(
+ *         property="start",
+ *         type="string",
+ *         example="2020-05-04",
+ *         description="required|string"
+ *       )
+ * ,
+ *     @OA\Property(
+ *         property="end",
+ *         type="string",
+ *         example="2020-08-04",
+ *         description="required|string"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+/**
+ * @OA\Delete(
+ *   path="/api/streamer/lesson/{lesson}",
+ *   summary="Delete Lesson",
+ *   tags={"Lesson Pages"},
+ *   security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *      name="lesson",
+ *      description="Lesson Slug",
+ *      required=true,
+ *      in="path",
+ *      @OA\Schema(
+ *          type="string"
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{user{data}",
+ *         type="string",
+ *         description="User"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
+////===========================End=Lesson=============================================
 //===========================Start=governorate==========================================
 /**
  * @OA\Get(

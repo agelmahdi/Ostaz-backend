@@ -4,7 +4,7 @@ namespace App\Http\Resources\Streamer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GroupResource extends JsonResource
+class LessonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,9 +20,6 @@ class GroupResource extends JsonResource
             "description" => $this->description,
             "start" => $this->start,
             "end" => $this->end,
-            "academic_year"=>$this->academic_year->title_en,
-            "subject"=>$this->subject->title_en,
-            "lesson"=>$this->lessons->count(),
             "created_at" => $this->created_at,
         ];
     }
