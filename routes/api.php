@@ -23,12 +23,12 @@ Route::group(['middleware' => ['cors']], function () {
     });
 });
 Route::group(['middleware' => ['cors']], function () {
+    Route::get('academic_subject_cities', 'api\AcademicYearController@get_all_data');
     Route::post('login', 'Auth\ApiAuthStreamerController@authenticate');
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('me', 'Auth\ApiAuthStreamerController@getAuthenticatedUser');
     });
     Route::group(['prefix' => 'follower'], function () {
-        Route::post('register', 'Auth\ApiAuthFollowerController@register');
         Route::group(['middleware' => ['jwt.verify']], function () {
             Route::post('update-profile-image', 'Auth\ApiAuthFollowerController@updateProfileImage');
             Route::put('update-profile', 'Auth\ApiAuthFollowerController@updateProfile');
@@ -78,6 +78,9 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('lesson/{lesson}', 'api\LessonController@Update_lesson');
             Route::delete('lesson/{lesson}', 'api\LessonController@Delete_lesson');
             //===========================End=lesson========================================
+            //============================Start==Follower=============================================
+            Route::post('follower_register', 'Auth\ApiAuthStreamerController@followers_register');
+            //============================End==Follower=============================================
         });
     });
 

@@ -23,6 +23,10 @@ class CreateStreamersTable extends Migration
             $table->tinyInteger('gender')->nullable();
             $table->string('address_ar')->nullable();
             $table->string('address_en')->nullable();
+            $table->BigInteger('city_id')->unsigned();
+            $table->foreign('city_id')
+                ->references('id')->on('cities')
+                ->onDelete('cascade');
             $table->longText('details_ar')->nullable();
             $table->longText('details_en')->nullable();
             $table->string('email')->unique();

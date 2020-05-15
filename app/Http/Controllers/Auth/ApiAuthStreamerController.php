@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AcademicYear;
 use App\Follower;
 use App\Streamer;
+use App\Subject;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -87,6 +89,9 @@ class ApiAuthStreamerController extends Controller
             'phone' => ['required', 'unique:streamers'],
             'address_ar' => 'string|max:255',
             'address_en' => 'string|max:255',
+            'city_id' => 'integer|max:255',
+            'subjects' => 'required|max:500',
+            'academic_years' => 'required|max:500',
             'gender' => 'string|max:20',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'email' => 'required|string|email|max:255|unique:users',
@@ -96,7 +101,45 @@ class ApiAuthStreamerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+        $subjects = json_decode(str_replace("'", '"', $request->get('subjects')), true);
+        if ($subjects == null) {
+            return response()->json(['sorry your subjects not write Correctly'], 400);
+        }
+        if (count($subjects) == 0) {
+            return response()->json(['The Array must contain data'], 400);
+        }
+        $count = 0;
+        $subjects_arr = [];
+        foreach ($subjects as $subject) {
 
+            $subject = Subject::where(function ($query) use ($subject) {
+                $query->where('slug_ar', $subject);
+                $query->orwhere('slug_en', $subject);
+            })->first();
+            if ($subject != null) {
+                $subjects_arr[$count] = $subject->id;
+                $count++;
+            }
+        }
+        $academic_years = json_decode(str_replace("'", '"', $request->get('academic_years')), true);
+        if ($academic_years == null) {
+            return response()->json(['sorry your academic_years not write Correctly'], 400);
+        }
+        if (count($academic_years) == 0) {
+            return response()->json(['The Array must contain data'], 400);
+        }
+        $count = 0;
+        $academic_arr = [];
+        foreach ($academic_years as $academic_year) {
+            $academic = AcademicYear::where(function ($query) use ($academic_year) {
+                $query->where('slug_ar', $academic_year);
+                $query->orwhere('slug_en', $academic_year);
+            })->first();
+            if ($academic != null) {
+                $academic_arr[$count] = $academic->id;
+                $count++;
+            }
+        }
         $filename = time() . ".jpg";
         $date = date('FY');
         if ($request->file('image')) {
@@ -115,6 +158,7 @@ class ApiAuthStreamerController extends Controller
             'phone' => $request->get('phone'),
             'address_ar' => $request->get('address_ar'),
             'address_en' => $request->get('address_en'),
+            'city_id' => $request->get('city_id'),
             'gender' => $request->get('gender'),
             'image' => $photoUrl,
             'email' => $request->get('email')
@@ -125,9 +169,11 @@ class ApiAuthStreamerController extends Controller
             'role'=>1,
             'role_id'=>$streamer->id,
         ]);
-        $token = JWTAuth::fromUser($user);
+        $streamer->Subjects()->sync($subjects_arr);
+        $streamer->AcademicYears()->sync($academic_arr);
+//        $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('streamer', 'token'), 201);
+        return response()->json("Success", 201);
     }
     public function updateProfilePassword(Request $request)
     {
@@ -365,5 +411,81 @@ class ApiAuthStreamerController extends Controller
         }
         return response()->json(compact('user'));
     }
+    public function followers_register(Request $request)
+    {
+        try {
 
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
+        }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'phone' => ['required', 'unique:followers'],
+            'address' => 'string|max:255',
+            'gender' => 'string|max:20',
+            'birthday' => 'string|max:255',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'academic_year' => 'required|max:500',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $filename = time() . ".jpg";
+        $date = date('FY');
+        if ($request->file('image')) {
+            $path = $request->file('image')->move(storage_path('app/public/followers/' . $date), $filename);
+            $photoUrl = '/followers/' . $date . '/' . $filename;
+
+        } else {
+            $photoUrl = "/followers/default.jpg";
+        }
+        $academic_year=$request->get('academic_year');
+        $academic = AcademicYear::where(function ($query) use ($academic_year) {
+            $query->where('slug_ar', $academic_year);
+            $query->orwhere('slug_en', $academic_year);
+        })->first();
+        if($academic==null){
+            return response()->json(['sorry your data not equal our system'], 400);
+        }
+        $follower = Follower::create([
+            'name' => $request->get('name'),
+            'phone' => $request->get('phone'),
+            'address' => $request->get('address'),
+            'gender' => $request->get('gender'),
+            'birthday' => $request->get('gender'),
+            'image' => $photoUrl,
+            'email' => $request->get('email'),
+            'academic_year_id' =>$academic->id ,
+        ]);
+         User::create([
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'role' => 2,
+            'role_id' => $follower->id,
+        ]);
+        $arr[0]=$user->role_id;
+        $follower->Streamers()->attach($arr);
+
+        return response()->json("Success", 201);
+    }
 }

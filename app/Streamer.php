@@ -17,7 +17,7 @@ class Streamer extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name_ar','name_en','slug_ar','slug_en','address_ar','address_en','details_ar','details_en','phone','email','gender','image', 'password',
+        'name_ar','name_en','slug_ar','slug_en','address_ar','address_en','details_ar','details_en','phone','email','gender','city_id','image', 'password',
     ];
 
     /**
@@ -70,5 +70,9 @@ class Streamer extends Authenticatable implements JWTSubject
     public function Subjects()
     {
         return $this->belongsToMany('App\Subject','subject_streamer');
+    }
+    public function Followers()
+    {
+        return $this->belongsToMany('App\Follower','streamer_follower');
     }
 }

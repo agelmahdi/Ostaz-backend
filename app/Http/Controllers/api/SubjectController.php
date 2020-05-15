@@ -102,11 +102,9 @@ class SubjectController extends Controller
     {
 
         try {
-
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
-
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
@@ -121,7 +119,6 @@ class SubjectController extends Controller
 
         }
         if ($user->role != 1) {
-
             return response()->json('sorry this user role is not As Streamer', 402);
         }
 

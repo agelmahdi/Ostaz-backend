@@ -103,9 +103,9 @@ class ApiAuthFollowerController extends Controller
             'role' => 2,
             'role_id' => $follower->id,
         ]);
-        $token = JWTAuth::fromUser($user);
+//        $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('follower', 'token'), 201);
+        return response()->json("Success", 201);
     }
 
     public function updateProfilePassword(Request $request)

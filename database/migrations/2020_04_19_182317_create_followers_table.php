@@ -21,7 +21,11 @@ class CreateFollowersTable extends Migration
             $table->string('birthday')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->unique();
-            $table->string('image')->default('/follower/default.jpg');
+            $table->string('image')->default('/followers/default.jpg');
+            $table->BigInteger('academic_year_id')->unsigned();
+            $table->foreign('academic_year_id')
+                ->references('id')->on('academic_years')
+                ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

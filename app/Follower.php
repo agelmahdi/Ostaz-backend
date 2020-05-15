@@ -18,7 +18,7 @@ class Follower extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name','phone','gender','birthday','address','image', 'email', 'password',
+        'name','phone','gender','birthday','address','image', 'email', 'academic_year_id', 'password',
     ];
 
     /**
@@ -60,5 +60,9 @@ class Follower extends Authenticatable implements JWTSubject
     {
         // TODO: Implement getJWTCustomClaims() method.
         return [];
+    }
+    public function Streamers()
+    {
+        return $this->belongsToMany('App\Streamer','streamer_follower');
     }
 }

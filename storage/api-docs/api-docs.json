@@ -1,21 +1,21 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "VSEL",
-        "description": "The main Api for all Streaming websites that we have ",
+        "title": "Admin Backend",
+        "description": "Admin Backend Description",
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://127.0.0.1:8000",
-            "description": "VSEL"
+            "description": "Admin Backend"
         }
     ],
     "paths": {
-        "/api/follower/login": {
+        "/api/login": {
             "post": {
                 "tags": [
-                    "Follower Authorization"
+                    "Authorization"
                 ],
                 "summary": "User Login",
                 "requestBody": {
@@ -31,7 +31,7 @@
                                     "email": {
                                         "description": "required|string|email|max:255",
                                         "type": "string",
-                                        "example": "follower@follower.com"
+                                        "example": "streamer@streamer.com"
                                     },
                                     "password": {
                                         "description": "required|string|min:6",
@@ -96,76 +96,12 @@
                 }
             }
         },
-        "/api/follower/register": {
-            "post": {
+        "/api/me": {
+            "get": {
                 "tags": [
-                    "Follower Authorization"
+                    "Authorization"
                 ],
-                "summary": "User Registration",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "phone",
-                                    "email",
-                                    "password",
-                                    "password_confirmation"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "description": "required|string|max:255",
-                                        "type": "string",
-                                        "example": "user"
-                                    },
-                                    "phone": {
-                                        "description": "['required', 'unique:followers']",
-                                        "type": "integer",
-                                        "example": "1234567"
-                                    },
-                                    "address": {
-                                        "description": "string|max:255",
-                                        "type": "string",
-                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
-                                    },
-                                    "gender": {
-                                        "description": "0= Male ,1=Female",
-                                        "type": "string",
-                                        "example": "0"
-                                    },
-                                    "birthday": {
-                                        "description": "string|max:255",
-                                        "type": "string",
-                                        "example": "15/1/1994"
-                                    },
-                                    "image": {
-                                        "description": "image|mimes:jpeg,png,jpg,gif,svg|max:1024",
-                                        "type": "file",
-                                        "example": "File Image"
-                                    },
-                                    "email": {
-                                        "description": "required|string|email|max:255|unique:users",
-                                        "type": "string",
-                                        "example": "follower@follower.com"
-                                    },
-                                    "password": {
-                                        "description": "required|string|min:6|confirmed",
-                                        "type": "string",
-                                        "example": "123123123"
-                                    },
-                                    "password_confirmation": {
-                                        "description": "Same As Password",
-                                        "type": "string",
-                                        "example": "123123123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "User Data",
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -199,7 +135,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/follower/update-profile-password": {
@@ -442,137 +383,6 @@
                 ]
             }
         },
-        "/api/follower/me": {
-            "get": {
-                "tags": [
-                    "Follower Authorization"
-                ],
-                "summary": "User Data",
-                "responses": {
-                    "201": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "{user{name,email,updated_at,created_at,id},token}": {
-                                            "description": "The Token",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error:These credentials do not match our records.": {
-                                            "description": "These credentials do not match our records.",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/streamer/login": {
-            "post": {
-                "tags": [
-                    "Streamer Authorization"
-                ],
-                "summary": "User Login",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "description": "required|string|email|max:255",
-                                        "type": "string",
-                                        "example": "streamer@streamer.com"
-                                    },
-                                    "password": {
-                                        "description": "required|string|min:6",
-                                        "type": "string",
-                                        "example": "123123123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "token:": {
-                                            "description": "The Token",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "invalid_credentials",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error:These credentials do not match our records.": {
-                                            "description": "These credentials do not match our records.",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Validator",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "Validator.": {
-                                            "description": "Validator",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/streamer/register": {
             "post": {
                 "tags": [
@@ -631,6 +441,21 @@
                                         "description": "0= Male ,1=Female",
                                         "type": "string",
                                         "example": "0"
+                                    },
+                                    "academic_years": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "['الصف-الاول-الابتدائي','الصف-الثانى-الابتدائي','الصف-الثالث-الاعدادي','first-grade-secondary']"
+                                    },
+                                    "subjects": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "['كيمياء']"
+                                    },
+                                    "city_id": {
+                                        "description": "required|string|max:255",
+                                        "type": "integer",
+                                        "example": "1"
                                     },
                                     "email": {
                                         "description": "required|string|email|max:255|unique:streamers",
@@ -929,12 +754,81 @@
                 ]
             }
         },
-        "/api/streamer/me": {
-            "get": {
+        "/api/streamer/follower_register": {
+            "post": {
                 "tags": [
                     "Streamer Authorization"
                 ],
-                "summary": "User Data",
+                "summary": "User Registration",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "description": "['required', 'unique:followers']",
+                                        "type": "integer",
+                                        "example": "1234567"
+                                    },
+                                    "address": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "Andalusia Group, 9 Mohamed Baidar St. from ElNasr St., New Maadi, Cairo, Egypt."
+                                    },
+                                    "gender": {
+                                        "description": "0= Male ,1=Female",
+                                        "type": "string",
+                                        "example": "0"
+                                    },
+                                    "birthday": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "15/1/1994"
+                                    },
+                                    "academic_year": {
+                                        "description": "string|max:255",
+                                        "type": "string",
+                                        "example": "الصف-الثالث-الاعدادي"
+                                    },
+                                    "image": {
+                                        "description": "image|mimes:jpeg,png,jpg,gif,svg|max:1024",
+                                        "type": "file",
+                                        "example": "File Image"
+                                    },
+                                    "email": {
+                                        "description": "required|string|email|max:255|unique:users",
+                                        "type": "string",
+                                        "example": "follower@follower.com"
+                                    },
+                                    "password": {
+                                        "description": "required|string|min:6|confirmed",
+                                        "type": "string",
+                                        "example": "123123123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Same As Password",
+                                        "type": "string",
+                                        "example": "123123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Success",
@@ -974,6 +868,894 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/academicYears": {
+            "get": {
+                "tags": [
+                    "Academic Years"
+                ],
+                "operationId": " All Academic Years",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['posts']"
+                    }
+                }
+            }
+        },
+        "/api/streamer/create_academic": {
+            "post": {
+                "tags": [
+                    "Academic Years"
+                ],
+                "operationId": " Create For Streamer Academic Years",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "academic_years"
+                                ],
+                                "properties": {
+                                    "academic_years": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "['الصف-الاول-الابتدائي','الصف-الثانى-الابتدائي','الصف-الثالث-الاعدادي','first-grade-secondary']"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['posts']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/academicYears": {
+            "get": {
+                "tags": [
+                    "Academic Years"
+                ],
+                "operationId": "Academic Years of streamer",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['Academic Years']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects": {
+            "get": {
+                "tags": [
+                    "Subjects"
+                ],
+                "operationId": " All Subjects",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['posts']"
+                    }
+                }
+            }
+        },
+        "/api/streamer/create_subjects": {
+            "post": {
+                "tags": [
+                    "Subjects"
+                ],
+                "operationId": " Create For Streamer Subjects",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subjects"
+                                ],
+                                "properties": {
+                                    "subjects": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "['كيمياء']"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['subjects']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/subjects": {
+            "get": {
+                "tags": [
+                    "Subjects"
+                ],
+                "operationId": "Subjects of streamer",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['subjects']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/group": {
+            "get": {
+                "tags": [
+                    "Group Pages"
+                ],
+                "operationId": "groups",
+                "parameters": [
+                    {
+                        "name": "P",
+                        "in": "query",
+                        "description": "Paginate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "10"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['group']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/create_group": {
+            "post": {
+                "tags": [
+                    "Group Pages"
+                ],
+                "summary": "Add New Group",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "description",
+                                    "academic_year",
+                                    "subject",
+                                    "start",
+                                    "end"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "First Exam"
+                                    },
+                                    "description": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "<h1>Description</h1>"
+                                    },
+                                    "start": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-05-04"
+                                    },
+                                    "end": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-08-04"
+                                    },
+                                    "academic_year": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "the-second-primary-grade"
+                                    },
+                                    "subject": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "psychology"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{Success}": {
+                                            "description": "Data Created SuccessFully ",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/group/{slug}": {
+            "get": {
+                "tags": [
+                    "Group Pages"
+                ],
+                "operationId": "Group Get Data Details",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Group Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['groups']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Group Pages"
+                ],
+                "summary": "Update Group",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Group Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "First Exam"
+                                    },
+                                    "description": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "<h1>Description</h1>"
+                                    },
+                                    "start": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-05-04"
+                                    },
+                                    "end": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-08-04"
+                                    },
+                                    "academic_year": {
+                                        "description": "required",
+                                        "type": "string",
+                                        "example": "the-second-primary-grade"
+                                    },
+                                    "subject": {
+                                        "description": "required",
+                                        "type": "string",
+                                        "example": "psychology"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Group Pages"
+                ],
+                "summary": "Delete Group",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Group Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/{group}/lesson": {
+            "get": {
+                "tags": [
+                    "Lesson Pages"
+                ],
+                "operationId": "Lesson",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Group Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "P",
+                        "in": "query",
+                        "description": "Paginate",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "10"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page Number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['Lesson']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/{group}/create_lesson": {
+            "post": {
+                "tags": [
+                    "Lesson Pages"
+                ],
+                "summary": "Add New Lesson",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Group Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "description",
+                                    "start",
+                                    "end"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "First Lesson"
+                                    },
+                                    "description": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "<h1>Description</h1>"
+                                    },
+                                    "start": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-05-04"
+                                    },
+                                    "end": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-08-04"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{Success}": {
+                                            "description": "Data Created SuccessFully ",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/streamer/lesson/{lesson}": {
+            "get": {
+                "tags": [
+                    "Lesson Pages"
+                ],
+                "operationId": "Lesson Get Data Details",
+                "parameters": [
+                    {
+                        "name": "lesson",
+                        "in": "path",
+                        "description": "lesson Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['quizes']"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Lesson Pages"
+                ],
+                "summary": "Update Lesson",
+                "parameters": [
+                    {
+                        "name": "lesson",
+                        "in": "path",
+                        "description": "Lesson Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "slug",
+                                    "description",
+                                    "start",
+                                    "end"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "required|string|max:255",
+                                        "type": "string",
+                                        "example": "Second Lesson"
+                                    },
+                                    "description": {
+                                        "description": "required|integer",
+                                        "type": "string",
+                                        "example": "<h1>Description</h1>"
+                                    },
+                                    "start": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-05-04"
+                                    },
+                                    "end": {
+                                        "description": "required|string",
+                                        "type": "string",
+                                        "example": "2020-08-04"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lesson Pages"
+                ],
+                "summary": "Delete Lesson",
+                "parameters": [
+                    {
+                        "name": "lesson",
+                        "in": "path",
+                        "description": "Lesson Slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "{user{data}": {
+                                            "description": "User",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error:These credentials do not match our records.": {
+                                            "description": "These credentials do not match our records.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/governorate": {
+            "get": {
+                "tags": [
+                    "Governorates"
+                ],
+                "operationId": "All Governorates Of Egypt",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['governorates']"
+                    }
+                }
+            }
+        },
+        "/api/academic_subject_cities": {
+            "get": {
+                "tags": [
+                    "Governorates"
+                ],
+                "operationId": "All Data as Governorates subjects AcademicYear",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "Lang",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "For Home Data as ['Governorates,subjects,AcademicYear']"
+                    }
+                }
             }
         },
         "/api/streamer/quiz": {
