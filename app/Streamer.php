@@ -73,6 +73,6 @@ class Streamer extends Authenticatable implements JWTSubject
     }
     public function Followers()
     {
-        return $this->belongsToMany('App\Follower','streamer_follower');
+        return $this->belongsToMany('App\Follower','streamer_follower','streamer_id');
     }
 }

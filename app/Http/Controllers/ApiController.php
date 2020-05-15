@@ -714,6 +714,39 @@ use Illuminate\Http\Request;
  *   )
  * )
  */
+/**
+ * @OA\Get(
+ *   path="/api/streamer/streamer_followers",
+ *   summary="Follower Data",
+ *   tags={"Streamer Authorization"},
+ *   security={{"bearerAuth":{}}},
+ *   @OA\Response(
+ *     response=201,
+ *     description="Success",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="{Follower{name,email,updated_at,created_at,id},token}",
+ *         type="string",
+ *         description="The Token"
+ *       )
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=400,
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *       type="object",
+ *       @OA\Property(
+ *         property="error:These credentials do not match our records.",
+ *         type="string",
+ *         description="These credentials do not match our records."
+ *       )
+ *     )
+ *    )
+ *   )
+ * )
+ */
 //===========================End=Auth=============================================
 
 //===========================Start=Academic Years===========================================

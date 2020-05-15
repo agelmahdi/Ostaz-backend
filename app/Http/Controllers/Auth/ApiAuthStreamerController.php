@@ -46,9 +46,9 @@ class ApiAuthStreamerController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        $user=User::where('email',$request->get('email'))->first();
-        if($user->role==1){
-            $streamer=Streamer::where('email',$user->email)->first();
+        $user = User::where('email', $request->get('email'))->first();
+        if ($user->role == 1) {
+            $streamer = Streamer::where('email', $user->email)->first();
             $user = [
                 'name_ar' => $streamer->name_ar,
                 'name_en' => $streamer->name_en,
@@ -60,10 +60,9 @@ class ApiAuthStreamerController extends Controller
                 'address_en' => $streamer->address_en,
                 'email' => $streamer->email,
                 'image' => env('APP_URL') . $streamer->image,
-                'is_streamer'=>true,
+                'is_streamer' => true,
             ];
-        }
-        elseif($user->role==2){
+        } elseif ($user->role == 2) {
             $follower = Follower::where('email', $user->email)->first();
             $user = [
                 'name' => $follower->name,
@@ -73,11 +72,12 @@ class ApiAuthStreamerController extends Controller
                 'birthday' => $follower->birthday,
                 'email' => $follower->email,
                 'avatar' => env('APP_URL') . $follower->image,
-                'is_streamer'=>false,
+                'is_streamer' => false,
             ];
         }
-        return response()->json(compact(['token','user']));
+        return response()->json(compact(['token', 'user']));
     }
+
     public function register(Request $request)
     {
 
@@ -166,8 +166,8 @@ class ApiAuthStreamerController extends Controller
         $user = User::create([
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
-            'role'=>1,
-            'role_id'=>$streamer->id,
+            'role' => 1,
+            'role_id' => $streamer->id,
         ]);
         $streamer->Subjects()->sync($subjects_arr);
         $streamer->AcademicYears()->sync($academic_arr);
@@ -175,6 +175,7 @@ class ApiAuthStreamerController extends Controller
 
         return response()->json("Success", 201);
     }
+
     public function updateProfilePassword(Request $request)
     {
         try {
@@ -204,8 +205,8 @@ class ApiAuthStreamerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        if($user->role!=1){
-            return response()->json('sorry this user role is not As Streamer',402);
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
         }
         if (!(Hash::check($request->get('current_password'), $user->password))) {
             return response()->json(['error' => 'password not Valid'], 400);
@@ -214,7 +215,7 @@ class ApiAuthStreamerController extends Controller
             'password' => bcrypt($request->get('new_password')),
         ]);
         $user->save();
-        $streamer=Streamer::where('email',$user->email)->first();
+        $streamer = Streamer::where('email', $user->email)->first();
         $user = [
             'name_ar' => $streamer->name_ar,
             'name_en' => $streamer->name_en,
@@ -229,6 +230,7 @@ class ApiAuthStreamerController extends Controller
         ];
         return response()->json(compact('user'), 201);
     }
+
     public function updateProfile(Request $request)
     {
         try {
@@ -266,10 +268,10 @@ class ApiAuthStreamerController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        if($user->role!=1){
-            return response()->json('sorry this user role is not As Streamer',402);
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
         }
-        $streamer=Streamer::where('email',$user->email)->first();
+        $streamer = Streamer::where('email', $user->email)->first();
         $streamer->update([
             'name_ar' => $request->get('name_ar'),
             'name_en' => $request->get('name_en'),
@@ -300,6 +302,7 @@ class ApiAuthStreamerController extends Controller
         ];
         return response()->json(compact('user'), 201);
     }
+
     public function updateProfileImage(Request $request)
     {
         try {
@@ -321,8 +324,8 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-        if($user->role!=1){
-            return response()->json('sorry this user role is not As Streamer',402);
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
         }
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
@@ -340,7 +343,7 @@ class ApiAuthStreamerController extends Controller
         } else {
             $photoUrl = "/streamer/default.jpg";
         }
-        $streamer=Streamer::where('email',$user->email)->first();
+        $streamer = Streamer::where('email', $user->email)->first();
         $streamer->update([
             'image' => $photoUrl,
         ]);
@@ -359,6 +362,7 @@ class ApiAuthStreamerController extends Controller
         ];
         return response()->json(compact('user'), 201);
     }
+
     public function getAuthenticatedUser()
     {
         try {
@@ -380,8 +384,8 @@ class ApiAuthStreamerController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
 
         }
-        if($user->role==1){
-            $streamer=Streamer::where('email',$user->email)->first();
+        if ($user->role == 1) {
+            $streamer = Streamer::where('email', $user->email)->first();
             $user = [
                 'name_ar' => $streamer->name_ar,
                 'name_en' => $streamer->name_en,
@@ -393,10 +397,9 @@ class ApiAuthStreamerController extends Controller
                 'address_en' => $streamer->address_en,
                 'email' => $streamer->email,
                 'image' => env('APP_URL') . $streamer->image,
-                'is_streamer'=>true,
+                'is_streamer' => true,
             ];
-        }
-        elseif($user->role==2){
+        } elseif ($user->role == 2) {
             $follower = Follower::where('email', $user->email)->first();
             $user = [
                 'name' => $follower->name,
@@ -406,11 +409,12 @@ class ApiAuthStreamerController extends Controller
                 'birthday' => $follower->birthday,
                 'email' => $follower->email,
                 'avatar' => env('APP_URL') . $follower->image,
-                'is_streamer'=>false,
+                'is_streamer' => false,
             ];
         }
         return response()->json(compact('user'));
     }
+
     public function followers_register(Request $request)
     {
         try {
@@ -459,12 +463,12 @@ class ApiAuthStreamerController extends Controller
         } else {
             $photoUrl = "/followers/default.jpg";
         }
-        $academic_year=$request->get('academic_year');
+        $academic_year = $request->get('academic_year');
         $academic = AcademicYear::where(function ($query) use ($academic_year) {
             $query->where('slug_ar', $academic_year);
             $query->orwhere('slug_en', $academic_year);
         })->first();
-        if($academic==null){
+        if ($academic == null) {
             return response()->json(['sorry your data not equal our system'], 400);
         }
         $follower = Follower::create([
@@ -472,20 +476,44 @@ class ApiAuthStreamerController extends Controller
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
             'gender' => $request->get('gender'),
-            'birthday' => $request->get('gender'),
+            'birthday' => $request->get('birthday'),
             'image' => $photoUrl,
             'email' => $request->get('email'),
-            'academic_year_id' =>$academic->id ,
+            'academic_year_id' => $academic->id,
         ]);
-         User::create([
+        User::create([
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'role' => 2,
             'role_id' => $follower->id,
         ]);
-        $arr[0]=$user->role_id;
+        $arr[0] = $user->role_id;
         $follower->Streamers()->attach($arr);
 
         return response()->json("Success", 201);
+    }
+
+    public function followers(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+        }
+        if ($user->role != 1) {
+            return response()->json('sorry this user role is not As Streamer', 402);
+        }
+        $streamer = Streamer::find($user->role_id);
+        $followers=$streamer->Followers()->get();
+
+        return response()->json(compact(['followers']), 201);
     }
 }
